@@ -47,6 +47,9 @@
   --r: 24px;
   --r-lg: 32px;
   --gutter: clamp(16px, 4vw, 48px);
+  /* Hero inset: the gutter, plus whatever keeps its content within 1440px on wide screens.
+     The % resolves where it is used (the hero's width), so the hero itself stays full bleed. */
+  --hero-in: max(var(--gutter), calc((100% - 1440px) / 2 + var(--gutter)));
   --max: 1240px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -141,9 +144,7 @@ input { caret-color: var(--accent); }
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   gap: clamp(16px, 3vw, 48px);
-  padding: clamp(104px, 16svh, 168px) var(--gutter) 0;
-  max-width: 1440px;
-  margin: 0 auto;
+  padding: clamp(104px, 16svh, 168px) var(--hero-in) 0;
 }
 .hero__left, .hero__right, .captions { position: relative; z-index: 2; }
 .stage { position: relative; z-index: 1; }
@@ -171,13 +172,13 @@ input { caret-color: var(--accent); }
 .js-motion .cap { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
 .js-motion .cap h2 {
   position: absolute;
-  left: var(--gutter);
+  left: var(--hero-in);
   top: 50%;
   translate: 0 -50%;
   max-width: var(--side);
   font-size: clamp(2rem, calc(var(--side) / 5.4), 4.5rem);
 }
-.js-motion .cap p { position: absolute; right: var(--gutter); top: 50%; translate: 0 -50%; max-width: min(var(--side), 17em); margin: 0; font-size: 1.0625rem; }
+.js-motion .cap p { position: absolute; right: var(--hero-in); top: 50%; translate: 0 -50%; max-width: min(var(--side), 17em); margin: 0; font-size: 1.0625rem; }
 .js-motion .stage { will-change: transform; }
 
 /* Pre-states for the load sequence */
