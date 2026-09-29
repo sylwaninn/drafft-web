@@ -71,7 +71,7 @@
     <ul>
       <li>We collect what drafft needs to work: your account, your profile, an approximate area, your chats and your sessions.</li>
       <li>Your exact location never leaves your phone: drafft only receives an area rounded to about 1 km. Your date of birth, phone number and email address are never shown to other members.</li>
-      <li>No ads, no selling of data, no advertising trackers. The website sets no cookies.</li>
+      <li>No ads, no selling of data, no advertising trackers. The app’s usage statistics are only collected with your consent. The website sets no cookies.</li>
       <li>Your data is stored in the European Union. A few providers are based in the United States: they’re listed below, with the safeguards that cover these transfers.</li>
       <li>You can export your data or delete your account at any time from the app.</li>
     </ul>
@@ -93,11 +93,13 @@
     <h3>What’s collected when you use drafft</h3>
     <ul>
       <li><strong>Approximate area:</strong> with your permission, the app reads your location at reduced accuracy and rounds it on your phone to a grid of about 1 km before sending it. Your exact location never leaves your phone.</li>
-      <li><strong>Device and connection:</strong> model, iOS and app versions, language, time zone, install identifier, IP address and the country it indicates, an Apple DeviceCheck token and a notification token.</li>
-      <li><strong>Activity:</strong> when you were last active, notification settings, purchases and credits (boosts, super likes, drafft tempo). We never receive your card details: payments go through Apple.</li>
+      <li><strong>Device and connection:</strong> model, system and app versions, language, time zone, install identifier, IP address and the country it indicates, a device integrity token provided by the phone’s system and a notification token.</li>
+      <li><strong>Activity:</strong> when you were last active, notification settings, purchases and credits (boosts, super likes, drafft tempo). We never receive your card details: payments go through your phone’s app store.</li>
+      <li><strong>Diagnostics:</strong> if the app crashes or hits an error, a technical report (device, versions, how the error happened, a pseudonymous account identifier) is sent so we can fix it. It contains neither your messages nor your photos.</li>
+      <li><strong>Usage statistics, only if you agree:</strong> the screens you open and the actions you take in the app (for example opening a profile or proposing a session), linked to a pseudonymous identifier. No message content, no photos and no screen recording.</li>
     </ul>
     <h3>What your phone’s permissions are used for</h3>
-    <p>Camera, microphone and photo library let you add photos, a video or voice messages. The calendar is only used to add a session when you ask. You can withdraw each permission in iOS Settings. drafft doesn’t ask for your contacts, your health data or permission to track you.</p>
+    <p>Camera, microphone and photo library let you add photos, a video or voice messages. The calendar is only used to add a session when you ask. You can withdraw each permission in your phone’s settings. drafft doesn’t ask for your contacts, your health data or permission to track you.</p>
 
     <h2 id="sensitive-data">Sensitive data</h2>
     <p>Your gender and the genders you want to see can reveal your sexual orientation. Your lifestyle answers (drinking, smoking, diet) can reveal information about your health or beliefs. Using a dating app is itself personal information.</p>
@@ -111,10 +113,12 @@
         <tr><td>Create your account, log you in, verify your number</td><td>Account, device</td><td>Performance of the contract (the terms of use)</td></tr>
         <tr><td>Show your profile and show you profiles near you</td><td>Profile, approximate area, activity</td><td>Performance of the contract, and your consent for sensitive data</td></tr>
         <tr><td>Run likes, matches, chats and sessions</td><td>Interactions</td><td>Performance of the contract</td></tr>
-        <tr><td>Send you service notifications and emails (codes, sessions, messages)</td><td>Account, notification token</td><td>Performance of the contract; push notifications also depend on your permission in iOS</td></tr>
+        <tr><td>Send you service notifications and emails (codes, sessions, messages)</td><td>Account, notification token</td><td>Performance of the contract; push notifications also depend on your permission in your phone’s settings</td></tr>
         <tr><td>Check photos and videos automatically, handle reports, stop banned accounts from coming back, fight fraud and spam</td><td>Profile, interactions, safety, device and connection</td><td>Legitimate interest: the safety of members and of drafft</td></tr>
         <tr><td>Manage drafft tempo, boosts and super likes</td><td>Purchases</td><td>Performance of the contract</td></tr>
         <tr><td>Answer your help requests</td><td>Help, account</td><td>Performance of the contract and legitimate interest</td></tr>
+        <tr><td>Spot and fix crashes and errors</td><td>Diagnostics, device</td><td>Legitimate interest: an app that works</td></tr>
+        <tr><td>Understand how drafft is used, to improve it</td><td>Usage statistics</td><td>Your consent, which you can withdraw at any time</td></tr>
         <tr><td>Meet our legal obligations (accounting, requests from authorities, duties of online platforms)</td><td>Purchases, reports, data an authority asks for</td><td>Legal obligation</td></tr>
       </tbody>
     </table>
@@ -149,7 +153,9 @@
         <tr><td>Twilio</td><td>Sending verification texts; checking the type of number</td><td>Ireland (EU) for texts; United States for the number check</td></tr>
         <tr><td>Resend</td><td>Sending emails (codes, help center replies)</td><td>United States</td></tr>
         <tr><td>RevenueCat</td><td>Tracking subscriptions and purchases</td><td>United States</td></tr>
-        <tr><td>Apple</td><td>App Store payments, push notifications, DeviceCheck</td><td>United States</td></tr>
+        <tr><td>Sentry (Functional Software, Inc.)</td><td>Crash and error reports</td><td>Germany (EU)</td></tr>
+        <tr><td>PostHog</td><td>Usage statistics, only with your consent</td><td>Germany (EU)</td></tr>
+        <tr><td>Apple or Google, depending on your phone</td><td>Payments through their app store, push notifications, device integrity checks</td><td>United States</td></tr>
       </tbody>
     </table>
     </div>
@@ -176,6 +182,8 @@
         <tr><td>Reports</td><td>1 year after they’re handled, without the reporter’s name if they deleted their account.</td></tr>
         <tr><td>Purchases</td><td>10 years, as accounting law requires, no longer linked to your account once it’s deleted.</td></tr>
         <tr><td>Help requests</td><td>3 years after the last exchange.</td></tr>
+        <tr><td>Crash and error reports</td><td>90 days.</td></tr>
+        <tr><td>Usage statistics</td><td>13 months at most, and erased if you withdraw your consent or delete your account.</td></tr>
       </tbody>
     </table>
     </div>
@@ -186,6 +194,7 @@
       <li><strong>Export your data:</strong> You › Privacy &amp; data › Export my data. You get a link by email, usually within 24 hours, valid for 7 days.</li>
       <li><strong>Delete your account:</strong> You › Delete account. Deletion is immediate.</li>
       <li><strong>Edit your profile:</strong> at any time from the You tab.</li>
+      <li><strong>Accept or refuse usage statistics:</strong> the app asks you, and you can change your mind at any time in You › Privacy &amp; data. Refusing doesn’t change anything you can do in drafft.</li>
       <li><strong>Anything else:</strong> write to <mark class="lg-todo">[privacyEmail]</mark>. We reply within one month at most. We may ask you to confirm your identity.</li>
     </ul>
     <p>If you think your rights aren’t being respected, you can complain to the CNIL (Commission nationale de l’informatique et des libertés, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07, France, <a href="https://www.cnil.fr">cnil.fr</a>) or to the data protection authority in your country.</p>
@@ -198,7 +207,7 @@
 
     <h2 id="cookies">Cookies and trackers</h2>
     <p>The getdrafft.com website sets no cookies, uses no audience measurement tool and loads no third-party service: its fonts are hosted on the site. Our host, Cloudflare, processes visitors’ IP addresses for as long as it takes to deliver the pages and protect the site from attacks.</p>
-    <p>The app uses no advertising trackers and no third-party analytics. It stores on your phone what it needs to work (login, cached profiles and media).</p>
+    <p>The app uses no advertising trackers. Usage statistics (PostHog) are only switched on with your consent, and crash reports (Sentry) are only used to fix errors. The app stores on your phone what it needs to work (login, cached profiles and media).</p>
 
     <h2 id="changes">Changes</h2>
     <p>This policy may change as drafft evolves. The date of the last update is at the top of the page. If there’s an important change, we’ll let you know in the app before it applies.</p>
