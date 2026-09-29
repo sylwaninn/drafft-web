@@ -1,0 +1,29 @@
+/**
+ * The marketing site: static files in public/, served by Workers static assets on getdrafft.com.
+ * The Worker sends www.getdrafft.com to the apex and hands every other request to the static files.
+ *
+ *   pnpm dev       local preview (http://localhost:8787)
+ *   pnpm check     bundle without deploying (CI on pull requests)
+ *   pnpm deploy    production; CI does it on every push to main
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "drafft-web",
+  "compatibility_date": "2026-09-25",
+  "main": "./worker/index.js",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none",
+    // The Worker runs first: a static file matching www.getdrafft.com/ would otherwise skip the redirect.
+    "run_worker_first": true
+  },
+  "routes": [
+    { "pattern": "getdrafft.com", "custom_domain": true },
+    { "pattern": "www.getdrafft.com", "custom_domain": true }
+  ],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true }
+}
