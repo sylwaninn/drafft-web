@@ -208,6 +208,9 @@
         if (/[.!?:;]\u00a0?$/.test(part) || /[.!?]["”»’)]?$/.test(part)) { pending = true; seenWord = false; }
         out += part;
       }
+      // A compound word ("rendez-vous") never breaks at its hyphen: it becomes a no-break hyphen,
+      // and fit() shrinks a heading when the whole word doesn't fit on a line.
+      out = out.replace(/(\p{L})-(?=\p{L})/gu, "$1\u2011");
       n.textContent = out;
     }
   };
@@ -545,9 +548,12 @@
     defaults: { ease: "power2.inOut" },
     scrollTrigger: {
       trigger: hero,
-      start: "top top",
-      // Phones get a shorter run: the same story in less thumb travel.
-      end: () => "+=" + innerHeight * (mobile() ? 6.5 : 8.5),
+      // The hero opens the page: the story starts at 0. Measured ("top top"), a refresh made deep
+      // in the pinned story (a resize) could read a negative start and shift every step.
+      start: 0,
+      // Phones get a shorter run: the same story in less thumb travel. The pull-back is short
+      // (1.2 of the timeline's units): the first flick of the wheel already sets the zoom going.
+      end: () => "+=" + innerHeight * (mobile() ? 6 : 7.85),
       pin: true,
       scrub: 0.9,
       anticipatePin: 1,
@@ -559,79 +565,79 @@
   story
     // 1. Pull back: the photo shrinks onto the top card, the phone appears around it.
     .fromTo(cueBtn, { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: 12, duration: 0.3, immediateRender: false }, 0)
-    .to(zoom, { t: 1, duration: 2.3, ease: "none", onUpdate: layout }, 0)
-    .fromTo(info, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power3.out" }, 2.3)
+    .to(zoom, { t: 1, duration: 1.2, ease: "none", onUpdate: layout }, 0)
+    .fromTo(info, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power3.out" }, 1.2)
 
     // 2. The screen settles; the headline arrives beside it.
     // (the screen is already settled: see measure)
-    .fromTo("[data-hero-copy]", { autoAlpha: 0, y: 30, filter: "blur(10px)" }, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8, stagger: 0.1, ease: "power3.out" }, 2.1)
-    .to(titleWords, { yPercent: 0, duration: 0.8, stagger: 0.06, ease: "expo.out" }, 2.2)
-    .to({}, { duration: 0.8 }, 3)
+    .fromTo("[data-hero-copy]", { autoAlpha: 0, y: 30, filter: "blur(10px)" }, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8, stagger: 0.1, ease: "power3.out" }, 1)
+    .to(titleWords, { yPercent: 0, duration: 0.8, stagger: 0.06, ease: "expo.out" }, 1.1)
+    .to({}, { duration: 0.8 }, 1.9)
 
     // 3. Like: the button presses, the LIKE stamp lands, the card flies off, the pile steps up.
-    .to("[data-hero-copy]", { autoAlpha: 0, y: -50, filter: "blur(10px)", duration: 0.6, stagger: 0.05, ease: "power2.in" }, 4.5)
-    .fromTo(phone, { y: () => settleY(-1) }, { y: () => settleY(0), duration: 0.5, ease: "power2.inOut", immediateRender: false }, 4.85)
-    .to(caps[0], capIn, 5.25)
-    .to("[data-like]", { scale: 0.9, duration: 0.15, ease: "power2.out" }, 5.7)
-    .to("[data-like]", { scale: 1.18, duration: 0.25, ease: "power2.out" }, 5.85)
-    .to("[data-stamp]", { autoAlpha: 1, scale: 1.05, duration: 0.3, ease: "back.out(2)" }, 5.8)
-    .to(card, { x: "6%", rotation: 3, scale: 0.94, autoAlpha: 0, transformOrigin: "50% 100%", duration: 0.35, ease: "power1.in" }, 6.05)
-    .to("[data-like]", { scale: 1, duration: 0.3 }, 6.2)
-    .to("[data-d1]", { y: 0, scale: 1, duration: 0.55, ease: "power3.out" }, 6.35)
-    .to("[data-d1-veil]", { opacity: 0, duration: 0.55 }, 6.35)
-    .to("[data-d2]", { y: "14em", scale: 0.93, duration: 0.55, ease: "power3.out" }, 6.35)
-    .to("[data-d2-veil]", { opacity: 0.55, duration: 0.55 }, 6.35)
+    .to("[data-hero-copy]", { autoAlpha: 0, y: -50, filter: "blur(10px)", duration: 0.6, stagger: 0.05, ease: "power2.in" }, 3.4)
+    .fromTo(phone, { y: () => settleY(-1) }, { y: () => settleY(0), duration: 0.5, ease: "power2.inOut", immediateRender: false }, 3.75)
+    .to(caps[0], capIn, 4.15)
+    .to("[data-like]", { scale: 0.9, duration: 0.15, ease: "power2.out" }, 4.6)
+    .to("[data-like]", { scale: 1.18, duration: 0.25, ease: "power2.out" }, 4.75)
+    .to("[data-stamp]", { autoAlpha: 1, scale: 1.05, duration: 0.3, ease: "back.out(2)" }, 4.7)
+    .to(card, { x: "6%", rotation: 3, scale: 0.94, autoAlpha: 0, transformOrigin: "50% 100%", duration: 0.35, ease: "power1.in" }, 4.95)
+    .to("[data-like]", { scale: 1, duration: 0.3 }, 5.1)
+    .to("[data-d1]", { y: 0, scale: 1, duration: 0.55, ease: "power3.out" }, 5.25)
+    .to("[data-d1-veil]", { opacity: 0, duration: 0.55 }, 5.25)
+    .to("[data-d2]", { y: "14em", scale: 0.93, duration: 0.55, ease: "power3.out" }, 5.25)
+    .to("[data-d2-veil]", { opacity: 0.55, duration: 0.55 }, 5.25)
     // The fourth card rises into the empty slot at the back, as the pile refills in the app
-    .fromTo("[data-d3]", { autoAlpha: 0, y: "40em", scale: 0.8 }, { autoAlpha: 1, y: "28em", scale: 0.86, duration: 0.7, ease: "power3.out" }, 6.5)
-    .to(caps[0], capOut, 6.4)
+    .fromTo("[data-d3]", { autoAlpha: 0, y: "40em", scale: 0.8 }, { autoAlpha: 1, y: "28em", scale: 0.86, duration: 0.7, ease: "power3.out" }, 5.4)
+    .to(caps[0], capOut, 5.3)
 
     // 4. It's a match: the full-screen cover slides up, the pair and the heart fall into place.
     // The pile clears first, then the match takes the stage: never both at once.
-    .to("[data-discover]", { autoAlpha: 0, duration: 0.15, ease: "power1.in" }, 6.6)
-    .to("[data-matchview]", { autoAlpha: 1, duration: 0.18, ease: "power1.out" }, 6.8)
-    .fromTo(".mv__formation", { autoAlpha: 0, y: -24, scale: 0.94 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" }, 6.95)
-    .fromTo("[data-heart]", { scale: 0.2 }, { scale: 1, duration: 0.5, ease: "back.out(2.4)" }, 7.15)
-    .fromTo(phone, { y: () => settleY(0) }, { y: () => settleY(1), duration: 0.5, ease: "power2.inOut", immediateRender: false }, 6.6)
-    .to(caps[1], capIn, 7)
-    .to("[data-sayhi]", { scale: 0.97, duration: 0.15, ease: "power2.out" }, 8.8)
-    .to("[data-sayhi]", { scale: 1, duration: 0.2 }, 8.95)
-    .to(caps[1], capOut, 9)
+    .to("[data-discover]", { autoAlpha: 0, duration: 0.15, ease: "power1.in" }, 5.5)
+    .to("[data-matchview]", { autoAlpha: 1, duration: 0.18, ease: "power1.out" }, 5.7)
+    .fromTo(".mv__formation", { autoAlpha: 0, y: -24, scale: 0.94 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" }, 5.85)
+    .fromTo("[data-heart]", { scale: 0.2 }, { scale: 1, duration: 0.5, ease: "back.out(2.4)" }, 6.05)
+    .fromTo(phone, { y: () => settleY(0) }, { y: () => settleY(1), duration: 0.5, ease: "power2.inOut", immediateRender: false }, 5.5)
+    .to(caps[1], capIn, 5.9)
+    .to("[data-sayhi]", { scale: 0.97, duration: 0.15, ease: "power2.out" }, 7.7)
+    .to("[data-sayhi]", { scale: 1, duration: 0.2 }, 7.85)
+    .to(caps[1], capOut, 7.9)
 
     // 5. Straight to the plan: the chat, then the propose sheet over it.
-    .to("[data-matchview]", { autoAlpha: 0, duration: 0.35, ease: "power1.out" }, 9.1)
-    .set("[data-discover]", { autoAlpha: 0 }, 9.2)
-    .to("[data-sheet]", { autoAlpha: 1, y: 0, duration: 0.7, ease: "expo.out" }, 9.45)
-    .fromTo(phone, { y: () => settleY(1) }, { y: () => settleY(2), duration: 0.5, ease: "power2.inOut", immediateRender: false }, 9.2)
-    .to(caps[2], capIn, 9.6)
+    .to("[data-matchview]", { autoAlpha: 0, duration: 0.35, ease: "power1.out" }, 8)
+    .set("[data-discover]", { autoAlpha: 0 }, 8.1)
+    .to("[data-sheet]", { autoAlpha: 1, y: 0, duration: 0.7, ease: "expo.out" }, 8.35)
+    .fromTo(phone, { y: () => settleY(1) }, { y: () => settleY(2), duration: 0.5, ease: "power2.inOut", immediateRender: false }, 8.1)
+    .to(caps[2], capIn, 8.5)
     // Pick Running…
-    .to("[data-tile]", { backgroundColor: accent, color: onAccent, "--tile": accent, duration: 0.25, ease: "none" }, 10)
-    .to("[data-tile] .tile__ic", { backgroundColor: "rgba(255,255,255,0.22)", duration: 0.25, ease: "none" }, 10)
-    .to("[data-tile-check]", { backgroundColor: onAccent, color: accent, boxShadow: "inset 0 0 0 0em rgba(14,15,12,0)", duration: 0.25, ease: "none" }, 10)
+    .to("[data-tile]", { backgroundColor: accent, color: onAccent, "--tile": accent, duration: 0.25, ease: "none" }, 8.9)
+    .to("[data-tile] .tile__ic", { backgroundColor: "rgba(255,255,255,0.22)", duration: 0.25, ease: "none" }, 8.9)
+    .to("[data-tile-check]", { backgroundColor: onAccent, color: accent, boxShadow: "inset 0 0 0 0em rgba(14,15,12,0)", duration: 0.25, ease: "none" }, 8.9)
     // …then a time: the add card turns into Tue 29, 7:00 and the send button wakes up.
-    .to("[data-slot-add]", { autoAlpha: 0, scale: 0.9, duration: 0.3 }, 10.4)
-    .fromTo("[data-slot-time]", { autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 10.45)
-    .to("[data-slot-next]", { autoAlpha: 1, duration: 0.3 }, 10.6)
-    .to("[data-recap-none]", { autoAlpha: 0, duration: 0.2 }, 10.5)
-    .to("[data-recap-time]", { autoAlpha: 1, duration: 0.2 }, 10.55)
-    .to("[data-send]", { opacity: 1, duration: 0.25, ease: "none" }, 10.6)
-    .to("[data-send]", { scale: 0.97, duration: 0.15, ease: "power2.out" }, 11)
-    .to("[data-send]", { scale: 1, duration: 0.25 }, 11.15)
-    .to("[data-send-label]", { opacity: 0, duration: 0.25, ease: "none" }, 11.15)
-    .to("[data-send-done]", { opacity: 1, duration: 0.25, ease: "none" }, 11.2)
-    .to(caps[2], capOut, 11.4)
+    .to("[data-slot-add]", { autoAlpha: 0, scale: 0.9, duration: 0.3 }, 9.3)
+    .fromTo("[data-slot-time]", { autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 9.35)
+    .to("[data-slot-next]", { autoAlpha: 1, duration: 0.3 }, 9.5)
+    .to("[data-recap-none]", { autoAlpha: 0, duration: 0.2 }, 9.4)
+    .to("[data-recap-time]", { autoAlpha: 1, duration: 0.2 }, 9.45)
+    .to("[data-send]", { opacity: 1, duration: 0.25, ease: "none" }, 9.5)
+    .to("[data-send]", { scale: 0.97, duration: 0.15, ease: "power2.out" }, 9.9)
+    .to("[data-send]", { scale: 1, duration: 0.25 }, 10.05)
+    .to("[data-send-label]", { opacity: 0, duration: 0.25, ease: "none" }, 10.05)
+    .to("[data-send-done]", { opacity: 1, duration: 0.25, ease: "none" }, 10.1)
+    .to(caps[2], capOut, 10.3)
 
     // 6. Sent: the sheet goes, the invite sits in the chat, Léa confirms.
-    .to("[data-sheet]", { autoAlpha: 0, y: 30, duration: 0.45, ease: "power2.in" }, 11.5)
-    .to("[data-chat]", { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 11.9)
-    .to("[data-session-wrap]", { height: "auto", marginTop: "8em", autoAlpha: 1, duration: 0.5, ease: "power3.out" }, 12)
-    .fromTo(phone, { y: () => settleY(2) }, { y: () => settleY(3), duration: 0.5, ease: "power2.inOut", immediateRender: false }, 11.6)
-    .to(caps[3], capIn, 12)
-    .to("[data-pill-wait]", { autoAlpha: 0, duration: 0.25 }, 12.6)
-    .to("[data-pill-ok]", { autoAlpha: 1, duration: 0.3 }, 12.65)
-    .fromTo("[data-agreed]", { autoAlpha: 0, scale: 0.6 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(2.4)" }, 12.7)
-    .to("[data-session-note]", { autoAlpha: 0, duration: 0.25 }, 12.7)
-    .fromTo("[data-add-cal]", { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 12.8)
-    .to({}, { duration: 0.8 }, 13.9);
+    .to("[data-sheet]", { autoAlpha: 0, y: 30, duration: 0.45, ease: "power2.in" }, 10.4)
+    .to("[data-chat]", { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 10.8)
+    .to("[data-session-wrap]", { height: "auto", marginTop: "8em", autoAlpha: 1, duration: 0.5, ease: "power3.out" }, 10.9)
+    .fromTo(phone, { y: () => settleY(2) }, { y: () => settleY(3), duration: 0.5, ease: "power2.inOut", immediateRender: false }, 10.5)
+    .to(caps[3], capIn, 10.9)
+    .to("[data-pill-wait]", { autoAlpha: 0, duration: 0.25 }, 11.5)
+    .to("[data-pill-ok]", { autoAlpha: 1, duration: 0.3 }, 11.55)
+    .fromTo("[data-agreed]", { autoAlpha: 0, scale: 0.6 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(2.4)" }, 11.6)
+    .to("[data-session-note]", { autoAlpha: 0, duration: 0.25 }, 11.6)
+    .fromTo("[data-add-cal]", { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 11.7)
+    .to({}, { duration: 0.8 }, 12.8);
 
   measure();
   layout();
@@ -644,9 +650,11 @@
     fit();
     measure();
     layout();
+    // Rewind first: invalidate() makes each tween re-read its start values, and read mid-story
+    // they would be another step's (a caption left visible, two screens at once).
     const p = story.progress();
-    story.invalidate();
-    story.progress(p);
+    story.progress(0, true).invalidate();
+    story.progress(p, true);
   });
   fit();
   measure();
@@ -658,7 +666,7 @@
 
   // Each step is a moment of the story (headline, like, match, plan, confirmed), then each
   // section below. A press scrolls there smoothly, so the scroll animation plays on the way.
-  const STORY_STEPS = [0, 4.2, 5.9, 7.9, 11.1, 13];
+  const STORY_STEPS = [0, 3.1, 4.8, 6.8, 10, 11.9];
   const stepTargets = () => {
     const st = story.scrollTrigger, span = st.end - st.start, total = story.duration();
     const inStory = STORY_STEPS.map((t) => st.start + (t / total) * span);
@@ -702,7 +710,7 @@
   addEventListener("scroll", refreshSteps, { passive: true });
   refreshSteps();
   stepperFrom = () => {
-    const st = story.scrollTrigger, v = st.start + (2.2 / story.duration()) * (st.end - st.start);
+    const st = story.scrollTrigger, v = st.start + (1.1 / story.duration()) * (st.end - st.start);
     return Number.isFinite(v) && v > 0 ? v : innerHeight * 0.5;
   };
   ST.addEventListener("refresh", placeStepper);
