@@ -23,7 +23,7 @@ footer links to the visitor's language.
 - Texts: `legal/pages/<lang>/<page>.html`, an `<h1>` then `<h2 id="…">` sections. The section ids are the
   same in every language, so a link like `/fr/privacy#retention` works in all of them. The French
   version prevails and the others follow it.
-- Publisher details: `legal/entity.json`, in one place for every page. `{{key}}` in a text shows the
+- Contact details: `legal/entity.json`, in one place for every page. `{{key}}` in a text shows the
   value, `{{@key}}` a link to it. Change `updated` whenever a text changes.
 - `pnpm legal` writes `public/**/{legal,privacy,terms}.html`; commit them with the sources. `pnpm check`
   (so CI, and every deploy) fails while a generated page is stale or a value in `legal/entity.json` is
