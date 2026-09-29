@@ -16,23 +16,23 @@
 <h2 id="data">The data we collect</h2>
 <h3>What you give us</h3>
 <ul>
-  <li><strong>Account:</strong> email address, password (stored as a hash that can’t be read back) and phone number, verified by SMS.</li>
-  <li><strong>Profile:</strong> first name, date of birth, gender, pronouns if you add them, the genders you want to see, neighbourhood, bio, goal, favourite spot, sports and how many times a week, answers to profile prompts, icebreaker, photos, video and voice intro, app language.</li>
+  <li><strong>Account:</strong> email address, password (stored as a hash that can’t be read back) and mobile number, verified by SMS.</li>
+  <li><strong>Profile:</strong> first name, date of birth, gender, the genders you want to see, neighbourhood or city, bio, goal, sports and how many times a week, answers to profile prompts, icebreaker, photos, voice intro, app language, notification settings and search filters (distance, age, sports).</li>
   <li><strong>Lifestyle, if you choose to fill it in:</strong> daily rhythm, diet, drinking, smoking. This step is optional.</li>
-  <li><strong>Interactions:</strong> likes, super likes and their notes, matches, messages (text, photos, videos, files, voice messages), session invites (sport, note, times, reply).</li>
-  <li><strong>Safety:</strong> the reports and blocks you make and, only if moderation asks for it, a verification selfie.</li>
-  <li><strong>Help:</strong> the messages you send to the help center and the email address to reply to.</li>
+  <li><strong>Interactions:</strong> likes and super likes, with their note if any, profiles you pass, matches, messages (text, photos, videos, voice messages, reactions), session invites (sport, title if any, times, reply).</li>
+  <li><strong>Safety:</strong> the reports and blocks you make, and a verification selfie, only if your account is put on hold for a check.</li>
+  <li><strong>Help:</strong> the messages you send to the help center, their topic, the email address to reply to and a few details that help us help you (app version, the screen you wrote from, your account status, the purchase concerned).</li>
 </ul>
 <h3>What’s collected when you use drafft</h3>
 <ul>
-  <li><strong>Approximate area:</strong> with your permission, the app reads your location at reduced accuracy and rounds it on your phone to a grid of about 1 km before sending it. Your exact location never leaves your phone.</li>
-  <li><strong>Device and connection:</strong> model, system and app versions, language, time zone, install identifier, IP address and the country it indicates, a device integrity token provided by the phone’s system and a notification token.</li>
-  <li><strong>Activity:</strong> when you were last active, notification settings, purchases and credits (boosts, super likes, drafft tempo). We never receive your card details: payments go through your phone’s app store.</li>
+  <li><strong>Approximate area:</strong> with your permission, the app reads your location at reduced accuracy and rounds it on your phone to a grid of about 1 km before sending it. Your exact location never leaves your phone. To find the name of your city, this rounded area may be sent to your phone system’s maps service.</li>
+  <li><strong>Device and connection:</strong> model, system and app versions, language, time zone, install identifier, how many times you opened the app and when first and last, IP address and the country it indicates, a device integrity token provided by the phone’s system and a notification token. The time zone is also used to send session reminders at the right time.</li>
+  <li><strong>Activity:</strong> when you were last active, purchases and credits (boosts, super likes, drafft tempo). We never receive your card details: payments go through your phone’s app store.</li>
   <li><strong>Diagnostics:</strong> if the app crashes or hits an error, a technical report (device, versions, how the error happened, a pseudonymous account identifier) is sent so we can fix it. It contains neither your messages nor your photos.</li>
   <li><strong>Usage statistics, only if you agree:</strong> the screens you open and the actions you take in the app (for example opening a profile or proposing a session), linked to a pseudonymous identifier. No message content, no photos and no screen recording.</li>
 </ul>
 <h3>What your phone’s permissions are used for</h3>
-<p>Camera, microphone and photo library let you add photos, a video or voice messages. The calendar is only used to add a session when you ask. You can withdraw each permission in your phone’s settings. drafft doesn’t ask for your contacts, your health data or permission to track you.</p>
+<p>Location is needed to show you profiles near you. Camera, microphone and photo library let you add photos, videos, voice messages or your voice intro, and take a verification selfie if we ask for one. The calendar is only used when you add a session: drafft creates the event, updates it or removes it if the session changes, and doesn’t use your other events. You can withdraw each permission in your phone’s settings. drafft doesn’t ask for your contacts, your health data or permission to track you.</p>
 
 <h2 id="sensitive-data">Sensitive data</h2>
 <p>Your gender and the genders you want to see can reveal your sexual orientation. Your lifestyle answers (drinking, smoking, diet) can reveal information about your health or beliefs. Using a dating app is itself personal information.</p>
@@ -46,8 +46,8 @@
     <tr><td>Create your account, log you in, verify your number</td><td>Account, device</td><td>Performance of the contract (the terms of use)</td></tr>
     <tr><td>Show your profile and show you profiles near you</td><td>Profile, approximate area, activity</td><td>Performance of the contract, and your consent for sensitive data</td></tr>
     <tr><td>Run likes, matches, chats and sessions</td><td>Interactions</td><td>Performance of the contract</td></tr>
-    <tr><td>Send you service notifications and emails (codes, sessions, messages)</td><td>Account, notification token</td><td>Performance of the contract; push notifications also depend on your permission in your phone’s settings</td></tr>
-    <tr><td>Check photos and videos automatically, handle reports, stop banned accounts from coming back, fight fraud and spam</td><td>Profile, interactions, safety, device and connection</td><td>Legitimate interest: the safety of members and of drafft</td></tr>
+    <tr><td>Send you notifications (likes, matches, messages, sessions and reminders) and emails about your account (codes, moderation decisions, help center replies)</td><td>Account, device, notification token</td><td>Performance of the contract; push notifications also depend on your permission in your phone’s settings</td></tr>
+    <tr><td>Check photos automatically, handle reports, stop banned accounts from coming back, fight fraud and spam</td><td>Profile, interactions, safety, device and connection</td><td>Legitimate interest: the safety of members and of drafft</td></tr>
     <tr><td>Manage drafft tempo, boosts and super likes</td><td>Purchases</td><td>Performance of the contract</td></tr>
     <tr><td>Answer your help requests</td><td>Help, account</td><td>Performance of the contract and legitimate interest</td></tr>
     <tr><td>Spot and fix crashes and errors</td><td>Diagnostics, device</td><td>Legitimate interest: an app that works</td></tr>
@@ -60,18 +60,18 @@
 
 <h2 id="automated">Automated processing</h2>
 <ul>
-  <li><strong>Order of profiles in Discover:</strong> it takes into account distance, recent activity, shared sports and whether someone has already liked you. It has no legal effect and doesn’t deny you any service.</li>
-  <li><strong>Photo and video checks:</strong> every profile media and every photo sent in a chat is analysed automatically to detect nudity, violence or other prohibited content. A media can be rejected automatically; unclear cases are reviewed by a person. If you think a rejection is a mistake, write to us: a person will look at it again.</li>
-  <li><strong>Banned accounts coming back:</strong> encrypted fingerprints of the email, number and device identifier help spot a banned account that returns. A match always leads to a review by a person, never to an automatic ban.</li>
+  <li><strong>Profiles shown in Discover:</strong> only profiles active in the last 30 days, with at least one approved photo, that match your filters (distance, age, sports) and whose preferred genders match both ways appear. People who sent you a super like come first, then boosted profiles near you, then everyone else, ranked by distance, recent activity, shared sports and whether someone has already liked you. This ranking has no legal effect and doesn’t deny you any service.</li>
+  <li><strong>Photo checks:</strong> every profile photo is analysed automatically to detect nudity, violence or other prohibited content. It can be rejected automatically; unclear cases wait for a person to review them. If you think a rejection is a mistake, you can ask for a second look: a person does it. Photos and videos sent in a chat are analysed after they’re sent; anything unclear is flagged to moderation, with no automatic decision. Voice messages and the voice intro aren’t analysed.</li>
+  <li><strong>Banned accounts coming back:</strong> encrypted fingerprints of the email, phone number and login identifiers, and a device integrity marker, help spot a banned account that returns. A banned identity can’t create a new account. A match can automatically put the account on hold while it’s reviewed or a verification selfie is checked. A ban is always decided by a person.</li>
   <li><strong>Phone number:</strong> we check the type of number; numbers that aren’t mobile numbers are refused.</li>
 </ul>
 
 <h2 id="visibility">What other members see</h2>
-<p>Other members see your profile: first name, age, gender, pronouns if you add them, neighbourhood, distance rounded to the kilometre (1 km minimum), bio, goal, favourite spot, the lifestyle answers you gave, sports, prompt answers, icebreaker, and approved photos, video and voice intro. The people you match with also see your messages and your session invites.</p>
-<p>Never shown: your date of birth, email address, phone number and the genders you want to see. When you pause your profile, it no longer appears in Discover; your matches and chats stay.</p>
+<p>Other members see your profile: first name, age, neighbourhood or city, bio, goal, the lifestyle answers you gave, sports and how many times a week, prompt answers, icebreaker, approved photos and voice intro. In Discover, they also see the distance between you, rounded to the kilometre (1 km minimum). The people you match with also see when you’re online, your messages and your session invites. drafft tempo members see who liked them, with the note if any; others only see a blurred preview.</p>
+<p>Never shown: your date of birth, email address, phone number and the genders you want to see. When you pause your profile, it no longer appears in Discover or in likes; your matches, chats and sessions stay.</p>
 
 <h2 id="team-access">Access by the drafft team</h2>
-<p>Only the team members who need it can access data, with rights limited to their role. To handle a report or look into a risk to members’ safety, moderation can read the chats involved and view a verification selfie. Every access is logged with its reason.</p>
+<p>Only the team members who need it can access data, with rights limited to their role (help, moderation, administration). To handle a report, a help request or a risk to members’ safety, moderation can read a match’s chat, delete a message that breaks the rules and view a verification selfie. Every access and every action is logged.</p>
 
 <h2 id="providers">Providers</h2>
 <p>drafft uses these providers, which process data on its behalf and under its instructions:</p>
@@ -80,15 +80,15 @@
   <thead><tr><th scope="col">Provider</th><th scope="col">Role</th><th scope="col">Where</th></tr></thead>
   <tbody>
     <tr><td>Supabase</td><td>Database, accounts, server functions, verification selfies</td><td>Ireland (EU)</td></tr>
-    <tr><td>Cloudflare</td><td>Storing and delivering photos, videos and voice messages, website hosting, bot protection on the help form</td><td>Stored in the EU; delivered through a global network</td></tr>
-    <tr><td>Stream</td><td>Chats and message notifications</td><td>EU</td></tr>
-    <tr><td>Amazon Web Services (Rekognition)</td><td>Automatic photo and video checks</td><td>Ireland (EU)</td></tr>
+    <tr><td>Cloudflare</td><td>Storing and delivering photos, videos and voice messages (profiles and chats), website hosting, bot protection on the help form (which receives your IP address), secure team access</td><td>Stored in the EU; delivered through a global network</td></tr>
+    <tr><td>Stream</td><td>Chat text messages and message notifications</td><td>EU</td></tr>
+    <tr><td>Amazon Web Services (Rekognition)</td><td>Automatic checks of profile photos and of photos and videos sent in chats</td><td>Ireland (EU)</td></tr>
     <tr><td>Twilio</td><td>Sending verification texts; checking the type of number</td><td>Ireland (EU) for texts; United States for the number check</td></tr>
-    <tr><td>Resend</td><td>Sending emails (codes, help center replies)</td><td>United States</td></tr>
+    <tr><td>Resend</td><td>Sending emails (codes, moderation decisions, help center replies)</td><td>United States</td></tr>
     <tr><td>RevenueCat</td><td>Tracking subscriptions and purchases</td><td>United States</td></tr>
     <tr><td>Sentry (Functional Software, Inc.)</td><td>Crash and error reports</td><td>Germany (EU)</td></tr>
     <tr><td>PostHog</td><td>Usage statistics, only with your consent</td><td>Germany (EU)</td></tr>
-    <tr><td>Apple or Google, depending on your phone</td><td>Payments through their app store, push notifications, device integrity checks</td><td>United States</td></tr>
+    <tr><td>Apple or Google, depending on your phone</td><td>Payments through their app store, push notifications, device integrity checks, the name of your city from your rounded area</td><td>United States</td></tr>
   </tbody>
 </table>
 </div>
@@ -106,17 +106,20 @@
     <tr><td>Backups</td><td>Up to 30 days, then erased.</td></tr>
     <tr><td>IP addresses</td><td>180 days after you last connected from that address.</td></tr>
     <tr><td>Device information</td><td>1 year after it was last used.</td></tr>
-    <tr><td>Log of texts sent</td><td>30 days.</td></tr>
+    <tr><td>Log of texts sent (number, IP address)</td><td>30 days.</td></tr>
+    <tr><td>Technical sending queues (notifications, emails)</td><td>30 days at most.</td></tr>
     <tr><td>Account that was on hold, banned or under an open report when deleted</td><td>Kept for members’ safety, then erased 1 year after the case is closed.</td></tr>
-    <tr><td>Chat after a match ends</td><td>No longer visible to anyone, kept 1 year to handle a possible report, then erased.</td></tr>
+    <tr><td>Chat after a match ends, with its photos, videos and voice messages</td><td>No longer visible to members, kept 1 year to handle a possible report, then erased.</td></tr>
     <tr><td>Chat with a member who is on hold or banned</td><td>1 year after the chat ends.</td></tr>
     <tr><td>Verification selfie</td><td>Erased as soon as the check is over; if the account is banned, kept 6 months so the decision can be appealed.</td></tr>
     <tr><td>Identity fingerprints of a deleted account (email, number, login identifiers)</td><td>1 year, 3 years if the account was banned, to stop a return under another identity.</td></tr>
     <tr><td>Reports</td><td>1 year after they’re handled, without the reporter’s name if they deleted their account.</td></tr>
+    <tr><td>Moderation and team access log</td><td>1 year, 3 years for anything about a banned account.</td></tr>
     <tr><td>Purchases</td><td>10 years, as accounting law requires, no longer linked to your account once it’s deleted.</td></tr>
     <tr><td>Help requests</td><td>3 years after the last exchange.</td></tr>
     <tr><td>Crash and error reports</td><td>90 days.</td></tr>
     <tr><td>Usage statistics</td><td>13 months at most, and erased if you withdraw your consent or delete your account.</td></tr>
+    <tr><td>Website technical logs</td><td>7 days at most.</td></tr>
   </tbody>
 </table>
 </div>
@@ -126,21 +129,21 @@
 <ul>
   <li><strong>Export your data:</strong> You › Privacy &amp; data › Export my data. You get a link by email, usually within 24 hours, valid for 7 days.</li>
   <li><strong>Delete your account:</strong> You › Delete account. Deletion is immediate.</li>
-  <li><strong>Edit your profile:</strong> at any time from the You tab.</li>
+  <li><strong>Edit your profile:</strong> at any time from the You tab. Your date of birth and gender can’t be changed after sign-up: write to us if there’s a mistake.</li>
   <li><strong>Accept or refuse usage statistics:</strong> the app asks you, and you can change your mind at any time in You › Privacy &amp; data. Refusing doesn’t change anything you can do in drafft.</li>
   <li><strong>Anything else:</strong> write to {{@privacyEmail}}. We reply within one month at most. We may ask you to confirm your identity.</li>
 </ul>
 <p>If you think your rights aren’t being respected, you can complain to the CNIL (Commission nationale de l’informatique et des libertés, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07, France, <a href="https://www.cnil.fr">cnil.fr</a>) or to the data protection authority in your country.</p>
 
 <h2 id="security">Security</h2>
-<p>Traffic between you and the app or website is encrypted (HTTPS). Data is encrypted at rest by our hosting providers. Each member can only access what concerns them. Photos, videos and voice messages are private and served through temporary links. Team access is limited and logged. No measure is foolproof: if a data breach puts you at risk, we’ll tell you as the law requires.</p>
+<p>Traffic between you and the app or website is encrypted (HTTPS). Data is encrypted at rest by our hosting providers. Each member can only access what concerns them. Photos, videos and voice messages are private and served through temporary links, valid for about an hour. Photos you send are stripped of their location metadata. Team access is limited and logged. No measure is foolproof: if a data breach puts you at risk, we’ll tell you as the law requires.</p>
 
 <h2 id="minors">Under 18</h2>
-<p>drafft is only for people aged 18 or over. Age is checked at sign-up and the date of birth can’t be changed afterwards. If you think someone under 18 is using drafft, report their profile: the account will be closed and its data erased.</p>
+<p>drafft is only for people aged 18 or over. Age is checked at sign-up and the date of birth can’t be changed afterwards. If you think someone under 18 is using drafft, report their profile: the team reviews the report and closes the account if the person is under 18.</p>
 
 <h2 id="cookies">Cookies and trackers</h2>
-<p>The getdrafft.com website sets no cookies, uses no audience measurement tool and loads no third-party service: its fonts are hosted on the site. Our host, Cloudflare, processes visitors’ IP addresses for as long as it takes to deliver the pages and protect the site from attacks.</p>
-<p>The app uses no advertising trackers. Usage statistics (PostHog) are only switched on with your consent, and crash reports (Sentry) are only used to fix errors. The app stores on your phone what it needs to work (login, cached profiles and media).</p>
+<p>The getdrafft.com website sets no cookies, uses no audience measurement tool and loads no third-party service: its fonts are hosted on the site. Our host, Cloudflare, processes visitors’ IP addresses to deliver the pages and protect the site from attacks, and keeps them for 7 days at most in its technical logs.</p>
+<p>The app uses no advertising trackers. Usage statistics (PostHog) are only switched on with your consent, and crash reports (Sentry) are only used to fix errors. The app keeps on your phone what it needs to work: your login, your profile, your matches, your sessions, the latest messages of each chat, a copy of photos already shown and, during sign-up, your answers so far.</p>
 
 <h2 id="changes">Changes</h2>
 <p>This policy may change as drafft evolves. The date of the last update is at the top of the page. If there’s an important change, we’ll let you know in the app before it applies.</p>
