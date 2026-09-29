@@ -298,7 +298,6 @@ input { caret-color: var(--accent); }
 .mv__formation { position: relative; height: 300em; flex: none; }
 .mv__formation > * { position: absolute; left: 50%; top: 50%; width: 170em; height: 230em; margin: -115em 0 0 -85em; border-radius: 24em; }
 /* Offsets as individual transform properties, so the entrance (transform) never erases them */
-.mv__ghost { background: color-mix(in srgb, var(--ink) calc(12% / var(--i)), transparent); translate: calc(-40em - 26em * var(--i)) -10em; rotate: -6deg; }
 .mv__me, .mv__them { object-fit: cover; box-shadow: 0 1em 3em rgb(14 15 12 / .08), 0 16em 32em -14em rgb(14 15 12 / .35); }
 .mv__me { translate: -48em -10em; rotate: -6deg; }
 .mv__them { translate: 56em 24em; rotate: 7deg; }
