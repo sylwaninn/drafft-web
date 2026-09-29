@@ -11,6 +11,6 @@
     "wording": "node scripts/ci/wording.mjs"
   },
   "devDependencies": {
-    "wrangler": "4.143.0"
+    "wrangler": "4.144.0"
   }
 }
