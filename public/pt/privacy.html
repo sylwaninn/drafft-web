@@ -1,0 +1,231 @@
+<!doctype html>
+<!-- Built by scripts/legal.mjs from legal/pages/pt/privacy.html and legal/entity.json: edit those, then run pnpm legal. -->
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    (() => {
+      const langs = ["en","fr","es","de","it","pt","nl"];
+      let want = "en";
+      for (const tag of navigator.languages || [navigator.language || "en"]) {
+        const code = String(tag).toLowerCase().split("-")[0];
+        if (langs.includes(code)) { want = code; break; }
+      }
+      if (want !== "pt") location.replace(`${want === "en" ? "" : `/${want}`}/privacy${location.hash}`);
+    })();
+  </script>
+  <title>drafft: Política de privacidade</title>
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://getdrafft.com/pt/privacy">
+  <link rel="alternate" hreflang="en" href="https://getdrafft.com/privacy">
+  <link rel="alternate" hreflang="fr" href="https://getdrafft.com/fr/privacy">
+  <link rel="alternate" hreflang="es" href="https://getdrafft.com/es/privacy">
+  <link rel="alternate" hreflang="de" href="https://getdrafft.com/de/privacy">
+  <link rel="alternate" hreflang="it" href="https://getdrafft.com/it/privacy">
+  <link rel="alternate" hreflang="pt-PT" href="https://getdrafft.com/pt/privacy">
+  <link rel="alternate" hreflang="nl" href="https://getdrafft.com/nl/privacy">
+  <link rel="alternate" hreflang="x-default" href="https://getdrafft.com/privacy">
+  <meta name="theme-color" content="#EEEFF1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E0F10" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png?v=graphite">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=graphite">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon.png?v=graphite">
+  <link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/legal.css?v=1790760000">
+</head>
+<body>
+<a class="skip" href="#main">Ir para o conteúdo</a>
+<header class="lg-head">
+  <a class="lg-brand" href="/" aria-label="Início do drafft">drafft</a>
+</header>
+<main id="main" class="lg">
+  <div class="lg-intro">
+    <p class="lg-date">Atualizado a <time datetime="2026-09-29">29 de setembro de 2026</time></p>
+    <h1>Política de privacidade</h1>
+    <p class="lg-lead">O que o drafft sabe sobre ti, porquê, com quem é partilhado, durante quanto tempo é guardado e como manténs o controlo. Esta política aplica-se à app drafft e ao site getdrafft.com.</p>
+  </div>
+  <nav class="lg-toc" aria-label="Índice">
+    <p class="lg-toc__title">Índice</p>
+    <ol>
+      <li><a href="#summary">Em resumo</a></li>
+      <li><a href="#contact">Contacto</a></li>
+      <li><a href="#data">Os dados que recolhemos</a></li>
+      <li><a href="#sensitive-data">Dados sensíveis</a></li>
+      <li><a href="#purposes">Para que os usamos</a></li>
+      <li><a href="#automated">Tratamentos automatizados</a></li>
+      <li><a href="#visibility">O que os outros membros veem</a></li>
+      <li><a href="#team-access">Acesso da equipa drafft</a></li>
+      <li><a href="#providers">Prestadores</a></li>
+      <li><a href="#transfers">Transferências para fora da União Europeia</a></li>
+      <li><a href="#retention">Durante quanto tempo os guardamos</a></li>
+      <li><a href="#rights">Os teus direitos</a></li>
+      <li><a href="#security">Segurança</a></li>
+      <li><a href="#minors">Menores de 18 anos</a></li>
+      <li><a href="#cookies">Cookies e rastreadores</a></li>
+      <li><a href="#changes">Alterações</a></li>
+    </ol>
+  </nav>
+  <div class="lg-body">
+    <h2 id="summary">Em resumo</h2>
+    <ul>
+      <li>Recolhemos o necessário para o drafft funcionar: a tua conta, o teu perfil, uma zona aproximada, as tuas conversas e as tuas sessões.</li>
+      <li>A tua localização exata nunca sai do teu telemóvel: o drafft só recebe uma zona arredondada a cerca de 1 km. A tua data de nascimento, o teu número de telefone e o teu endereço de e-mail nunca são mostrados aos outros membros.</li>
+      <li>Sem publicidade, sem venda de dados, sem rastreadores publicitários. As estatísticas de utilização da app só são recolhidas com o teu acordo. O site não instala cookies.</li>
+      <li>Os teus dados são armazenados na União Europeia. Alguns prestadores estão sediados nos Estados Unidos: estão indicados mais abaixo, com as garantias que enquadram essas transferências.</li>
+      <li>Podes exportar os teus dados ou eliminar a tua conta a qualquer momento na app.</li>
+    </ul>
+
+    <h2 id="contact">Contacto</h2>
+    <p>Para exercer os teus direitos ou contactar a pessoa encarregada da proteção de dados, escreve para <a href="mailto:support@getdrafft.com">support@getdrafft.com</a>.</p>
+
+    <h2 id="data">Os dados que recolhemos</h2>
+    <h3>O que nos dás</h3>
+    <ul>
+      <li><strong>Conta:</strong> endereço de e-mail, palavra-passe (guardada sob a forma de hash, que não permite voltar a lê-la) e número de telemóvel, verificado por SMS.</li>
+      <li><strong>Perfil:</strong> nome próprio, data de nascimento, género, os géneros das pessoas que queres ver, bairro ou cidade, bio, objetivo, desportos e número de sessões por semana, respostas às perguntas do perfil, icebreaker, fotos, intro de voz, idioma da app, preferências de notificação e filtros de pesquisa (distância, idade, desportos).</li>
+      <li><strong>Hábitos, se escolheres indicá-los:</strong> ritmo do dia, alimentação, álcool, tabaco. Este passo é opcional.</li>
+      <li><strong>Interações:</strong> likes e super likes, com a eventual nota, perfis que passaste, matches, mensagens (texto, fotos, vídeos, mensagens de voz, reações), propostas de sessão (desporto, eventual título, horários, resposta).</li>
+      <li><strong>Segurança:</strong> as denúncias e os bloqueios que fazes e uma selfie de verificação, apenas se a tua conta ficar em espera de verificação.</li>
+      <li><strong>Ajuda:</strong> as mensagens que envias ao centro de ajuda, o respetivo assunto, o endereço de e-mail para onde te respondemos e algumas informações úteis para te ajudarmos (versão da app, ecrã a partir do qual escreves, estado da tua conta, compra em causa).</li>
+    </ul>
+    <h3>O que é recolhido quando usas o drafft</h3>
+    <ul>
+      <li><strong>Zona aproximada:</strong> com a tua autorização, a app lê a tua localização com precisão reduzida e arredonda-a no teu telemóvel para uma grelha de cerca de 1 km antes de a enviar. A tua localização exata nunca sai do teu telemóvel. Para encontrar o nome da tua cidade, esta zona arredondada pode ser enviada ao serviço de mapas do sistema do teu telemóvel.</li>
+      <li><strong>Dispositivo e ligação:</strong> modelo, versões do sistema e da app, idioma, fuso horário, identificador de instalação, número de aberturas da app e datas da primeira e da última abertura, endereço IP e país deduzido do endereço IP, um token de integridade do dispositivo fornecido pelo sistema do telemóvel e um token de notificação. O fuso horário serve também para te enviarmos os lembretes de sessão à hora certa.</li>
+      <li><strong>Atividade:</strong> data da tua última atividade, compras e créditos (boosts, super likes, drafft tempo). Nunca recebemos os teus dados bancários: os pagamentos passam pela loja de aplicações do teu telemóvel.</li>
+      <li><strong>Diagnóstico:</strong> se a app falhar ou encontrar um erro, é enviado um relatório técnico (dispositivo, versões, desenrolar do erro, identificador de conta pseudónimo) para o podermos corrigir. Não contém as tuas mensagens nem as tuas fotos.</li>
+      <li><strong>Estatísticas de utilização, só se aceitares:</strong> os ecrãs que abres e as ações que fazes na app (por exemplo, abrir um perfil ou propor uma sessão), associados a um identificador pseudónimo. Sem o conteúdo das tuas mensagens, sem as tuas fotos e sem gravação do teu ecrã.</li>
+    </ul>
+    <h3>Para que servem as autorizações do teu telemóvel</h3>
+    <p>A localização é necessária para te mostrarmos perfis perto de ti. A câmara, o microfone e a biblioteca de fotos servem para adicionar fotos, vídeos, mensagens de voz ou a tua intro de voz, e para tirares uma selfie de verificação se ta pedirmos. O calendário só é usado quando adicionas uma sessão: o drafft cria lá o evento, atualiza-o ou remove-o se a sessão mudar, e não usa os teus outros eventos. Podes retirar cada autorização nas definições do teu telemóvel. O drafft não pede os teus contactos, os teus dados de saúde nem autorização para rastreamento publicitário.</p>
+
+    <h2 id="sensitive-data">Dados sensíveis</h2>
+    <p>O teu género e os géneros das pessoas que queres ver podem revelar a tua orientação sexual. Os teus hábitos (álcool, tabaco, alimentação) podem revelar informações relacionadas com a tua saúde ou as tuas convicções. O simples facto de usares uma app de encontros é também uma informação pessoal.</p>
+    <p>Estes dados são tratados com base no teu consentimento explícito, que dás ao indicá-los para que o drafft te mostre perfis e mostre o teu. Podes retirá-lo a qualquer momento: altera ou apaga os teus hábitos no teu perfil, ou elimina a tua conta. O género e os géneros que queres ver são necessários para o funcionamento do drafft: para parar o seu tratamento, tens de eliminar a tua conta.</p>
+
+    <h2 id="purposes">Para que os usamos</h2>
+    <div class="lg-table">
+    <table>
+      <thead><tr><th scope="col">Para</th><th scope="col">Dados</th><th scope="col">Base legal</th></tr></thead>
+      <tbody>
+        <tr><td>Criar a tua conta, dar-te acesso a ela, verificar o teu número</td><td>Conta, dispositivo</td><td>Execução do contrato (os termos de utilização)</td></tr>
+        <tr><td>Mostrar o teu perfil e mostrar-te perfis perto de ti</td><td>Perfil, zona aproximada, atividade</td><td>Execução do contrato e o teu consentimento para os dados sensíveis</td></tr>
+        <tr><td>Fazer funcionar os likes, os matches, as conversas e as sessões</td><td>Interações</td><td>Execução do contrato</td></tr>
+        <tr><td>Enviar-te notificações (likes, matches, mensagens, sessões e lembretes) e e-mails relacionados com a tua conta (códigos, decisões de moderação, respostas do centro de ajuda)</td><td>Conta, dispositivo, token de notificação</td><td>Execução do contrato; as notificações push dependem também da tua autorização nas definições do teu telemóvel</td></tr>
+        <tr><td>Verificar automaticamente as fotos, tratar denúncias, impedir o regresso de contas banidas, combater a fraude e o spam</td><td>Perfil, interações, segurança, dispositivo e ligação</td><td>Interesse legítimo: a segurança dos membros e do drafft</td></tr>
+        <tr><td>Gerir o drafft tempo, os boosts e os super likes</td><td>Compras</td><td>Execução do contrato</td></tr>
+        <tr><td>Responder aos teus pedidos de ajuda</td><td>Ajuda, conta</td><td>Execução do contrato e interesse legítimo</td></tr>
+        <tr><td>Detetar e corrigir falhas e erros</td><td>Diagnóstico, dispositivo</td><td>Interesse legítimo: uma app que funciona</td></tr>
+        <tr><td>Perceber como o drafft é usado, para o melhorar</td><td>Estatísticas de utilização</td><td>O teu consentimento, que podes retirar a qualquer momento</td></tr>
+        <tr><td>Cumprir as nossas obrigações (contabilidade, respostas às autoridades, obrigações das plataformas online)</td><td>Compras, denúncias, dados pedidos por uma autoridade</td><td>Obrigação legal</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Não usamos os teus dados para publicidade, não os vendemos e não os alugamos.</p>
+
+    <h2 id="automated">Tratamentos automatizados</h2>
+    <ul>
+      <li><strong>Perfis mostrados em Descobrir:</strong> só aparecem os perfis ativos nos últimos 30 dias, com pelo menos uma foto aprovada, que correspondem aos teus filtros (distância, idade, desportos) e cujos géneros procurados correspondem nos dois sentidos. Aparecem primeiro as pessoas que te enviaram um super like, depois os perfis com boost perto de ti e depois os restantes, ordenados segundo a distância, a atividade recente, os desportos em comum e o facto de uma pessoa já te ter dado like. Esta ordenação não produz nenhum efeito jurídico e não te priva de nenhum serviço.</li>
+      <li><strong>Verificação de fotos:</strong> cada foto de perfil é analisada automaticamente para detetar nudez, violência ou outros conteúdos proibidos. Pode ser recusada automaticamente; os casos duvidosos aguardam a análise de uma pessoa. Se achares que uma recusa é um erro, podes pedir uma segunda análise: é feita por uma pessoa. As fotos e os vídeos enviados numa conversa são analisados depois do envio; um conteúdo duvidoso é assinalado à moderação, sem decisão automática. As mensagens de voz e a intro de voz não são analisadas.</li>
+      <li><strong>Regresso de contas banidas:</strong> códigos cifrados gerados a partir do e-mail, do número de telefone e dos identificadores de acesso, e um marcador de integridade do dispositivo, permitem detetar uma conta banida que regressa. Uma identidade banida não pode criar uma nova conta. Uma correspondência pode pôr automaticamente a conta em espera, durante uma análise ou uma selfie de verificação. Um banimento é sempre decidido por uma pessoa.</li>
+      <li><strong>Número de telefone:</strong> verificamos o tipo de número; os números que não são de telemóvel são recusados.</li>
+    </ul>
+
+    <h2 id="visibility">O que os outros membros veem</h2>
+    <p>Os outros membros veem o teu perfil: nome próprio, idade, bairro ou cidade, bio, objetivo, hábitos indicados, desportos e número de sessões por semana, respostas, icebreaker, fotos aprovadas e intro de voz. Em Descobrir, veem também a que distância estás, arredondada ao quilómetro (1 km no mínimo). As pessoas com quem tens match veem também quando estás online, as vossas mensagens e as vossas propostas de sessão. Os membros drafft tempo veem quem lhes deu like, com a eventual nota; os outros só veem uma pré-visualização desfocada.</p>
+    <p>Nunca são mostrados: a tua data de nascimento, o teu endereço de e-mail, o teu número de telefone e os géneros que queres ver. Quando pausas o teu perfil, deixa de aparecer em Descobrir e nos likes; os teus matches, as tuas conversas e as tuas sessões mantêm-se.</p>
+
+    <h2 id="team-access">Acesso da equipa drafft</h2>
+    <p>Só as pessoas da equipa que precisam acedem aos dados, com direitos limitados à sua função (ajuda, moderação, administração). Para tratar uma denúncia, um pedido de ajuda ou um risco para a segurança dos membros, a moderação pode ler as conversas de um match, apagar uma mensagem que viole as regras e consultar uma selfie de verificação. Cada consulta e cada ação ficam registadas.</p>
+
+    <h2 id="providers">Prestadores</h2>
+    <p>O drafft recorre a estes prestadores, que tratam dados por sua conta e segundo as suas instruções:</p>
+    <div class="lg-table">
+    <table>
+      <thead><tr><th scope="col">Prestador</th><th scope="col">Função</th><th scope="col">Onde</th></tr></thead>
+      <tbody>
+        <tr><td>Supabase</td><td>Base de dados, contas, funções de servidor, selfies de verificação</td><td>Irlanda (UE)</td></tr>
+        <tr><td>Cloudflare</td><td>Armazenamento e distribuição de fotos, vídeos e mensagens de voz (perfis e conversas), alojamento do site, proteção anti-bots do formulário de ajuda (que recebe o teu endereço IP), acesso seguro da equipa</td><td>Armazenamento na UE; distribuição através de uma rede mundial</td></tr>
+        <tr><td>Stream</td><td>Mensagens de texto das conversas e notificações de mensagens</td><td>UE</td></tr>
+        <tr><td>Amazon Web Services (Rekognition)</td><td>Verificação automática das fotos de perfil e das fotos e vídeos enviados nas conversas</td><td>Irlanda (UE)</td></tr>
+        <tr><td>Twilio</td><td>Envio dos SMS de verificação; verificação do tipo de número</td><td>Irlanda (UE) para os SMS; Estados Unidos para a verificação do número</td></tr>
+        <tr><td>Resend</td><td>Envio de e-mails (códigos, decisões de moderação, respostas do centro de ajuda)</td><td>Estados Unidos</td></tr>
+        <tr><td>RevenueCat</td><td>Acompanhamento das subscrições e compras</td><td>Estados Unidos</td></tr>
+        <tr><td>Sentry (Functional Software, Inc.)</td><td>Relatórios de falhas e erros</td><td>Alemanha (UE)</td></tr>
+        <tr><td>PostHog</td><td>Estatísticas de utilização, só com o teu acordo</td><td>Alemanha (UE)</td></tr>
+        <tr><td>Apple ou Google, consoante o teu telemóvel</td><td>Pagamentos através da respetiva loja de aplicações, notificações push, verificação da integridade do dispositivo, nome da tua cidade a partir da tua zona arredondada</td><td>Estados Unidos</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Os teus dados podem também ser comunicados a uma autoridade judicial ou administrativa quando a lei o exige, ou para proteger uma pessoa em perigo.</p>
+
+    <h2 id="transfers">Transferências para fora da União Europeia</h2>
+    <p>Quando um prestador trata dados fora da União Europeia, a transferência é enquadrada pelo Quadro de Privacidade de Dados UE–EUA (Data Privacy Framework), se o prestador estiver certificado ao abrigo deste, e, caso contrário, pelas cláusulas contratuais-tipo da Comissão Europeia. Podes obter uma cópia destas garantias escrevendo para <a href="mailto:support@getdrafft.com">support@getdrafft.com</a>.</p>
+
+    <h2 id="retention">Durante quanto tempo os guardamos</h2>
+    <div class="lg-table">
+    <table>
+      <thead><tr><th scope="col">Dados</th><th scope="col">Duração</th></tr></thead>
+      <tbody>
+        <tr><td>Conta, perfil, interações</td><td>Enquanto a tua conta existir. Quando a eliminas, são apagados de imediato, salvo as exceções abaixo.</td></tr>
+        <tr><td>Cópias de segurança</td><td>Até 30 dias, depois são apagadas.</td></tr>
+        <tr><td>Endereços IP</td><td>180 dias após a tua última ligação a partir desse endereço.</td></tr>
+        <tr><td>Informações sobre o dispositivo</td><td>1 ano após a sua última utilização.</td></tr>
+        <tr><td>Histórico dos SMS enviados (número, endereço IP)</td><td>30 dias.</td></tr>
+        <tr><td>Filas de envio técnicas (notificações, e-mails)</td><td>30 dias no máximo.</td></tr>
+        <tr><td>Conta suspensa, banida ou visada por uma denúncia em curso no momento da eliminação</td><td>Conservada para a segurança dos membros e apagada 1 ano após o encerramento do processo.</td></tr>
+        <tr><td>Conversa após o fim de um match, com as respetivas fotos, vídeos e mensagens de voz</td><td>Deixa de estar visível para os membros, é guardada 1 ano para tratar uma eventual denúncia e depois apagada.</td></tr>
+        <tr><td>Conversa com um membro suspenso ou banido</td><td>1 ano após o fim da conversa.</td></tr>
+        <tr><td>Selfie de verificação</td><td>Apagada logo que a verificação termina; em caso de banimento, guardada 6 meses para permitir uma contestação.</td></tr>
+        <tr><td>Códigos cifrados de identidade de uma conta eliminada (e-mail, número, identificadores de acesso)</td><td>1 ano, ou 3 anos se a conta tiver sido banida, para impedir um regresso com outra identidade.</td></tr>
+        <tr><td>Denúncias</td><td>1 ano após o seu tratamento, sem o nome de quem fez a denúncia se essa pessoa tiver eliminado a conta.</td></tr>
+        <tr><td>Registo da moderação e dos acessos da equipa</td><td>1 ano, ou 3 anos no que diz respeito a uma conta banida.</td></tr>
+        <tr><td>Compras</td><td>10 anos, como exige a legislação contabilística, sem ligação à tua conta depois de ela ser eliminada.</td></tr>
+        <tr><td>Pedidos de ajuda</td><td>3 anos após a última troca de mensagens.</td></tr>
+        <tr><td>Relatórios de falhas e erros</td><td>90 dias.</td></tr>
+        <tr><td>Estatísticas de utilização</td><td>13 meses no máximo, e apagadas se retirares o teu consentimento ou eliminares a tua conta.</td></tr>
+        <tr><td>Registos técnicos do site</td><td>7 dias no máximo.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="rights">Os teus direitos</h2>
+    <p>Tens o direito de aceder aos teus dados, de os retificar, de os apagar, de limitar o seu tratamento, de te opores a um tratamento baseado no interesse legítimo, de os receber num formato reutilizável (portabilidade) e de retirar o teu consentimento a qualquer momento. Podes também definir diretrizes sobre o destino dos teus dados após a tua morte.</p>
+    <ul>
+      <li><strong>Exportar os teus dados:</strong> Tu › Privacidade e dados › Exportar os meus dados. Recebes uma ligação por e-mail, geralmente em 24 horas, válida durante 7 dias.</li>
+      <li><strong>Eliminar a tua conta:</strong> Tu › Eliminar conta. A eliminação é imediata.</li>
+      <li><strong>Alterar o teu perfil:</strong> a qualquer momento no separador Tu. A data de nascimento e o género não podem ser alterados depois do registo: escreve-nos em caso de erro.</li>
+      <li><strong>Aceitar ou recusar as estatísticas de utilização:</strong> a app pergunta-te, e podes mudar de ideias a qualquer momento em Tu › Privacidade e dados. Recusar não muda nada no que podes fazer no drafft.</li>
+      <li><strong>Para o resto:</strong> escreve para <a href="mailto:support@getdrafft.com">support@getdrafft.com</a>. Respondemos no prazo máximo de um mês. Podemos pedir-te que confirmes a tua identidade.</li>
+    </ul>
+    <p>Se considerares que os teus direitos não estão a ser respeitados, podes apresentar uma reclamação à CNIL (Commission nationale de l’informatique et des libertés, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07, França, <a href="https://www.cnil.fr">cnil.fr</a>) ou à autoridade de proteção de dados do teu país (em Portugal, a CNPD).</p>
+
+    <h2 id="security">Segurança</h2>
+    <p>As comunicações com a app e o site são cifradas (HTTPS). Os dados são cifrados em repouso nos nossos fornecedores de alojamento. Cada membro só acede ao que lhe diz respeito. As fotos, os vídeos e as mensagens de voz são privados e servidos através de ligações temporárias, válidas durante cerca de uma hora. Os metadados de localização são removidos das fotos que envias. Os acessos da equipa são limitados e registados. Nenhuma medida é infalível: se uma violação de dados representar um risco para ti, avisamos-te como a lei exige.</p>
+
+    <h2 id="minors">Menores de 18 anos</h2>
+    <p>O drafft destina-se apenas a pessoas com 18 anos ou mais. A idade é verificada no registo e a data de nascimento deixa de poder ser alterada depois. Se achares que uma pessoa menor está a usar o drafft, denuncia o perfil: a equipa analisa a denúncia e encerra a conta se a pessoa tiver menos de 18 anos.</p>
+
+    <h2 id="cookies">Cookies e rastreadores</h2>
+    <p>O site getdrafft.com não instala nenhum cookie, não usa nenhuma ferramenta de medição de audiência e não carrega nenhum serviço de terceiros: os tipos de letra estão alojados no próprio site. O nosso fornecedor de alojamento, a Cloudflare, trata o endereço IP dos visitantes para entregar as páginas e proteger o site contra ataques, e guarda-o no máximo 7 dias nos seus registos técnicos.</p>
+    <p>A app não usa nenhum rastreador publicitário. As estatísticas de utilização (PostHog) só são ativadas com o teu acordo, e os relatórios de falhas (Sentry) servem apenas para corrigir erros. A app guarda no teu telemóvel o que precisa para funcionar: o acesso à tua conta, o teu perfil, os teus matches, as tuas sessões, as últimas mensagens de cada conversa, uma cópia das fotos já mostradas e, durante o registo, as respostas que estás a dar.</p>
+
+    <h2 id="changes">Alterações</h2>
+    <p>Esta política pode evoluir com o drafft. A data da última atualização aparece no topo da página. Em caso de alteração importante, avisamos-te na app antes de ela se aplicar.</p>
+  </div>
+</main>
+<footer class="lg-foot">
+  <div class="lg-foot__row">
+    <p>Encontros para quem treina.</p>
+    <nav class="lg-foot__links" aria-label="Informação legal">
+      <a href="/pt/legal">Aviso legal</a>
+      <a href="/pt/privacy" aria-current="page">Política de privacidade</a>
+      <a href="/pt/terms">Termos de utilização</a>
+    </nav>
+    <p>© 2026 drafft</p>
+  </div>
+</footer>
+</body>
+</html>

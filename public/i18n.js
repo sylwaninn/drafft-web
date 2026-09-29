@@ -344,6 +344,8 @@
   document.querySelector('meta[property="og:description"]')?.setAttribute("content", t.description);
   document.querySelectorAll("[data-i18n]").forEach((el) => { const v = t[el.dataset.i18n]; if (v) el.textContent = v; });
   document.querySelectorAll("[data-i18n-aria]").forEach((el) => { const v = t[el.dataset.i18nAria]; if (v) el.setAttribute("aria-label", v); });
+  // Legal pages: /<page> is English, /<lang>/<page> every other language.
+  if (lang !== "en") document.querySelectorAll("[data-legal]").forEach((a) => { a.href = `/${lang}${a.getAttribute("href")}`; });
   // The tier name keeps its markup: "drafft" one weight up, "tempo" in the accent.
   const tier = '<b class="brand-inline">drafft <span class="tempo-word">tempo</span></b>';
   document.querySelectorAll("[data-i18n-tier]").forEach((el) => {

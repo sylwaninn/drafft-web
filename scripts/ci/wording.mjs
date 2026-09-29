@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Fails when the site's copy uses wording WORDING.md forbids (its `wording-forbidden` block):
-// every string literal of public/i18n.js and the visible text and attributes of public/index.html.
-import { readFileSync } from "node:fs";
+// every string literal of public/i18n.js, and the visible text and attributes of public/index.html
+// and of the legal pages (public/**/{legal,privacy,terms}.html, built by scripts/legal.mjs).
+import { readFileSync, readdirSync } from "node:fs";
 
 const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), "utf8");
 
@@ -19,10 +20,15 @@ const texts = [];
 read("public/i18n.js").split("\n").forEach((line, i) => {
   for (const m of line.matchAll(/"((?:[^"\\]|\\.)*)"/g)) texts.push({ where: `public/i18n.js:${i + 1}`, text: m[1] });
 });
-read("public/index.html").split("\n").forEach((line, i) => {
-  const visible = line.replace(/<script[\s\S]*?<\/script>/g, " ").replace(/<(?!\/?[a-z])|<[^>]*?(?:alt|title|content|aria-label)="([^"]*)"[^>]*>|<[^>]*>/gi, " $1 ");
-  texts.push({ where: `public/index.html:${i + 1}`, text: visible });
-});
+const legal = ["", ...readdirSync(new URL("../../public/", import.meta.url), { withFileTypes: true })
+  .filter((d) => d.isDirectory() && /^[a-z]{2}$/.test(d.name)).map((d) => `${d.name}/`)]
+  .flatMap((dir) => ["legal", "privacy", "terms"].map((page) => `public/${dir}${page}.html`));
+for (const file of ["public/index.html", ...legal]) {
+  read(file).split("\n").forEach((line, i) => {
+    const visible = line.replace(/<script[\s\S]*?<\/script>/g, " ").replace(/<(?!\/?[a-z])|<[^>]*?(?:alt|title|content|aria-label)="([^"]*)"[^>]*>|<[^>]*>/gi, " $1 ");
+    texts.push({ where: `${file}:${i + 1}`, text: visible });
+  });
+}
 
 let errors = 0;
 for (const { where, text } of texts) {

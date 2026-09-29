@@ -1,0 +1,119 @@
+/* The legal pages (built by scripts/legal.mjs): one reading column, the site's palette and type. */
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/Inter-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/Inter-latin-ext.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter Display";
+  src: url("fonts/InterDisplay-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+}
+
+/* Same tokens as styles.css */
+:root {
+  --page: #EEEFF1;
+  --block: #FFFFFF;
+  --ink: #0E0F0C;
+  --body: #454745;
+  --mute: #626461;
+  --hairline: #DADCE0;
+  --accent: #111214;
+  --on-accent: #FFFFFF;
+  --accent-ink: #111214;
+  --todo: #FFE8A3;
+  --gutter: clamp(16px, 4vw, 48px);
+  --column: 760px;
+  --display: "Inter Display", "Inter", system-ui, sans-serif;
+  --text: "Inter", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0E0F10;
+    --block: #1A1C18;
+    --ink: #F1F3EF;
+    --body: #B9BCB7;
+    --mute: #969994;
+    --hairline: #2A2C2F;
+    --accent: #F2F3F5;
+    --on-accent: #111214;
+    --accent-ink: #F2F3F5;
+    --todo: #5C4A12;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 24px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--body);
+  font: 400 1rem/1.6 var(--text);
+  font-feature-settings: "calt", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; border-radius: 6px; }
+a { color: var(--ink); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+
+.skip { position: fixed; left: 16px; top: -60px; z-index: 10; padding: 10px 16px; border-radius: 999px; background: var(--ink); color: var(--page); font-weight: 600; text-decoration: none; transition: top .2s; }
+.skip:focus { top: 16px; }
+
+/* Header: the wordmark, home */
+.lg-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;
+  max-width: calc(var(--column) + 2 * var(--gutter)); margin: 0 auto;
+  padding: max(20px, env(safe-area-inset-top)) var(--gutter) 0;
+}
+.lg-brand { font-family: var(--display); font-weight: 900; font-size: 1.625rem; letter-spacing: -0.02em; line-height: 1; color: var(--ink); text-decoration: none; }
+
+/* The reading column */
+.lg { max-width: calc(var(--column) + 2 * var(--gutter)); margin: 0 auto; padding: clamp(48px, 9vw, 96px) var(--gutter) clamp(64px, 10vw, 112px); }
+.lg-date { margin: 0 0 12px; font-size: .875rem; color: var(--mute); }
+.lg h1 { margin: 0; font-family: var(--display); font-weight: 900; font-size: clamp(2.25rem, 7vw, 3.75rem); line-height: .95; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance; overflow-wrap: anywhere; hyphens: auto; }
+.lg-lead { margin: 20px 0 0; font-size: 1.125rem; line-height: 1.55; text-wrap: pretty; }
+
+.lg-toc { margin: 40px 0 0; padding: 20px 24px; border-radius: 20px; background: var(--block); }
+.lg-toc__title { margin: 0 0 8px; font-size: .8125rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--mute); }
+.lg-toc ol { margin: 0; padding-left: 1.25em; columns: 2 16em; column-gap: 32px; }
+.lg-toc li { break-inside: avoid; padding: 2px 0; }
+.lg-toc a { text-decoration: none; }
+.lg-toc a:hover { text-decoration: underline; }
+
+.lg-body h2 { margin: 56px 0 0; font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.015em; font-weight: 700; color: var(--ink); text-wrap: balance; }
+.lg-body h3 { margin: 28px 0 0; font-size: 1.0625rem; font-weight: 700; color: var(--ink); }
+.lg-body p, .lg-body ul { margin: 12px 0 0; text-wrap: pretty; }
+.lg-body ul { padding-left: 1.25em; }
+.lg-body li + li { margin-top: 6px; }
+.lg-body strong { color: var(--ink); font-weight: 600; }
+
+/* Tables scroll on their own on a narrow screen, never the page */
+.lg-table { margin: 16px 0 0; overflow-x: auto; border-radius: 16px; background: var(--block); }
+.lg-table table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: .9375rem; line-height: 1.5; }
+.lg-table th, .lg-table td { padding: 12px 16px; text-align: left; vertical-align: top; border-top: 1px solid var(--hairline); }
+.lg-table thead th { border-top: 0; font-size: .8125rem; font-weight: 700; color: var(--mute); }
+.lg-table td:first-child { color: var(--ink); font-weight: 500; }
+
+/* A value legal/entity.json doesn't have yet: loud on purpose, and `pnpm check` fails while one is left */
+.lg-todo { padding: 0 4px; border-radius: 4px; background: var(--todo); color: var(--ink); font-weight: 600; }
+
+/* Footer, like the home page's */
+.lg-foot__row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; max-width: 1240px; margin: 0 auto; padding: 24px var(--gutter) max(24px, env(safe-area-inset-bottom)); font-size: .875rem; color: var(--mute); border-top: 1px solid var(--hairline); }
+.lg-foot__row p { margin: 0; }
+.lg-foot__links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-left: auto; }
+.lg-foot__links a { text-decoration: none; font-weight: 600; color: var(--body); }
+.lg-foot__links a:hover, .lg-foot__links a[aria-current] { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
