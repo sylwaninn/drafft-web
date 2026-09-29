@@ -4,6 +4,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    (() => {
+      const langs = ["en","fr","es","de","it","pt","nl"];
+      let want = "en";
+      for (const tag of navigator.languages || [navigator.language || "en"]) {
+        const code = String(tag).toLowerCase().split("-")[0];
+        if (langs.includes(code)) { want = code; break; }
+      }
+      if (want !== "nl") location.replace(`${want === "en" ? "" : `/${want}`}/privacy${location.hash}`);
+    })();
+  </script>
   <title>drafft: Privacybeleid</title>
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://getdrafft.com/nl/privacy">
@@ -27,17 +39,6 @@
 <a class="skip" href="#main">Naar de inhoud</a>
 <header class="lg-head">
   <a class="lg-brand" href="/" aria-label="drafft home">drafft</a>
-  <nav class="lg-langs" aria-label="Taal">
-    <ul>
-      <li><a href="/privacy" lang="en" hreflang="en">English</a></li>
-      <li><a href="/fr/privacy" lang="fr" hreflang="fr">Français</a></li>
-      <li><a href="/es/privacy" lang="es" hreflang="es">Español</a></li>
-      <li><a href="/de/privacy" lang="de" hreflang="de">Deutsch</a></li>
-      <li><a href="/it/privacy" lang="it" hreflang="it">Italiano</a></li>
-      <li><a href="/pt/privacy" lang="pt" hreflang="pt">Português</a></li>
-      <li><a href="/nl/privacy" lang="nl" aria-current="page">Nederlands</a></li>
-    </ul>
-  </nav>
 </header>
 <main id="main" class="lg">
   <div class="lg-intro">

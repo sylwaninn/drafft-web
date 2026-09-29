@@ -73,17 +73,13 @@ a:hover { text-decoration-thickness: 2px; }
 .skip { position: fixed; left: 16px; top: -60px; z-index: 10; padding: 10px 16px; border-radius: 999px; background: var(--ink); color: var(--page); font-weight: 600; text-decoration: none; transition: top .2s; }
 .skip:focus { top: 16px; }
 
-/* Header: the wordmark home, the languages */
+/* Header: the wordmark, home */
 .lg-head {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;
   max-width: calc(var(--column) + 2 * var(--gutter)); margin: 0 auto;
   padding: max(20px, env(safe-area-inset-top)) var(--gutter) 0;
 }
 .lg-brand { font-family: var(--display); font-weight: 900; font-size: 1.625rem; letter-spacing: -0.02em; line-height: 1; color: var(--ink); text-decoration: none; }
-.lg-langs ul { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.lg-langs a { display: block; padding: 6px 10px; border-radius: 999px; font-size: .8125rem; font-weight: 600; color: var(--mute); text-decoration: none; }
-.lg-langs a:hover { color: var(--ink); background: var(--block); }
-.lg-langs a[aria-current] { color: var(--on-accent); background: var(--accent); }
 
 /* The reading column */
 .lg { max-width: calc(var(--column) + 2 * var(--gutter)); margin: 0 auto; padding: clamp(48px, 9vw, 96px) var(--gutter) clamp(64px, 10vw, 112px); }

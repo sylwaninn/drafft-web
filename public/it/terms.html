@@ -4,6 +4,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    (() => {
+      const langs = ["en","fr","es","de","it","pt","nl"];
+      let want = "en";
+      for (const tag of navigator.languages || [navigator.language || "en"]) {
+        const code = String(tag).toLowerCase().split("-")[0];
+        if (langs.includes(code)) { want = code; break; }
+      }
+      if (want !== "it") location.replace(`${want === "en" ? "" : `/${want}`}/terms${location.hash}`);
+    })();
+  </script>
   <title>drafft: Termini di utilizzo</title>
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://getdrafft.com/it/terms">
@@ -27,17 +39,6 @@
 <a class="skip" href="#main">Vai al contenuto</a>
 <header class="lg-head">
   <a class="lg-brand" href="/" aria-label="Home di drafft">drafft</a>
-  <nav class="lg-langs" aria-label="Lingua">
-    <ul>
-      <li><a href="/terms" lang="en" hreflang="en">English</a></li>
-      <li><a href="/fr/terms" lang="fr" hreflang="fr">Français</a></li>
-      <li><a href="/es/terms" lang="es" hreflang="es">Español</a></li>
-      <li><a href="/de/terms" lang="de" hreflang="de">Deutsch</a></li>
-      <li><a href="/it/terms" lang="it" aria-current="page">Italiano</a></li>
-      <li><a href="/pt/terms" lang="pt" hreflang="pt">Português</a></li>
-      <li><a href="/nl/terms" lang="nl" hreflang="nl">Nederlands</a></li>
-    </ul>
-  </nav>
 </header>
 <main id="main" class="lg">
   <div class="lg-intro">

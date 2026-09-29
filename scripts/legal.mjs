@@ -6,7 +6,8 @@
 //                                    {{@key}} a link to it (mailto: for an email address)
 //
 // English lives at /<page>, the other languages at /<lang>/<page>. Every page gets the same frame:
-// wordmark, language switcher, date, contents, and the footer links in its language.
+// wordmark, date, contents, and the footer links in its language. Like the home page, a page follows the
+// browser's language: opened in another one, it moves to its own version (English when none matches).
 //
 //   node scripts/legal.mjs           write public/**/{legal,privacy,terms}.html
 //   node scripts/legal.mjs --check   fail if those files are stale or a value in entity.json is empty
@@ -22,25 +23,25 @@ const CSS_VERSION = "1790760000";
 const PAGES = ["legal", "privacy", "terms"];
 const LANGS = {
   en: { name: "English", locale: "en-GB", legal: "Legal notice", privacy: "Privacy policy", terms: "Terms of use",
-    updated: "Updated on {date}", toc: "Contents", languages: "Language", home: "drafft home", skip: "Skip to content",
+    updated: "Updated on {date}", toc: "Contents", home: "drafft home", skip: "Skip to content",
     footer: "Dating for people who train.", legalNav: "Legal" },
   fr: { name: "Français", locale: "fr-FR", legal: "Mentions légales", privacy: "Politique de confidentialité", terms: "Conditions d’utilisation",
-    updated: "Mis à jour le {date}", toc: "Sommaire", languages: "Langue", home: "Accueil drafft", skip: "Aller au contenu",
+    updated: "Mis à jour le {date}", toc: "Sommaire", home: "Accueil drafft", skip: "Aller au contenu",
     footer: "Les rencontres pour les personnes qui s’entraînent.", legalNav: "Informations légales" },
   es: { name: "Español", locale: "es-ES", legal: "Aviso legal", privacy: "Política de privacidad", terms: "Condiciones de uso",
-    updated: "Actualizado el {date}", toc: "Índice", languages: "Idioma", home: "Inicio de drafft", skip: "Ir al contenido",
+    updated: "Actualizado el {date}", toc: "Índice", home: "Inicio de drafft", skip: "Ir al contenido",
     footer: "Citas para quienes entrenan.", legalNav: "Información legal" },
   de: { name: "Deutsch", locale: "de-DE", legal: "Impressum", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen",
-    updated: "Aktualisiert am {date}", toc: "Inhalt", languages: "Sprache", home: "drafft Startseite", skip: "Zum Inhalt",
+    updated: "Aktualisiert am {date}", toc: "Inhalt", home: "drafft Startseite", skip: "Zum Inhalt",
     footer: "Dating für Menschen, die trainieren.", legalNav: "Rechtliches" },
   it: { name: "Italiano", locale: "it-IT", legal: "Note legali", privacy: "Informativa sulla privacy", terms: "Termini di utilizzo",
-    updated: "Aggiornato il {date}", toc: "Indice", languages: "Lingua", home: "Home di drafft", skip: "Vai al contenuto",
+    updated: "Aggiornato il {date}", toc: "Indice", home: "Home di drafft", skip: "Vai al contenuto",
     footer: "Incontri per chi si allena.", legalNav: "Note legali" },
   pt: { name: "Português", locale: "pt-PT", legal: "Aviso legal", privacy: "Política de privacidade", terms: "Termos de utilização",
-    updated: "Atualizado a {date}", toc: "Índice", languages: "Idioma", home: "Início do drafft", skip: "Ir para o conteúdo",
+    updated: "Atualizado a {date}", toc: "Índice", home: "Início do drafft", skip: "Ir para o conteúdo",
     footer: "Encontros para quem treina.", legalNav: "Informação legal" },
   nl: { name: "Nederlands", locale: "nl-NL", legal: "Juridische informatie", privacy: "Privacybeleid", terms: "Gebruiksvoorwaarden",
-    updated: "Bijgewerkt op {date}", toc: "Inhoud", languages: "Taal", home: "drafft home", skip: "Naar de inhoud",
+    updated: "Bijgewerkt op {date}", toc: "Inhoud", home: "drafft home", skip: "Naar de inhoud",
     footer: "Daten voor mensen die trainen.", legalNav: "Juridisch" },
 };
 
@@ -74,9 +75,6 @@ function render(lang, page) {
   const date = new Intl.DateTimeFormat(L.locale, { dateStyle: "long", timeZone: "UTC" }).format(Date.UTC(y, m - 1, d));
   const title = h1[1].replace(/<[^>]+>/g, "");
   const alternates = Object.keys(LANGS).map((l) => `  <link rel="alternate" hreflang="${l === "pt" ? "pt-PT" : l}" href="${SITE}${path(l, page)}">`).join("\n");
-  const switcher = Object.entries(LANGS).map(([l, { name }]) => l === lang
-    ? `      <li><a href="${path(l, page)}" lang="${l}" aria-current="page">${name}</a></li>`
-    : `      <li><a href="${path(l, page)}" lang="${l}" hreflang="${l}">${name}</a></li>`).join("\n");
   const foot = PAGES.map((p) => p === page
     ? `      <a href="${path(lang, p)}" aria-current="page">${L[p]}</a>`
     : `      <a href="${path(lang, p)}">${L[p]}</a>`).join("\n");
@@ -92,6 +90,18 @@ function render(lang, page) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    (() => {
+      const langs = ${JSON.stringify(Object.keys(LANGS))};
+      let want = "en";
+      for (const tag of navigator.languages || [navigator.language || "en"]) {
+        const code = String(tag).toLowerCase().split("-")[0];
+        if (langs.includes(code)) { want = code; break; }
+      }
+      if (want !== "${lang}") location.replace(\`\${want === "en" ? "" : \`/\${want}\`}/${page}\${location.hash}\`);
+    })();
+  </script>
   <title>${pageTitle}</title>
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${SITE}${path(lang, page)}">
@@ -109,11 +119,6 @@ ${alternates}
 <a class="skip" href="#main">${L.skip}</a>
 <header class="lg-head">
   <a class="lg-brand" href="/" aria-label="${L.home}">drafft</a>
-  <nav class="lg-langs" aria-label="${L.languages}">
-    <ul>
-${switcher}
-    </ul>
-  </nav>
 </header>
 <main id="main" class="lg">
   <div class="lg-intro">
