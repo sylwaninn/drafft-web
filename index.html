@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>First dates that move.</title>
+  <meta name="description" content="drafft is a dating app for people who train. Match on how you move, then turn the match into a first date that is a session: a sport, a place, a time.">
+  <meta name="theme-color" content="#EEEFF1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E0F10" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="First dates that move.">
+  <meta property="og:description" content="Match on how you move. Meet for a session, not a drink.">
+  <meta property="og:image" content="img/sport_sunsetrun.webp">
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=graphite">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=graphite">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon.png?v=graphite">
+  <link rel="preload" href="fonts/InterDisplay-Black.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1790686010">
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrollTrigger.min.js" defer></script>
+  <script src="vendor/lenis.min.js" defer></script>
+  <script src="i18n.js?v=1790686010" defer></script>
+  <script src="main.js?v=1790686010" defer></script>
+</head>
+<body>
+<script>document.documentElement.classList.add(matchMedia("(prefers-reduced-motion: reduce)").matches ? "js" : "js-motion", "is-booting")</script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-run" viewBox="0 0 24 24"><circle cx="14" cy="4" r="2"/><path d="m7 21 3-6 3 2v5"/><path d="m6 12 3-4 4 1 3 3h3"/><path d="m10 15 2-6"/></symbol>
+    <symbol id="i-mountain" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></symbol>
+    <symbol id="i-waves" viewBox="0 0 24 24"><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-infinity" viewBox="0 0 24 24"><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11z"/><path d="m21.85 2.15-10.94 10.94"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.33 2q2 0 3.87-.8a1 1 0 0 1 1.3.95V15a1 1 0 0 1-.4.8A6 6 0 0 1 16 17c-3 0-5-2-8-2a6 6 0 0 0-4 1.53"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-replay" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+    <!-- SF Symbols stand-ins, drawn to the same silhouettes and weights -->
+    <symbol id="sf-flame-fill" viewBox="0 0 24 24"><path d="M12.6 1.8c.4 3.4-1.4 5.3-3 7.1C8 10.7 6.4 12.6 6.4 15.4a5.6 5.6 0 0 0 11.2 0c0-2.3-1-4.2-2.3-5.7-.1 1.4-.8 2.6-2 3.2.5-4-.7-7.8-.7-11.1Z" fill="currentColor"/></symbol>
+    <symbol id="sf-heart" viewBox="0 0 24 24"><path d="M12 20.3 4.6 13a4.6 4.6 0 0 1 6.5-6.6l.9.9.9-.9a4.6 4.6 0 0 1 6.5 6.6Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="sf-heart-fill" viewBox="0 0 24 24"><path d="M12 21.2 4 13.4a5.2 5.2 0 0 1 7.4-7.3l.6.6.6-.6a5.2 5.2 0 0 1 7.4 7.3Z" fill="currentColor"/></symbol>
+    <symbol id="sf-flag2" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.8 21.2 6.4 3.4M7.2 21.2 17.6 3.4"/><path d="M6.4 3.4C5 2.9 3.8 3.9 2.3 3.6l-1 5.3c1.5.3 2.7-.7 4.1-.2"/><path d="M17.6 3.4c1.4-.5 2.6.5 4.1.2l1 5.3c-1.5.3-2.7-.7-4.1-.2"/></g></symbol>
+    <symbol id="sf-bubbles" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M14.5 4.5h-9A2.5 2.5 0 0 0 3 7v5a2.5 2.5 0 0 0 2.5 2.5H6V17l3-2.5h5.5A2.5 2.5 0 0 0 17 12V7a2.5 2.5 0 0 0-2.5-2.5Z"/><path d="M17 8.5h1.5A2.5 2.5 0 0 1 21 11v4.5a2.5 2.5 0 0 1-2.5 2.5H18v2.5L15 18h-3"/></g></symbol>
+    <symbol id="sf-person-circle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="10" r="3.2"/><path d="M6.2 18.6c1.4-2.2 3.4-3.2 5.8-3.2s4.4 1 5.8 3.2"/></g></symbol>
+    <symbol id="sf-bolt-fill" viewBox="0 0 24 24"><path d="M13.6 1.8 4.6 13.4c-.4.5 0 1.1.6 1.1h5.9l-1.6 7.6 9-11.6c.4-.5 0-1.1-.6-1.1h-5.9Z" fill="currentColor"/></symbol>
+    <symbol id="sf-sliders" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"><path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17"/></g><g fill="currentColor" stroke="none"><circle cx="15.5" cy="6.5" r="2.6"/><circle cx="8.5" cy="12" r="2.6"/><circle cx="14" cy="17.5" r="2.6"/></g></symbol>
+    <symbol id="sf-xmark" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="sf-undo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5 4 9.5 8.5 14"/><path d="M4.5 9.5h9.5a5.5 5.5 0 0 1 0 11h-3"/></g></symbol>
+    <symbol id="sf-waveform" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11v2M6.5 8v8M10 4.5v15M13.5 7.5v9M17 10v4M20.5 11.2v1.6"/></g></symbol>
+    <symbol id="sf-run" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="14.6" cy="3.9" r="2.1"/><path d="M9.3 7.4c.4-.3.9-.4 1.4-.3l3.5.7c.6.1 1.1.5 1.3 1l1.3 2.7 2.4.9a1.1 1.1 0 1 1-.8 2.1l-2.8-1a1.1 1.1 0 0 1-.6-.5l-.7-1.5-1.3 3.2 2.5 1.9c.3.2.4.5.4.8l.4 4.2a1.1 1.1 0 1 1-2.2.2l-.4-3.7-3-2.2-1.5 3.3a1.1 1.1 0 0 1-.8.6l-4.1.8a1.1 1.1 0 1 1-.4-2.2l3.5-.7 2.8-6.4-1.3-.3-1.6 2.5a1.1 1.1 0 1 1-1.9-1.2Z"/></g></symbol>
+    <symbol id="sf-climb" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="10.2" cy="4.8" r="2.1"/><path d="M16.8 2.2c.5-.3 1.2-.1 1.5.4.3.5.1 1.2-.4 1.5l-3.5 2 .2 4.4 3.1 3.4c.2.2.3.5.3.8l-.2 5.8a1.1 1.1 0 1 1-2.2-.1l.2-5.3-2.5-2.7-2.6 3.1.8 4.3a1.1 1.1 0 1 1-2.2.4l-.9-4.8c-.1-.3 0-.7.2-.9l3.2-3.8-.2-2.5-2.4 1.9-.2 2.8a1.1 1.1 0 1 1-2.2-.1l.2-3.3c0-.3.2-.6.4-.8l4-3.2c.2-.1.3-.2.5-.2Z"/></g></symbol>
+    <symbol id="sf-strength" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="4.2" r="2.1"/><path d="M8.6 7.6h6.8c.7 0 1.2.5 1.2 1.2v.4l2.1-.1V7.5a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0v-1.4l-2.1.1v1.1c0 .5-.3.9-.7 1.1l.9 6.8a1.1 1.1 0 1 1-2.2.3L13.8 15h-3.6l-.8 5.5a1.1 1.1 0 1 1-2.2-.3l.9-6.8a1.2 1.2 0 0 1-.7-1.1v-1.1l-2.1-.1v1.4a1 1 0 0 1-2 0v-5a1 1 0 0 1 2 0v1.6l2.1.1v-.4c0-.7.5-1.2 1.2-1.2Z"/></g></symbol>
+    <symbol id="sf-hyrox" viewBox="0 0 24 24"><g fill="currentColor"><path d="M9.5 1.8h5a1 1 0 0 1 0 2h-1.5v1.3a8.6 8.6 0 0 1 4.5 2l.8-.8a1 1 0 1 1 1.4 1.4l-.8.8A8.6 8.6 0 1 1 11 5.1V3.8H9.5a1 1 0 0 1 0-2Zm2.5 6.7a1 1 0 0 0-1 1v4.3c0 .3.1.5.3.7l2.3 2.3a1 1 0 0 0 1.4-1.4L13 12.4V9.5a1 1 0 0 0-1-1Z"/></g></symbol>
+    <symbol id="sf-hiking" viewBox="0 0 24 24"><path d="M8.6 5.6a1 1 0 0 1 1.7 0l3.4 5.6 1.5-2.2a1 1 0 0 1 1.7 0l5.2 8.4c.4.7-.1 1.6-.9 1.6H2.8c-.8 0-1.3-.9-.9-1.6Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="sf-cycling" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="16.5" r="3.7"/><circle cx="18.5" cy="16.5" r="3.7"/><path d="M5.5 16.5 9 9.5h6l3.5 7M9 9.5l3.5 7h-7M12 6.5h3l1 3"/></g><circle cx="16.8" cy="3.8" r="1.8" fill="currentColor"/></symbol>
+    <symbol id="sf-yoga" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="4" r="2.1"/><path d="M5.2 7.6a1 1 0 0 1 1.3-.5l3.3 1.4h4.4l3.3-1.4a1 1 0 1 1 .8 1.8L14.8 10v3.2l3.6 2.4c.9.6.5 2-.6 2H13l3.3 1.6a1 1 0 1 1-.9 1.8L12 19.3 8.6 21a1 1 0 1 1-.9-1.8L11 17.6H6.2c-1.1 0-1.5-1.4-.6-2l3.6-2.4V10L5.7 8.9a1 1 0 0 1-.5-1.3Z"/></g></symbol>
+    <symbol id="sf-trail" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="13.6" cy="3.8" r="2.1"/><path d="M11 7.2h2.6c.5 0 1 .3 1.2.8l1.3 3 2.1.8a1 1 0 1 1-.7 1.9l-2.5-.9a1 1 0 0 1-.6-.6l-.5-1.1-.9 3.4 2.5 2.3c.2.2.3.5.3.8l.3 3.6a1.1 1.1 0 1 1-2.2.2l-.3-3.2-2.2-2-1.3 3.4a1.1 1.1 0 0 1-2-.8l2-5.6.7-2.8-1.6.9-.8 2.3a1.1 1.1 0 1 1-2-.7l1-2.7c.1-.3.3-.5.5-.6l2.6-1.4c.2-.1.5-.2.7-.2Z"/><path d="M18.5 7.5a1 1 0 0 1 1 1v12.3a1 1 0 0 1-2 0V8.5a1 1 0 0 1 1-1Z"/></g></symbol>
+    <symbol id="sf-tennis" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><ellipse cx="14.5" cy="8.5" rx="5.2" ry="6.2" transform="rotate(35 14.5 8.5)"/><path d="M10.8 12.9 4 20.2M11.7 5.4l6.6 6.2M9.6 8.3l6.6 6.2"/></g><circle cx="5.2" cy="5.2" r="2.2" fill="currentColor"/></symbol>
+    <symbol id="sf-bubble-fill" viewBox="0 0 24 24"><path d="M12 3.5c5 0 9 3.3 9 7.5s-4 7.5-9 7.5c-.9 0-1.8-.1-2.6-.3L5 20.5c-.5.2-.9-.3-.7-.7l1.1-3C4 15.4 3 13.3 3 11c0-4.2 4-7.5 9-7.5Z" fill="currentColor"/></symbol>
+    <symbol id="sf-paperplane" viewBox="0 0 24 24"><path d="M20.8 3.2c.4.4.5.9.3 1.4l-6.4 15.6c-.4.9-1.7.9-2-.1L11 13 4 11.3c-1-.3-1.1-1.6-.1-2l15.6-6.4c.5-.2 1-.1 1.3.3ZM11.2 12.8l3.9-3.9" fill="currentColor"/></symbol>
+    <symbol id="sf-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="sf-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke-linecap="round"/></g></symbol>
+    <symbol id="sf-calendar-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.5 12V8.2A3.2 3.2 0 0 0 17.3 5H6.7a3.2 3.2 0 0 0-3.2 3.2v9.1a3.2 3.2 0 0 0 3.2 3.2H12M3.5 9.5h17M8 3v4M16 3v4M18 15v6M15 18h6"/></g></symbol>
+    <symbol id="sf-chevron-left" viewBox="0 0 24 24"><path d="M15 4.5 7.5 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="sf-plus" viewBox="0 0 24 24"><path d="M12 4.5v15M4.5 12h15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
+    <symbol id="sf-hourglass" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3h11M6.5 21h11M7.5 3v2.5c0 2.3 4.5 4.3 4.5 6.5 0-2.2 4.5-4.2 4.5-6.5V3M7.5 21v-2.5c0-2.3 4.5-4.3 4.5-6.5 0 2.2 4.5 4.2 4.5 6.5V21"/></g></symbol>
+    <symbol id="sf-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11.5" rx="3" fill="currentColor"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></g></symbol>
+    <symbol id="st-signal" viewBox="0 0 18 12"><g fill="currentColor"><rect x="0" y="7.5" width="3" height="4.5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></g></symbol>
+    <symbol id="st-wifi" viewBox="0 0 16 12"><g fill="currentColor"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.2-1.2A10 10 0 0 0 8 .6 10 10 0 0 0 .8 3.6L2 4.8a8.4 8.4 0 0 1 6-2.4Z"/><path d="M8 5.8c1.4 0 2.6.5 3.6 1.4l1.2-1.2A6.8 6.8 0 0 0 8 4a6.8 6.8 0 0 0-4.8 2l1.2 1.2c1-.9 2.2-1.4 3.6-1.4Z"/><path d="M8 9.2c.5 0 1 .2 1.3.5L8 11.4 6.7 9.7c.3-.3.8-.5 1.3-.5Z"/></g></symbol>
+    <symbol id="st-battery" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.5" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill="currentColor" opacity=".45"/></symbol>
+    <!-- Liquid Glass lens: bends what is behind the rim (Chromium; other engines keep blur + saturation) -->
+    <filter id="lg-lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feImage href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22x%22%20x1%3D%220%22%20x2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23000%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f00%22/%3E%3C/linearGradient%3E%3ClinearGradient%20id%3D%22y%22%20y1%3D%220%22%20y2%3D%221%22%20x1%3D%220%22%20x2%3D%220%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23000%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230f0%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22b%22%3E%3CfeGaussianBlur%20stdDeviation%3D%229%22/%3E%3C/filter%3E%3C/defs%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22url%28%23x%29%22/%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22url%28%23y%29%22%20style%3D%22mix-blend-mode%3Ascreen%22/%3E%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2232%22%20fill%3D%22%23808000%22%20filter%3D%22url%28%23b%29%22/%3E%3C/svg%3E" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" data-nav>
+  <p class="brand">
+    drafft
+  </p>
+</header>
+
+<!-- Step through the story without scrolling: each press plays the scroll animation to the next step -->
+<nav class="stepper lg is-away" aria-label="Steps" data-stepper>
+  <span class="stepper__blob" aria-hidden="true"></span>
+  <button type="button" class="stepper__btn" data-step="-1" aria-label="Previous step" data-i18n-aria="prevStep"><svg class="ic" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
+  <button type="button" class="stepper__btn" data-step="1" aria-label="Next step" data-i18n-aria="nextStep"><svg class="ic" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+</nav>
+
+<main id="main">
+
+  <!-- Hero, then the same phone carries the story while pinned -->
+  <section class="hero" id="top" data-hero>
+
+    <div class="hero__left" data-hero-copy>
+      <h1 class="display hero__title" data-split data-i18n="tagline">First dates that move.</h1>
+      <div class="stores">
+        <!-- Store URLs: replace href="#" with the App Store and Google Play links at launch -->
+        <a class="store" href="#" data-store="ios" aria-label="Download drafft on the App Store" data-i18n-aria="storeIosAria">
+          <svg class="store__logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+          <span class="store__text"><small data-i18n="storeIosSmall">Download on the</small>App Store</span>
+        </a>
+        <a class="store" href="#" data-store="android" aria-label="Get drafft on Google Play" data-i18n-aria="storeAndroidAria">
+          <svg class="store__logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
+          <span class="store__text"><small data-i18n="storeAndroidSmall">Get it on</small>Google Play</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__right" data-hero-copy data-rise>
+      <p class="hero__note" data-i18n="note">The dating app for people who train. Every match ends in a plan: a sport, a place, a time.</p>
+    </div>
+
+    <ol class="captions" id="story" aria-label="How drafft works" data-i18n-aria="storyAria">
+      <li class="cap" data-cap><h2 class="display" data-i18n="cap1">Like how they move.</h2><p data-i18n="cap1Text">Sports, level and weekly rhythm come first. Photos second.</p></li>
+      <li class="cap" data-cap><h2 class="display" data-i18n="cap2">Match. Skip the small talk.</h2><p data-i18n="cap2Text">A match leads to a plan, not a chat that fades out.</p></li>
+      <li class="cap" data-cap><h2 class="display" data-i18n="cap3">Propose a session.</h2><p data-i18n="cap3Text">Sport, day, time, place. One tap to send.</p></li>
+      <li class="cap" data-cap><h2 class="display" data-i18n="cap4">See you at 07:00.</h2><p data-i18n="cap4Text">The first date is the session. The talking comes easy.</p></li>
+    </ol>
+
+    <div class="stage" data-stage>
+     <div class="scene" data-scene>
+      <div class="phone" data-phone role="img" data-tpl-aria="phoneAria" aria-label="The drafft app: you like Léa, it’s a match, and you plan a run together on Tuesday 29 September at 07:00 at Canal Saint-Martin.">
+        <div class="phone__front">
+        <div class="phone__screen" aria-hidden="true">
+         <div class="app" data-app>
+
+          <!-- Discover (DiscoverView) -->
+          <div class="scr scr--discover" data-discover>
+            <div class="deck">
+              <div class="card card--d3" data-d3><img alt="" data-d3-img><span class="veil" style="--o:.75"></span></div>
+              <div class="card card--d2" data-d2><img alt="" data-d2-img><span class="veil" style="--o:.75" data-d2-veil></span></div>
+              <div class="card card--d1" data-d1><img alt="" data-d1-img><span class="veil" style="--o:.55" data-d1-veil></span></div>
+              <article class="card card--top" data-card>
+                <img alt="" data-card-img data-person-img data-framed>
+                <span class="card__scrim"></span>
+                <div class="card__top">
+                  <div class="card__identity">
+                    <p class="card__id"><span class="card__name" data-name>Léa</span><span class="card__age">&nbsp;&nbsp;<span data-age>29</span></span></p>
+                    <p class="card__area" data-area>Paris 10e, 2 km</p>
+                  </div>
+                  <span class="voice"><svg><use href="#sf-waveform"/></svg><span>0:12</span></span>
+                </div>
+                <div class="card__chips">
+                  <span class="chip chip--shared"><svg><use href="#sf-run" data-sport-icon/></svg><span data-sport-name>Running</span></span>
+                  <span class="chip"><svg><use href="#sf-climb" data-sport2-icon/></svg><span data-sport2-name>Climbing</span></span>
+                </div>
+                <span class="stamp" data-stamp>LIKE</span>
+              </article>
+            </div>
+            <div class="acts">
+              <span class="act act--undo"><svg><use href="#sf-undo"/></svg></span>
+              <span class="act act--pass"><svg><use href="#sf-xmark"/></svg></span>
+              <span class="act act--like" data-like><svg><use href="#sf-heart-fill"/></svg></span>
+              <span class="act act--super"><span class="sl"><svg class="sl__g2"><use href="#sf-heart-fill"/></svg><svg class="sl__g1"><use href="#sf-heart-fill"/></svg><svg class="sl__lead"><use href="#sf-heart-fill"/></svg></span><b>3</b></span>
+            </div>
+          </div>
+
+          <!-- Chat with the session card (SessionCard) -->
+          <div class="scr scr--chat" data-chat>
+            <!-- Older messages fade out at the top (a mask on the list itself, no blur band) -->
+            <div class="thread-view">
+            <div class="thread">
+              <p class="bubble bubble--them" data-i18n="p1">Hey! Loved your voice intro.</p>
+              <p class="bubble bubble--me" data-i18n="p2">Ha, thanks. It took 12 takes.</p>
+              <p class="bubble bubble--them" data-i18n="p3">Mornings or evenings?</p>
+              <p class="bubble bubble--me" data-i18n="p4">Mornings. Before the city wakes up.</p>
+              <p class="bubble bubble--them" data-i18n="m1">So, “hill day enthusiast”. Bold claim.</p>
+              <p class="bubble bubble--me" data-i18n="m2">Tested and proven. The canal has hills, right?</p>
+              <p class="bubble bubble--them bubble--grouped" data-i18n="m3">It’s the flattest place in Paris.</p>
+              <p class="bubble bubble--them" data-i18n="m4">But I like the confidence.</p>
+              <p class="bubble bubble--me" data-i18n="m5">Then let’s settle it on the ground.</p>
+              <div class="session-wrap" data-session-wrap>
+                <div class="session">
+              <div class="session__head">
+                <span class="session__sport"><svg><use href="#sf-run" data-sport-icon/></svg></span>
+                <span class="session__pills">
+                  <span class="session__pill" data-pill-wait><svg><use href="#sf-hourglass"/></svg><span data-i18n="waiting">Waiting</span></span>
+                  <span class="session__pill session__pill--ok" data-pill-ok><svg><use href="#sf-check"/></svg><span data-i18n="confirmed">Confirmed</span></span>
+                </span>
+              </div>
+              <p class="session__title" data-tpl="sessionTitle">Running session</p>
+              <div class="session__time">
+                <span class="session__cal"><svg><use href="#sf-calendar"/></svg></span>
+                <span class="session__when"><b data-i18n="dayLong">Tuesday 29 Sep</b><span>7:00</span></span>
+                <span class="checkdisc checkdisc--night" data-agreed><svg><use href="#sf-check"/></svg></span>
+              </div>
+              <div class="session__foot">
+                <p class="session__note" data-session-note data-tpl="willPick">Léa will pick a time or suggest others.</p>
+                <span class="btn-white" data-add-cal><svg><use href="#sf-calendar-plus"/></svg><span data-i18n="addToCalendar">Add to calendar</span></span>
+              </div>
+            </div>
+              </div>
+            </div>
+            </div>
+            <div class="composer">
+              <span class="glass-btn glass-btn--sm"><svg><use href="#sf-plus"/></svg></span>
+              <span class="composer__field"><span data-i18n="message">Message</span><svg><use href="#sf-mic"/></svg></span>
+            </div>
+          </div>
+
+          <!-- Match (MatchView, full-screen cover) -->
+          <div class="scr scr--match" data-matchview>
+            <div class="mv__formation">
+              <span class="mv__ghost" style="--i:3"></span><span class="mv__ghost" style="--i:2"></span><span class="mv__ghost" style="--i:1"></span>
+              <img class="mv__me" alt="" data-viewer-img>
+              <img class="mv__them" alt="" data-person-img>
+              <span class="mv__heart"><span class="mv__heart-in" data-heart><svg><use href="#sf-heart-fill"/></svg></span></span>
+            </div>
+            <div class="mv__text">
+              <p class="mv__title" data-i18n="itsAMatch">It’s a match.</p>
+              <p class="mv__sub" data-tpl="matchSub">You and Léa both do Running. Skip the endless chat: make the first date a session.</p>
+            </div>
+            <div class="mv__btns">
+              <span class="btn-white" data-sayhi><svg><use href="#sf-bubble-fill"/></svg><span data-i18n="sayHi">Say hi</span></span>
+              <span class="mv__link" data-i18n="keepSwiping">Keep swiping</span>
+            </div>
+          </div>
+
+          <!-- Propose a session (ProposeSessionSheet, large detent) -->
+          <div class="psheet" data-sheet>
+            <div class="psheet__body">
+              <div class="well well--head">
+                <span class="ring"><img alt="" data-person-img data-avatar></span>
+                <span class="well__text"><b class="well__title" data-tpl="trainWith">Train with Léa</b><span class="well__sub" data-i18n="firstDateSession">Make the first date a session.</span></span>
+              </div>
+              <div class="well">
+                <p class="well__row"><svg><use href="#sf-run"/></svg><b data-i18n="sport">Sport</b></p>
+                <div class="tiles">
+                  <span class="tile" data-tile>
+                    <span class="tile__top"><span class="tile__ic"><svg><use href="#sf-run" data-sport-icon/></svg></span><span class="checkdisc checkdisc--off" data-tile-check><svg><use href="#sf-check"/></svg></span></span>
+                    <b data-sport-name>Running</b>
+                    <span class="faces"><img alt="" data-person-img data-avatar><img alt="" data-viewer-img data-avatar></span>
+                  </span>
+                  <span class="tile">
+                    <span class="tile__top"><span class="tile__ic"><svg><use href="#sf-climb" data-sport2-icon/></svg></span><span class="checkdisc checkdisc--off"><svg><use href="#sf-check"/></svg></span></span>
+                    <b data-sport2-name>Climbing</b>
+                    <span class="faces"><img alt="" data-person-img data-avatar></span>
+                  </span>
+                </div>
+              </div>
+              <div class="well">
+                <p class="well__row"><svg><use href="#sf-calendar"/></svg><b data-i18n="when">When</b><em data-i18n="upTo3">Up to 3 times</em></p>
+                <div class="slots">
+                  <span class="slot slot--stack">
+                    <span class="slot slot--add" data-slot-add><svg><use href="#sf-plus"/></svg><span data-i18n="addTime">Add a time</span></span>
+                    <span class="slot slot--time" data-slot-time><small data-i18n="tue">Tue</small><b>29</b><small data-i18n="sep">Sep</small><em>7:00</em></span>
+                  </span>
+                  <span class="slot slot--add slot--next" data-slot-next><svg><use href="#sf-plus"/></svg><span data-i18n="addAnother">Add another</span></span>
+                  <span class="slot slot--empty"></span>
+                </div>
+              </div>
+            </div>
+            <div class="psheet__foot">
+              <div class="recap">
+                <span class="recap__ic"><svg><use href="#sf-run" data-sport-icon/></svg></span>
+                <span class="recap__text"><span class="recap__line"><b data-recap-none data-tpl="recapNone">Running, no time yet</b><b data-recap-time data-tpl="recapTime">Running, Tue 29 Sep at 7:00</b></span><span data-i18n="noPitch">No pitch yet</span></span>
+              </div>
+              <span class="send" data-send>
+                <span class="send__g send__g--2"></span><span class="send__g send__g--1"></span>
+                <span class="send__face">
+                  <span class="send__label" data-send-label><svg><use href="#sf-paperplane"/></svg><span data-i18n="sendInvite">Send invite</span></span>
+                  <span class="send__label" data-send-done><svg><use href="#sf-check"/></svg><span data-i18n="sent">Sent</span></span>
+                </span>
+              </span>
+            </div>
+          </div>
+
+         </div>
+        </div>
+        </div>
+      </div>
+     </div>
+    </div>
+
+    <!-- On load, only this: the top profile's photo, full bleed. Scrolling reveals it's the top card on the phone. -->
+    <div class="hero__photo" data-photo><img data-person-img data-framed alt="" fetchpriority="high"></div>
+    <!-- After 10 s without scrolling: a blurred veil and a glass card that says how to go on -->
+    <div class="idle-hint" data-idle-hint hidden>
+      <button type="button" class="idle-hint__go" data-idle-go>
+        <!-- A mouse you can't mistake for a zero: body, the split between the buttons, a wheel that never disappears -->
+        <svg class="idle-hint__mouse" viewBox="0 0 32 48" aria-hidden="true"><rect x="2" y="2" width="28" height="44" rx="14"/><path d="M16 2v12"/><rect class="idle-hint__wheel" x="13" y="9" width="6" height="11" rx="3"/></svg>
+        <svg class="idle-hint__swipe" viewBox="0 0 32 48" aria-hidden="true"><rect x="9" y="4" width="14" height="40" rx="7"/><circle class="idle-hint__dot" cx="16" cy="36" r="4"/></svg>
+        <span class="idle-hint__text" data-i18n="hintScroll" data-hint-text>Scroll to continue</span>
+        <span class="idle-hint__chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+      </button>
+    </div>
+    <div class="scrollcue-wrap" data-scrollcue>
+      <a class="scrollcue lg" href="#story" aria-label="Scroll to see the app" data-i18n-aria="scrollAria">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Manifesto: inks in word by word as you scroll -->
+  <section class="statement">
+    <p class="statement__text" data-fill data-i18n="statement">Profiles lead with how someone moves: their sports, their level, how often they train. You hear their voice before you meet. And every match ends in a plan.</p>
+  </section>
+
+  <!-- Sports marquee -->
+  <section class="sports" aria-labelledby="sports-title">
+    <h2 class="display sports__title" id="sports-title" data-split data-reveal data-i18n="sportsTitle">From run club to wing foil.</h2>
+    <div class="marquee" data-marquee aria-hidden="true">
+      <ul class="marquee__track">
+        <li><img src="img/sport_groupnight.webp" alt="" loading="lazy"><span data-i18n="runClub">Run club</span></li>
+        <li><img src="img/sport_boulder.webp" alt="" loading="lazy"><span data-i18n="climbing">Climbing</span></li>
+        <li><img src="img/sport_peloton.webp" alt="" loading="lazy"><span data-i18n="cycling">Cycling</span></li>
+        <li><img src="img/sport_clay.webp" alt="" loading="lazy"><span data-i18n="tennis">Tennis</span></li>
+        <li><img src="img/sport_swim.webp" alt="" loading="lazy"><span data-i18n="swimming">Swimming</span></li>
+        <li><img src="img/sport_hike.webp" alt="" loading="lazy"><span data-i18n="hiking">Hiking</span></li>
+        <li><img src="img/sport_barbell.webp" alt="" loading="lazy"><span data-i18n="strength">Strength</span></li>
+        <li><img src="img/sport_yogasunset.webp" alt="" loading="lazy"><span data-i18n="yoga">Yoga</span></li>
+        <li><img src="img/sport_trail.webp" alt="" loading="lazy"><span data-i18n="trail">Trail</span></li>
+        <li><img src="img/sport_ropes.webp" alt="" loading="lazy"><span data-i18n="hyrox">Hyrox</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- tempo -->
+  <section class="tempo" id="tempo">
+    <div class="tempo__card" data-tone="dark">
+      <div class="tempo__intro">
+        <h2 class="display tempo__lockup">drafft <span>tempo</span></h2>
+        <p class="tempo__lead" data-i18n-tier="tempoLead">The free app gets you matching and meeting. <b class="brand-inline">drafft <span class="tempo-word">tempo</span></b> gets you there faster.</p>
+      </div>
+      <ul class="perks">
+        <li class="perk"><span class="perk__ic"><svg class="ic"><use href="#i-undo"/></svg></span><h3 data-i18n="undo">Undo any swipe</h3><p data-i18n="undoText">Swiped too fast? Bring them back.</p></li>
+        <li class="perk"><span class="perk__ic"><svg class="ic"><use href="#i-eye"/></svg></span><h3 data-i18n="likedYou">See who liked you</h3><p data-i18n="likedYouText">Match in one tap.</p></li>
+        <li class="perk"><span class="perk__ic"><svg class="ic"><use href="#i-infinity"/></svg></span><h3 data-i18n="unlimited">Unlimited likes</h3><p data-i18n="unlimitedText">No daily cap.</p></li>
+        <li class="perk"><span class="perk__ic"><svg class="ic"><use href="#i-zap"/></svg></span><h3 data-i18n="boost">Weekly boost</h3><p data-i18n="boostText">Thirty minutes at the top of decks near you.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Join -->
+  <section class="join" id="join">
+    <h2 class="display join__title" data-split data-reveal data-i18n="joinTitle">Meet at the start line.</h2>
+    <p class="join__lead" data-i18n="joinText">Free on iPhone and Android.</p>
+    <div class="stores" data-center>
+        <!-- Store URLs: replace href="#" with the App Store and Google Play links at launch -->
+        <a class="store" href="#" data-store="ios" aria-label="Download drafft on the App Store" data-i18n-aria="storeIosAria">
+          <svg class="store__logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+          <span class="store__text"><small data-i18n="storeIosSmall">Download on the</small>App Store</span>
+        </a>
+        <a class="store" href="#" data-store="android" aria-label="Get drafft on Google Play" data-i18n-aria="storeAndroidAria">
+          <svg class="store__logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
+          <span class="store__text"><small data-i18n="storeAndroidSmall">Get it on</small>Google Play</span>
+        </a>
+      </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot__row">
+    <p data-i18n="footer">Dating for people who train.</p>
+    <!-- Legal pages: point these at the real documents once they exist -->
+    <nav class="foot__links" aria-label="Legal">
+      <a href="#" data-i18n="legalNotice">Legal notice</a>
+      <a href="#" data-i18n="privacy">Privacy policy</a>
+      <a href="#" data-i18n="terms">Terms of use</a>
+    </nav>
+    <p>© 2026 drafft</p>
+  </div>
+</footer>
+</body>
+</html>
