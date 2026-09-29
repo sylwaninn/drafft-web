@@ -1,6 +1,6 @@
 # drafft-web CI: every change is checked; main ships to production (getdrafft.com).
 #
-#   pull request   → PR title, bundle (wrangler dry run), security (dependencies, secrets, workflows)
+#   pull request   → PR title, bundle (wrangler dry run, wording check), security (dependencies, secrets, workflows)
 #   push to main   → the same checks, then deploy the drafft-web Worker and smoke-test getdrafft.com
 #
 # Wrangler needs the secret CLOUDFLARE_API_TOKEN and the variable CLOUDFLARE_ACCOUNT_ID.
@@ -59,6 +59,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - name: Check wording (WORDING.md forbidden list)
+        run: pnpm wording
 
   security:
     name: security (dependencies, secrets, workflows)
