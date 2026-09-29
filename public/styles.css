@@ -628,8 +628,9 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
 }
 .lg::after {
   content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
-  background: radial-gradient(70% 55% at var(--lx) var(--ly), rgb(255 255 255 / .5), rgb(255 255 255 / 0) 70%);
-  mix-blend-mode: soft-light;
+  /* Plain alpha, no blend mode: a blend inside a backdrop-filter element mixes with the blurred
+     backdrop or with nothing depending on how the browser layers it, so the bloom flickers. */
+  background: radial-gradient(60% 45% at var(--lx) var(--ly), rgb(255 255 255 / .4), rgb(255 255 255 / 0) 70%);
 }
 .lg:hover { --lg-tint: .22; }
 /* The cue sits on a photo that moves while the page loads: keep its glass on one stable layer,
