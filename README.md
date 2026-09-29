@@ -7,7 +7,11 @@ Worker with static assets (`wrangler.jsonc`). The Worker only redirects `www.get
 pnpm install
 pnpm dev      # http://localhost:8787, with the production headers (public/_headers)
 pnpm check    # bundle without deploying
+pnpm wording  # the copy against WORDING.md's forbidden wording (CI runs it too)
 ```
+
+All page copy (`public/i18n.js`, 7 languages) follows [WORDING.md](WORDING.md), a synced copy of the one in
+the `drafft` repository.
 
 ## Deploying
 
