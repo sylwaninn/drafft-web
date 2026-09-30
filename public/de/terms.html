@@ -5,15 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <script>
-    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    // A link can name the language (?lang=fr: the app does, so its pages follow the app's language);
+    // otherwise the browser's language picks the version, as on the home page (i18n.js). The query
+    // and the anchor come along.
     (() => {
       const langs = ["en","fr","es","de","it","pt","nl"];
-      let want = "en";
-      for (const tag of navigator.languages || [navigator.language || "en"]) {
+      const asked = new URLSearchParams(location.search).get("lang");
+      let want = langs.includes(asked) ? asked : null;
+      for (const tag of want ? [] : navigator.languages || [navigator.language || "en"]) {
         const code = String(tag).toLowerCase().split("-")[0];
         if (langs.includes(code)) { want = code; break; }
       }
-      if (want !== "de") location.replace(`${want === "en" ? "" : `/${want}`}/terms${location.hash}`);
+      want = want || "en";
+      if (want !== "de") location.replace(`${want === "en" ? "" : `/${want}`}/terms${location.search}${location.hash}`);
     })();
   </script>
   <title>drafft: Nutzungsbedingungen</title>
@@ -130,7 +134,7 @@
 
     <h2 id="tempo">drafft tempo, Boosts und Super Likes</h2>
     <h3>drafft tempo</h3>
-    <p>drafft tempo ist ein Abo, das drafft um Folgendes ergänzt: sehen, wer dich gelikt hat, unbegrenzte Likes, zum zuletzt übersprungenen Profil zurückkehren und jede Woche einen kostenlosen Boost. Es gibt drafft tempo mit einer Laufzeit von 1 Monat, 6 Monaten oder 12 Monaten. Der Preis inklusive Steuern und der Leistungsumfang werden vor dem Kauf in der App angezeigt.</p>
+    <p>drafft tempo ist ein Abo, das drafft um Folgendes ergänzt: sehen, wer dich gelikt hat, unbegrenzte Likes, deinen letzten Swipe rückgängig machen und jede Woche einen kostenlosen Boost. Es gibt drafft tempo mit einer Laufzeit von 1 Monat, 6 Monaten oder 12 Monaten. Der Preis inklusive Steuern und der Leistungsumfang werden vor dem Kauf in der App angezeigt.</p>
     <ul>
       <li>Die Zahlung erfolgt über den App-Store deines Handys, über dein Konto dort, sobald du den Kauf bestätigst.</li>
       <li>Das Abo verlängert sich automatisch um dieselbe Laufzeit zum selben Preis, wenn du es nicht mindestens 24 Stunden vor Ende des laufenden Zeitraums kündigst.</li>
@@ -190,6 +194,7 @@
       <a href="/de/legal">Impressum</a>
       <a href="/de/privacy">Datenschutzerklärung</a>
       <a href="/de/terms" aria-current="page">Nutzungsbedingungen</a>
+      <a href="/de/delete-account">Konto löschen</a>
     </nav>
     <p>© 2026 drafft</p>
   </div>

@@ -5,15 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <script>
-    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    // A link can name the language (?lang=fr: the app does, so its pages follow the app's language);
+    // otherwise the browser's language picks the version, as on the home page (i18n.js). The query
+    // and the anchor come along.
     (() => {
       const langs = ["en","fr","es","de","it","pt","nl"];
-      let want = "en";
-      for (const tag of navigator.languages || [navigator.language || "en"]) {
+      const asked = new URLSearchParams(location.search).get("lang");
+      let want = langs.includes(asked) ? asked : null;
+      for (const tag of want ? [] : navigator.languages || [navigator.language || "en"]) {
         const code = String(tag).toLowerCase().split("-")[0];
         if (langs.includes(code)) { want = code; break; }
       }
-      if (want !== "fr") location.replace(`${want === "en" ? "" : `/${want}`}/legal${location.hash}`);
+      want = want || "en";
+      if (want !== "fr") location.replace(`${want === "en" ? "" : `/${want}`}/legal${location.search}${location.hash}`);
     })();
   </script>
   <title>drafft : Mentions légales</title>
@@ -89,6 +93,7 @@
       <a href="/fr/legal" aria-current="page">Mentions légales</a>
       <a href="/fr/privacy">Politique de confidentialité</a>
       <a href="/fr/terms">Conditions d’utilisation</a>
+      <a href="/fr/delete-account">Supprimer ton compte</a>
     </nav>
     <p>© 2026 drafft</p>
   </div>

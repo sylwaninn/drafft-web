@@ -1,0 +1,120 @@
+<!doctype html>
+<!-- Built by scripts/legal.mjs from legal/pages/it/delete-account.html and legal/entity.json: edit those, then run pnpm legal. -->
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // A link can name the language (?lang=fr: the app does, so its pages follow the app's language);
+    // otherwise the browser's language picks the version, as on the home page (i18n.js). The query
+    // and the anchor come along.
+    (() => {
+      const langs = ["en","fr","es","de","it","pt","nl"];
+      const asked = new URLSearchParams(location.search).get("lang");
+      let want = langs.includes(asked) ? asked : null;
+      for (const tag of want ? [] : navigator.languages || [navigator.language || "en"]) {
+        const code = String(tag).toLowerCase().split("-")[0];
+        if (langs.includes(code)) { want = code; break; }
+      }
+      want = want || "en";
+      if (want !== "it") location.replace(`${want === "en" ? "" : `/${want}`}/delete-account${location.search}${location.hash}`);
+    })();
+  </script>
+  <title>drafft: Eliminare il tuo account</title>
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://getdrafft.com/it/delete-account">
+  <link rel="alternate" hreflang="en" href="https://getdrafft.com/delete-account">
+  <link rel="alternate" hreflang="fr" href="https://getdrafft.com/fr/delete-account">
+  <link rel="alternate" hreflang="es" href="https://getdrafft.com/es/delete-account">
+  <link rel="alternate" hreflang="de" href="https://getdrafft.com/de/delete-account">
+  <link rel="alternate" hreflang="it" href="https://getdrafft.com/it/delete-account">
+  <link rel="alternate" hreflang="pt-PT" href="https://getdrafft.com/pt/delete-account">
+  <link rel="alternate" hreflang="nl" href="https://getdrafft.com/nl/delete-account">
+  <link rel="alternate" hreflang="x-default" href="https://getdrafft.com/delete-account">
+  <meta name="theme-color" content="#EEEFF1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E0F10" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png?v=graphite">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=graphite">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon.png?v=graphite">
+  <link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/legal.css?v=1790760000">
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="lg-head">
+  <a class="lg-brand" href="/" aria-label="Home di drafft">drafft</a>
+</header>
+<main id="main" class="lg">
+  <div class="lg-intro">
+    <p class="lg-date">Aggiornato il <time datetime="2026-09-29">29 settembre 2026</time></p>
+    <h1>Eliminare il tuo account</h1>
+    <p class="lg-lead">Come eliminare il tuo account drafft, con o senza l’app, cosa viene cancellato e cosa viene conservato, e per quanto tempo.</p>
+  </div>
+  <nav class="lg-toc" aria-label="Indice">
+    <p class="lg-toc__title">Indice</p>
+    <ol>
+      <li><a href="#in-app">Dall’app</a></li>
+      <li><a href="#without-app">Senza l’app</a></li>
+      <li><a href="#subscription">Il tuo abbonamento</a></li>
+      <li><a href="#deleted">Cosa viene cancellato</a></li>
+      <li><a href="#kept">Cosa viene conservato, e per quanto tempo</a></li>
+      <li><a href="#export">Conservare una copia prima di andartene</a></li>
+    </ol>
+  </nav>
+  <div class="lg-body">
+    <h2 id="in-app">Dall’app</h2>
+    <ol>
+      <li>Apri drafft e vai nella scheda Tu.</li>
+      <li>Tocca Elimina account, in fondo alla schermata.</li>
+      <li>Conferma. Il tuo account viene eliminato subito.</li>
+    </ol>
+
+    <h2 id="without-app">Senza l’app</h2>
+    <p>Non hai più l’app o non hai più accesso al tuo telefono? Scrivi a <a href="mailto:support@getdrafft.com">support@getdrafft.com</a> dall’indirizzo e-mail del tuo account, con oggetto «Elimina il mio account».</p>
+    <ul>
+      <li>Se non hai più accesso a quell’indirizzo, scrivi da un altro e indica il numero di telefono del tuo account: ti chiederemo di confermare che sei proprio tu.</li>
+      <li>Eliminiamo il tuo account entro 30 giorni al massimo e te lo confermiamo via e-mail.</li>
+    </ul>
+
+    <h2 id="subscription">Il tuo abbonamento</h2>
+    <p>Eliminare il tuo account non disdice un abbonamento drafft tempo in corso. Disdicilo nella gestione degli abbonamenti dello store di app in cui l’hai acquistato, dalle impostazioni del tuo telefono. I boost e i super like che ti restano vanno persi.</p>
+
+    <h2 id="deleted">Cosa viene cancellato</h2>
+    <p>Vengono cancellati subito: il tuo account, il tuo profilo, le tue foto e la tua intro vocale, i tuoi like, i tuoi match, le tue conversazioni con le loro foto, i loro video e i loro messaggi vocali, le tue sessioni, i tuoi blocchi, le tue preferenze, i tuoi dispositivi registrati e l’eventuale archivio di esportazione dei tuoi dati.</p>
+
+    <h2 id="kept">Cosa viene conservato, e per quanto tempo</h2>
+    <div class="lg-table">
+    <table>
+      <thead><tr><th scope="col">Dati</th><th scope="col">Durata</th></tr></thead>
+      <tbody>
+        <tr><td>Backup</td><td>Fino a 30 giorni, poi cancellati.</td></tr>
+        <tr><td>Account sospeso, bannato o oggetto di una segnalazione in corso al momento dell’eliminazione</td><td>Conservato per la sicurezza dei membri, poi cancellato 1 anno dopo la chiusura della pratica.</td></tr>
+        <tr><td>Conversazione con un membro sospeso o bannato</td><td>1 anno dopo la fine della conversazione.</td></tr>
+        <tr><td>Impronte identificative (e-mail, numero, identificativi di accesso), cifrate</td><td>1 anno, 3 anni se l’account è stato bannato, per impedire un ritorno con un’altra identità.</td></tr>
+        <tr><td>Segnalazioni che hai fatto</td><td>1 anno dopo la loro gestione, senza il tuo nome.</td></tr>
+        <tr><td>Acquisti</td><td>10 anni, come richiesto dalla normativa contabile, senza collegamento al tuo account.</td></tr>
+        <tr><td>Richieste di aiuto</td><td>3 anni dopo l’ultimo scambio.</td></tr>
+        <tr><td>Indirizzi IP, registro degli SMS inviati</td><td>Al massimo 180 giorni e 30 giorni.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Il dettaglio di ogni durata è nell’<a href="/it/privacy#retention">informativa sulla privacy</a>.</p>
+
+    <h2 id="export">Conservare una copia prima di andartene</h2>
+    <p>Prima di eliminare il tuo account, puoi chiedere una copia dei tuoi dati: Tu › Privacy e dati › Esporta i miei dati. Ricevi via e-mail uno o più link di download, di solito entro 24 ore, validi 7 giorni.</p>
+  </div>
+</main>
+<footer class="lg-foot">
+  <div class="lg-foot__row">
+    <p>Incontri per chi si allena.</p>
+    <nav class="lg-foot__links" aria-label="Note legali">
+      <a href="/it/legal">Note legali</a>
+      <a href="/it/privacy">Informativa sulla privacy</a>
+      <a href="/it/terms">Termini di utilizzo</a>
+      <a href="/it/delete-account" aria-current="page">Eliminare il tuo account</a>
+    </nav>
+    <p>© 2026 drafft</p>
+  </div>
+</footer>
+</body>
+</html>

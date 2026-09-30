@@ -5,15 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <script>
-    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    // A link can name the language (?lang=fr: the app does, so its pages follow the app's language);
+    // otherwise the browser's language picks the version, as on the home page (i18n.js). The query
+    // and the anchor come along.
     (() => {
       const langs = ["en","fr","es","de","it","pt","nl"];
-      let want = "en";
-      for (const tag of navigator.languages || [navigator.language || "en"]) {
+      const asked = new URLSearchParams(location.search).get("lang");
+      let want = langs.includes(asked) ? asked : null;
+      for (const tag of want ? [] : navigator.languages || [navigator.language || "en"]) {
         const code = String(tag).toLowerCase().split("-")[0];
         if (langs.includes(code)) { want = code; break; }
       }
-      if (want !== "en") location.replace(`${want === "en" ? "" : `/${want}`}/terms${location.hash}`);
+      want = want || "en";
+      if (want !== "en") location.replace(`${want === "en" ? "" : `/${want}`}/terms${location.search}${location.hash}`);
     })();
   </script>
   <title>drafft: Terms of use</title>
@@ -130,7 +134,7 @@
 
     <h2 id="tempo">drafft tempo, boosts and super likes</h2>
     <h3>drafft tempo</h3>
-    <p>drafft tempo is a subscription that adds to drafft: seeing who liked you, unlimited likes, going back to the last profile you passed and one free boost each week. It comes in lengths of 1 month, 6 months or 12 months. The price, including taxes, and what’s included are shown in the app before you buy.</p>
+    <p>drafft tempo is a subscription that adds to drafft: seeing who liked you, unlimited likes, undoing your last swipe and one free boost each week. It comes in lengths of 1 month, 6 months or 12 months. The price, including taxes, and what’s included are shown in the app before you buy.</p>
     <ul>
       <li>Payment is taken by your phone’s app store, from your account, when you confirm the purchase.</li>
       <li>The subscription renews automatically for the same length and at the same price, unless you cancel it at least 24 hours before the end of the current period.</li>
@@ -190,6 +194,7 @@
       <a href="/legal">Legal notice</a>
       <a href="/privacy">Privacy policy</a>
       <a href="/terms" aria-current="page">Terms of use</a>
+      <a href="/delete-account">Delete your account</a>
     </nav>
     <p>© 2026 drafft</p>
   </div>

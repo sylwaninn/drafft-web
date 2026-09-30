@@ -5,15 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <script>
-    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    // A link can name the language (?lang=fr: the app does, so its pages follow the app's language);
+    // otherwise the browser's language picks the version, as on the home page (i18n.js). The query
+    // and the anchor come along.
     (() => {
       const langs = ["en","fr","es","de","it","pt","nl"];
-      let want = "en";
-      for (const tag of navigator.languages || [navigator.language || "en"]) {
+      const asked = new URLSearchParams(location.search).get("lang");
+      let want = langs.includes(asked) ? asked : null;
+      for (const tag of want ? [] : navigator.languages || [navigator.language || "en"]) {
         const code = String(tag).toLowerCase().split("-")[0];
         if (langs.includes(code)) { want = code; break; }
       }
-      if (want !== "pt") location.replace(`${want === "en" ? "" : `/${want}`}/privacy${location.hash}`);
+      want = want || "en";
+      if (want !== "pt") location.replace(`${want === "en" ? "" : `/${want}`}/privacy${location.search}${location.hash}`);
     })();
   </script>
   <title>drafft: Política de privacidade</title>
@@ -103,7 +107,7 @@
 
     <h2 id="sensitive-data">Dados sensíveis</h2>
     <p>O teu género e os géneros das pessoas que queres ver podem revelar a tua orientação sexual. Os teus hábitos (álcool, tabaco, alimentação) podem revelar informações relacionadas com a tua saúde ou as tuas convicções. O simples facto de usares uma app de encontros é também uma informação pessoal.</p>
-    <p>Estes dados são tratados com base no teu consentimento explícito, que dás ao indicá-los para que o drafft te mostre perfis e mostre o teu. Podes retirá-lo a qualquer momento: altera ou apaga os teus hábitos no teu perfil, ou elimina a tua conta. O género e os géneros que queres ver são necessários para o funcionamento do drafft: para parar o seu tratamento, tens de eliminar a tua conta.</p>
+    <p>Estes dados são tratados com base no teu consentimento explícito, que dás ao marcar a caixa prevista, no registo ou quando a app te pede, para que o drafft te mostre perfis e mostre o teu. Podes retirá-lo a qualquer momento: altera ou apaga os teus hábitos no teu perfil, ou elimina a tua conta (Tu › Privacidade e dados › Consentimento de dados sensíveis). O género e os géneros que queres ver são necessários para o funcionamento do drafft: para parar o seu tratamento, tens de eliminar a tua conta.</p>
 
     <h2 id="purposes">Para que os usamos</h2>
     <div class="lg-table">
@@ -138,7 +142,7 @@
     <p>Nunca são mostrados: a tua data de nascimento, o teu endereço de e-mail, o teu número de telefone e os géneros que queres ver. Quando pausas o teu perfil, deixa de aparecer em Descobrir e nos likes; os teus matches, as tuas conversas e as tuas sessões mantêm-se.</p>
 
     <h2 id="team-access">Acesso da equipa drafft</h2>
-    <p>Só as pessoas da equipa que precisam acedem aos dados, com direitos limitados à sua função (ajuda, moderação, administração). Para tratar uma denúncia, um pedido de ajuda ou um risco para a segurança dos membros, a moderação pode ler as conversas de um match, apagar uma mensagem que viole as regras e consultar uma selfie de verificação. Cada consulta e cada ação ficam registadas.</p>
+    <p>Só as pessoas da equipa que precisam acedem aos dados, com direitos limitados à sua função (ajuda, moderação, administração). Para tratar uma denúncia, um pedido de ajuda, um risco para a segurança dos membros ou o pedido de uma autoridade, a moderação pode ler as conversas de um match, apagar uma mensagem que viole as regras e consultar uma selfie de verificação. Cada consulta e cada ação ficam registadas.</p>
 
     <h2 id="providers">Prestadores</h2>
     <p>O drafft recorre a estes prestadores, que tratam dados por sua conta e segundo as suas instruções:</p>
@@ -174,7 +178,7 @@
         <tr><td>Endereços IP</td><td>180 dias após a tua última ligação a partir desse endereço.</td></tr>
         <tr><td>Informações sobre o dispositivo</td><td>1 ano após a sua última utilização.</td></tr>
         <tr><td>Histórico dos SMS enviados (número, endereço IP)</td><td>30 dias.</td></tr>
-        <tr><td>Filas de envio técnicas (notificações, e-mails)</td><td>30 dias no máximo.</td></tr>
+        <tr><td>Filas de envio técnicas (notificações, e-mails)</td><td>30 dias no máximo. Um pedido de eliminação que falha fica na fila até ser concluído.</td></tr>
         <tr><td>Conta suspensa, banida ou visada por uma denúncia em curso no momento da eliminação</td><td>Conservada para a segurança dos membros e apagada 1 ano após o encerramento do processo.</td></tr>
         <tr><td>Conversa após o fim de um match, com as respetivas fotos, vídeos e mensagens de voz</td><td>Deixa de estar visível para os membros, é guardada 1 ano para tratar uma eventual denúncia e depois apagada.</td></tr>
         <tr><td>Conversa com um membro suspenso ou banido</td><td>1 ano após o fim da conversa.</td></tr>
@@ -194,8 +198,8 @@
     <h2 id="rights">Os teus direitos</h2>
     <p>Tens o direito de aceder aos teus dados, de os retificar, de os apagar, de limitar o seu tratamento, de te opores a um tratamento baseado no interesse legítimo, de os receber num formato reutilizável (portabilidade) e de retirar o teu consentimento a qualquer momento. Podes também definir diretrizes sobre o destino dos teus dados após a tua morte.</p>
     <ul>
-      <li><strong>Exportar os teus dados:</strong> Tu › Privacidade e dados › Exportar os meus dados. Recebes uma ligação por e-mail, geralmente em 24 horas, válida durante 7 dias.</li>
-      <li><strong>Eliminar a tua conta:</strong> Tu › Eliminar conta. A eliminação é imediata.</li>
+      <li><strong>Exportar os teus dados:</strong> Tu › Privacidade e dados › Exportar os meus dados. Recebes por e-mail uma ou mais ligações de transferência, geralmente em 24 horas, válidas durante 7 dias.</li>
+      <li><strong>Eliminar a tua conta:</strong> Tu › Eliminar conta. A eliminação é imediata. Sem a app: <a href="/pt/delete-account">eliminar a tua conta</a>.</li>
       <li><strong>Alterar o teu perfil:</strong> a qualquer momento no separador Tu. A data de nascimento e o género não podem ser alterados depois do registo: escreve-nos em caso de erro.</li>
       <li><strong>Aceitar ou recusar as estatísticas de utilização:</strong> a app pergunta-te, e podes mudar de ideias a qualquer momento em Tu › Privacidade e dados. Recusar não muda nada no que podes fazer no drafft.</li>
       <li><strong>Para o resto:</strong> escreve para <a href="mailto:support@getdrafft.com">support@getdrafft.com</a>. Respondemos no prazo máximo de um mês. Podemos pedir-te que confirmes a tua identidade.</li>
@@ -223,6 +227,7 @@
       <a href="/pt/legal">Aviso legal</a>
       <a href="/pt/privacy" aria-current="page">Política de privacidade</a>
       <a href="/pt/terms">Termos de utilização</a>
+      <a href="/pt/delete-account">Eliminar a tua conta</a>
     </nav>
     <p>© 2026 drafft</p>
   </div>

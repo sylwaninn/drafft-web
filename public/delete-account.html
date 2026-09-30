@@ -1,0 +1,120 @@
+<!doctype html>
+<!-- Built by scripts/legal.mjs from legal/pages/en/delete-account.html and legal/entity.json: edit those, then run pnpm legal. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // A link can name the language (?lang=fr: the app does, so its pages follow the app's language);
+    // otherwise the browser's language picks the version, as on the home page (i18n.js). The query
+    // and the anchor come along.
+    (() => {
+      const langs = ["en","fr","es","de","it","pt","nl"];
+      const asked = new URLSearchParams(location.search).get("lang");
+      let want = langs.includes(asked) ? asked : null;
+      for (const tag of want ? [] : navigator.languages || [navigator.language || "en"]) {
+        const code = String(tag).toLowerCase().split("-")[0];
+        if (langs.includes(code)) { want = code; break; }
+      }
+      want = want || "en";
+      if (want !== "en") location.replace(`${want === "en" ? "" : `/${want}`}/delete-account${location.search}${location.hash}`);
+    })();
+  </script>
+  <title>drafft: Delete your account</title>
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://getdrafft.com/delete-account">
+  <link rel="alternate" hreflang="en" href="https://getdrafft.com/delete-account">
+  <link rel="alternate" hreflang="fr" href="https://getdrafft.com/fr/delete-account">
+  <link rel="alternate" hreflang="es" href="https://getdrafft.com/es/delete-account">
+  <link rel="alternate" hreflang="de" href="https://getdrafft.com/de/delete-account">
+  <link rel="alternate" hreflang="it" href="https://getdrafft.com/it/delete-account">
+  <link rel="alternate" hreflang="pt-PT" href="https://getdrafft.com/pt/delete-account">
+  <link rel="alternate" hreflang="nl" href="https://getdrafft.com/nl/delete-account">
+  <link rel="alternate" hreflang="x-default" href="https://getdrafft.com/delete-account">
+  <meta name="theme-color" content="#EEEFF1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E0F10" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png?v=graphite">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=graphite">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon.png?v=graphite">
+  <link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/legal.css?v=1790760000">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="lg-head">
+  <a class="lg-brand" href="/" aria-label="drafft home">drafft</a>
+</header>
+<main id="main" class="lg">
+  <div class="lg-intro">
+    <p class="lg-date">Updated on <time datetime="2026-09-29">29 September 2026</time></p>
+    <h1>Delete your account</h1>
+    <p class="lg-lead">How to delete your drafft account, with or without the app, what’s erased and what’s kept, and for how long.</p>
+  </div>
+  <nav class="lg-toc" aria-label="Contents">
+    <p class="lg-toc__title">Contents</p>
+    <ol>
+      <li><a href="#in-app">From the app</a></li>
+      <li><a href="#without-app">Without the app</a></li>
+      <li><a href="#subscription">Your subscription</a></li>
+      <li><a href="#deleted">What’s erased</a></li>
+      <li><a href="#kept">What’s kept, and for how long</a></li>
+      <li><a href="#export">Keep a copy before you go</a></li>
+    </ol>
+  </nav>
+  <div class="lg-body">
+    <h2 id="in-app">From the app</h2>
+    <ol>
+      <li>Open drafft and go to the You tab.</li>
+      <li>Tap Delete account, at the bottom of the screen.</li>
+      <li>Confirm. Your account is deleted straight away.</li>
+    </ol>
+
+    <h2 id="without-app">Without the app</h2>
+    <p>No longer have the app, or your phone? Write to <a href="mailto:support@getdrafft.com">support@getdrafft.com</a> from your account’s email address, with the subject “Delete my account”.</p>
+    <ul>
+      <li>If you can no longer use that address, write from another one and give your account’s phone number: we’ll ask you to confirm it’s you.</li>
+      <li>We delete your account within 30 days at most and confirm it by email.</li>
+    </ul>
+
+    <h2 id="subscription">Your subscription</h2>
+    <p>Deleting your account doesn’t cancel an active drafft tempo subscription. Cancel it in the subscriptions of the app store you bought it from, in your phone’s settings. Any boosts and super likes you have left are lost.</p>
+
+    <h2 id="deleted">What’s erased</h2>
+    <p>As soon as you delete: your account, your profile, your photos and voice intro, your likes, your matches, your chats and their photos, videos and voice messages, your sessions, your blocks, your settings, your registered devices and any data export archive.</p>
+
+    <h2 id="kept">What’s kept, and for how long</h2>
+    <div class="lg-table">
+    <table>
+      <thead><tr><th scope="col">Data</th><th scope="col">How long</th></tr></thead>
+      <tbody>
+        <tr><td>Backups</td><td>Up to 30 days, then erased.</td></tr>
+        <tr><td>Account that was on hold, banned or under an open report when deleted</td><td>Kept for members’ safety, then erased 1 year after the case is closed.</td></tr>
+        <tr><td>Chat with a member who is on hold or banned</td><td>1 year after the chat ends.</td></tr>
+        <tr><td>Identity fingerprints (email, number, login identifiers), encrypted</td><td>1 year, 3 years if the account was banned, to stop a return under another identity.</td></tr>
+        <tr><td>Reports you made</td><td>1 year after they’re handled, without your name.</td></tr>
+        <tr><td>Purchases</td><td>10 years, as accounting law requires, no longer linked to your account.</td></tr>
+        <tr><td>Help requests</td><td>3 years after the last exchange.</td></tr>
+        <tr><td>IP addresses, log of texts sent</td><td>180 days and 30 days at most.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Each period is detailed in the <a href="/privacy#retention">privacy policy</a>.</p>
+
+    <h2 id="export">Keep a copy before you go</h2>
+    <p>Before deleting your account, you can ask for a copy of your data: You › Privacy &amp; data › Export my data. You get one or more download links by email, usually within 24 hours, valid for 7 days.</p>
+  </div>
+</main>
+<footer class="lg-foot">
+  <div class="lg-foot__row">
+    <p>Dating for people who train.</p>
+    <nav class="lg-foot__links" aria-label="Legal">
+      <a href="/legal">Legal notice</a>
+      <a href="/privacy">Privacy policy</a>
+      <a href="/terms">Terms of use</a>
+      <a href="/delete-account" aria-current="page">Delete your account</a>
+    </nav>
+    <p>© 2026 drafft</p>
+  </div>
+</footer>
+</body>
+</html>
