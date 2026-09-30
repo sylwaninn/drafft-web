@@ -84,11 +84,14 @@
     nav.classList.toggle("on-dark", dark);
     nav.classList.toggle("on-light", !dark);
   }
-  let toneQueued = false;
+  // At most one reading every 80 ms (18 hit tests each): every frame is too much for a phone
+  // while it scrolls, and the logo's colour can trail by a few frames unnoticed.
+  let toneQueued = false, toneAt = 0;
   const queueTone = () => {
     if (toneQueued) return;
     toneQueued = true;
-    requestAnimationFrame(() => { toneQueued = false; toneUnderLogo(); });
+    const wait = Math.max(0, toneAt + 80 - performance.now());
+    setTimeout(() => requestAnimationFrame(() => { toneQueued = false; toneAt = performance.now(); toneUnderLogo(); }), wait);
   };
   addEventListener("scroll", queueTone, { passive: true });
   addEventListener("resize", queueTone);
@@ -188,8 +191,11 @@
     stepper.style.bottom = `${free ?? usual}px`;
     stepper.classList.toggle("is-away", away || free === undefined);
   };
-  addEventListener("resize", placeStepper);
-  addEventListener("scroll", placeStepper, { passive: true });
+  // Touch screens never show the arrows (see the CSS): no need to place them on every scroll.
+  if (!matchMedia("(pointer: coarse)").matches) {
+    addEventListener("resize", placeStepper);
+    addEventListener("scroll", placeStepper, { passive: true });
+  }
 
   /* ================= Sentence starts never hang ================= */
 
@@ -241,10 +247,16 @@
   let stackShare = 0.58; // part of the hero's height the screen takes; fit() lowers it on short phones
   let stackLift = 0;     // px the stack is raised for the headline step (base of the landing)
   let capLifts = [];     // the same for each story caption: each step is centred on its own
+  // The hero is as tall as the screen with the toolbar folded away (lvh); the screen is placed in
+  // the part always visible (svh, measured on a probe), the extra room stays below it.
+  const svhProbe = document.createElement("div");
+  svhProbe.style.cssText = "position:absolute;top:0;left:0;width:0;height:100svh;visibility:hidden;pointer-events:none";
+  document.body.append(svhProbe);
   const stackFrame = (lift = stackLift) => {
     const heroEl = $("[data-hero]"), ph = $("[data-phone]").offsetHeight, H = heroEl.offsetHeight, pt = ph / 852;
-    const scale = Math.min(0.95, (stackShare * H) / ((CONTENT_BOTTOM - CONTENT_TOP) * pt));
-    const contentTop = H - 16 - lift - (CONTENT_BOTTOM - CONTENT_TOP) * pt * scale;
+    const V = Math.min(H, svhProbe.offsetHeight);
+    const scale = Math.min(0.95, (stackShare * V) / ((CONTENT_BOTTOM - CONTENT_TOP) * pt));
+    const contentTop = V - 16 - lift - (CONTENT_BOTTOM - CONTENT_TOP) * pt * scale;
     return { scale, y: contentTop - CONTENT_TOP * pt * scale - (H / 2 - (ph * scale) / 2), textBottom: contentTop - 20 };
   };
   const bottomOf = (el, stop) => { let y = el.offsetHeight; for (let n = el; n && n !== stop; n = n.offsetParent) y += n.offsetTop; return y; };
@@ -309,7 +321,14 @@
   // With the scroll story running, fitting happens right after ScrollTrigger's refresh (see the
   // "refresh" listener by the story): only then does the pinned hero carry its new size, so the
   // texts are measured at the new size. Without it (static page), a plain debounced resize.
+  // On touch screens a height-only resize is the browser's toolbar showing or hiding while the
+  // page scrolls (iOS Safari): the layout never depends on it (100svh), so nothing is redone.
+  // Refreshing there would re-measure the pinned story mid-scroll and make the page jump.
+  const coarse = matchMedia("(pointer: coarse)").matches;
+  let lastW = innerWidth;
   addEventListener("resize", () => {
+    if (coarse && innerWidth === lastW) return;
+    lastW = innerWidth;
     clearTimeout(fitTimer);
     fitTimer = setTimeout(() => { if (window.ScrollTrigger && root.classList.contains("js-motion")) window.ScrollTrigger.refresh(); else fit(); }, 150);
   });
@@ -400,6 +419,8 @@
   /* ================= Smooth scroll ================= */
 
   g.registerPlugin(ST);
+  // Same rule inside ScrollTrigger: the toolbar's height changes never trigger a refresh.
+  ST.config({ ignoreMobileResize: true });
   g.ticker.add(queueTone);
   // A pile can be one card short (see i18n.js): its tweens then simply have nothing to move.
   g.config({ nullTargetWarn: false });
@@ -453,13 +474,14 @@
       W: h.width, H: h.height,
       cx: c.left - h.left + c.width / 2, cy: c.top - h.top + c.height / 2,
       w: c.width, h: c.height,
+      PH: photo.offsetHeight,
       r: parseFloat(getComputedStyle(card).borderTopLeftRadius) || 20,
       // the action row (like, pass…): the photo keeps clear of it while it pulls back
       aTop: $(".acts").getBoundingClientRect().top - h.top,
       // what this geometry depends on: if any of it changes, measure again (see layout)
       key: `${hero.offsetHeight}|${phone.offsetHeight}|${hero.style.getPropertyValue("--text-gap")}`,
     };
-    m.S0 = Math.max(m.H / m.h, m.W / m.w) * 1.04;
+    m.S0 = Math.max(m.PH / m.h, m.W / m.w) * 1.04;
     scene.style.transformOrigin = `${c.left + c.width / 2 - s.left}px ${c.top + c.height / 2 - s.top}px`;
     scene.style.transform = prevScene;
     frameAll();
@@ -480,7 +502,7 @@
     // into the card's frame over the rest of it (smootherstep): late, long and without a jolt.
     // Start where the card's framing becomes smaller than the full-screen one, so the image only
     // ever shrinks (no swell before the pull-back).
-    const full0 = frameBox(photoImg, m.W, m.H, 0), card0 = frameBox(photoImg, m.w, m.h, 1);
+    const full0 = frameBox(photoImg, m.W, m.PH, 0), card0 = frameBox(photoImg, m.w, m.h, 1);
     const ratio = full0 && card0 ? full0.rw / card0.rw : 1;
     const t0 = Math.min(Math.max(1 - Math.log(Math.max(ratio, 1.0001)) / Math.log(m.S0), 0.25), 0.85);
     const u = Math.min(Math.max((t - t0) / (1 - t0), 0), 1);
@@ -489,34 +511,36 @@
     // The photo's bottom edge never comes within 16 px of the action buttons: they move with the
     // scene (scaled about the card's centre, then shifted), and the frame stops above them.
     const actsTop = m.cy + (m.aTop - m.cy) * s + dy;
-    const bw = lerp(m.W, cw, w), bh = Math.min(lerp(m.H, ch, w), actsTop - 16 - lerp(0, cy - ch / 2, w));
-    photo.style.left = `${lerp(0, cx - cw / 2, w)}px`;
-    photo.style.top = `${lerp(0, cy - ch / 2, w)}px`;
-    photo.style.width = `${bw}px`;
-    photo.style.height = `${bh}px`;
-    photo.style.borderRadius = `${m.r * s * w}px`;
+    const bx = lerp(0, cx - cw / 2, w), by = lerp(0, cy - ch / 2, w);
+    const bw = lerp(m.W, cw, w), bh = Math.min(lerp(m.PH, ch, w), actsTop - 16 - by);
+    // The frame is a clip on the full-hero layer and the image moves by transform only: nothing
+    // is laid out again while scrolling, so the pull-back stays on the GPU (smooth on phones).
+    photo.style.clipPath = `inset(${by}px ${m.W - bx - bw}px ${m.PH - by - bh}px ${bx}px round ${m.r * s * w}px)`;
     // A camera pull-back, not a re-crop: the image's rectangle on screen glides from its
     // full-screen framing to exactly where it sits inside the card (which itself moves with the
     // scene), while the frame above closes around it. Both are linear in w, so the image always
     // covers the frame, keeps its proportions and never jumps.
-    const full = frameBox(photoImg, m.W, m.H, 0), inCard = frameBox(photoImg, m.w, m.h, 1);
+    const full = frameBox(photoImg, m.W, m.PH, 0), inCard = frameBox(photoImg, m.w, m.h, 1);
     if (full && inCard) {
-      const bx = lerp(0, cx - cw / 2, w), by = lerp(0, cy - ch / 2, w);
       const ix = lerp(full.left, cx - cw / 2 + inCard.left * s, w);
       const iy = lerp(full.top, cy - ch / 2 + inCard.top * s, w);
-      const iw = lerp(full.rw, inCard.rw * s, w), ih = lerp(full.rh, inCard.rh * s, w);
-      const st2 = photoImg.style;
-      st2.position = "absolute"; st2.maxWidth = "none";
-      st2.left = `${ix - bx}px`; st2.top = `${iy - by}px`; st2.width = `${iw}px`; st2.height = `${ih}px`;
+      const iw = lerp(full.rw, inCard.rw * s, w);
+      const st2 = photoImg.style, size = `${full.rw}px`;
+      if (st2.width !== size) {
+        st2.position = "absolute"; st2.maxWidth = "none"; st2.left = "0px"; st2.top = "0px";
+        st2.width = size; st2.height = `${full.rh}px`; st2.transformOrigin = "0 0";
+      }
+      st2.transform = `translate3d(${ix}px, ${iy}px, 0) scale(${iw / full.rw})`;
     }
     // Once it lands, the card underneath (same image, same crop) takes over.
     photo.style.visibility = t >= 0.999 ? "hidden" : "visible";
     queueTone();
   };
 
-  // Load: the photo settles in (the scroll cue's entrance is CSS, so it never flashes).
+  // Load: the photo settles in (the scroll cue's entrance is CSS, so it never flashes). It runs on
+  // the frame layer, the image's own transform belongs to the pull-back (see layout).
   g.timeline({ defaults: { ease: "expo.out" } })
-    .fromTo(photoImg, { scale: 1.12, filter: "blur(18px)" }, { scale: 1, filter: "blur(0px)", duration: 2, clearProps: "scale,filter" }, 0);
+    .fromTo(photo, { scale: 1.12, filter: "blur(18px)" }, { scale: 1, filter: "blur(0px)", duration: 2, clearProps: "scale,filter" }, 0);
   root.classList.remove("is-booting");
 
   const caps = $$("[data-cap]");
@@ -548,19 +572,33 @@
   const settleY = (i) => (mobile() ? stackFrame(i < 0 ? stackLift : capLifts[i] ?? stackLift).y : 0);
 
 
+  // Phones get a shorter run: the same story in less thumb travel. The pull-back is short
+  // (1.2 of the timeline's units): the first flick of the wheel already sets the zoom going.
+  // Measured on the hero (svh/lvh), not innerHeight: the length stays put while a phone's
+  // toolbar shows and hides.
+  const run = () => hero.offsetHeight * (mobile() ? 6 : 7.85);
+  // Pinned by CSS, not by ScrollTrigger: the hero is sticky inside a runway as tall as itself
+  // plus the story. The browser keeps it in place on its own compositor, so it never lags a
+  // frame behind a phone's momentum scroll (a JS pin jitters there, above all as it lets go).
+  const runway = document.createElement("div");
+  runway.className = "hero-run";
+  hero.before(runway);
+  runway.append(hero);
+  const sizeRunway = () => { runway.style.height = `${hero.offsetHeight + run()}px`; };
+  sizeRunway();
+  ST.addEventListener("refreshInit", sizeRunway);
+
   const story = g.timeline({
     defaults: { ease: "power2.inOut" },
     scrollTrigger: {
-      trigger: hero,
+      trigger: runway,
       // The hero opens the page: the story starts at 0. Measured ("top top"), a refresh made deep
-      // in the pinned story (a resize) could read a negative start and shift every step.
+      // in the story (a resize) could read a negative start and shift every step.
       start: 0,
-      // Phones get a shorter run: the same story in less thumb travel. The pull-back is short
-      // (1.2 of the timeline's units): the first flick of the wheel already sets the zoom going.
-      end: () => "+=" + innerHeight * (mobile() ? 6 : 7.85),
-      pin: true,
-      scrub: 0.9,
-      anticipatePin: 1,
+      end: () => "+=" + run(),
+      // A finger drives the page directly (with its own momentum): a short catch-up keeps the
+      // story under the thumb instead of trailing behind it. The wheel keeps the longer glide.
+      scrub: coarse ? 0.3 : 0.9,
       invalidateOnRefresh: true,
       onRefreshInit: () => { m = null; },
       onRefresh: () => { measure(); layout(); },

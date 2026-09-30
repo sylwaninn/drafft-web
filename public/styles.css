@@ -99,6 +99,8 @@
 /* Base */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 88px; }
+/* Lenis drives the scroll: native smoothing on top of it makes programmatic jumps drift */
+html.lenis { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   margin: 0;
@@ -505,9 +507,9 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
   left: 0; top: 0;
   width: 100%; height: 100%;
   overflow: hidden;
-  will-change: left, top, width, height;
+  will-change: clip-path;
 }
-.hero__photo img { position: absolute; max-width: none; transform-origin: 50% 50%; }
+.hero__photo img { position: absolute; max-width: none; transform-origin: 0 0; will-change: transform; }
 .scrollcue-wrap { display: none; }
 .js-motion .scrollcue-wrap {
   display: block;
@@ -528,6 +530,8 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
 
 /* The screen is centred in the pinned viewport; the scene wrapper carries the zoom */
 .js-motion .stage { position: absolute; inset: 0; grid-column: auto; grid-row: auto; place-items: center; }
+/* The story's pin: the hero sticks to the top of its runway (sized in main.js) */
+.hero-run > .hero { position: sticky; top: 0; }
 .scene { transform-origin: 50% 50%; }
 
 /* ================= Store links ================= */
@@ -561,8 +565,14 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
     --top: calc(env(safe-area-inset-top) + 72px);
     grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; align-content: start; row-gap: 14px;
     padding: var(--top) var(--gutter) 0; text-align: center; justify-items: center;
-    height: 100svh; min-height: 0;
+    /* As tall as the screen with the toolbar folded away (lvh), so nothing is ever cut when it
+       folds; the screen and the texts sit in the part always visible (svh, see stackFrame() in
+       main.js). Both heights are fixed: the toolbar moving never changes the layout. */
+    --toolbar: calc(100lvh - 100svh);
+    height: 100lvh; min-height: 0;
   }
+  .js-motion .scrollcue-wrap { bottom: calc(max(32px, env(safe-area-inset-bottom)) + var(--toolbar)); }
+  .idle-hint { padding-bottom: var(--toolbar); }
   .js-motion .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
   .js-motion .hero__left, .js-motion .hero__right { grid-column: 1; }
   .hero__title { margin-inline: auto; font-size: clamp(2.25rem, 10.5vw, 3.5rem); max-width: 11em; }
@@ -716,6 +726,14 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
 /* The step arrows are for mouse and trackpad: touch screens scroll natively, and there the
    capsule would only sit on top of the content. */
 @media (pointer: coarse) { .stepper { display: none; } }
+/* Touch screens (iOS Safari above all): a backdrop-filter redrawn under a moving or scaling layer
+   flickers there. The app's screen scales through the whole story and the cue sits on the moving
+   photo, so their glass keeps its tint and rim without the live blur (over the screen's plain
+   background it looked the same anyway). */
+@media (pointer: coarse) {
+  .phone *, .scrollcue.lg, .lg-refract .scrollcue.lg { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .scrollcue.lg { --lg-tint: .22; }
+}
 /* On narrower desktop windows, the sections keep clear of the capsule (symmetric, so their
    content stays centred). */
 @media (hover: hover) and (pointer: fine) and (min-width: 900px) and (max-width: 1400px) {
