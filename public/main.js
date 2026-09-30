@@ -241,10 +241,16 @@
   let stackShare = 0.58; // part of the hero's height the screen takes; fit() lowers it on short phones
   let stackLift = 0;     // px the stack is raised for the headline step (base of the landing)
   let capLifts = [];     // the same for each story caption: each step is centred on its own
+  // The hero is as tall as the screen with the toolbar folded away (lvh); the screen is placed in
+  // the part always visible (svh, measured on a probe), the extra room stays below it.
+  const svhProbe = document.createElement("div");
+  svhProbe.style.cssText = "position:absolute;top:0;left:0;width:0;height:100svh;visibility:hidden;pointer-events:none";
+  document.body.append(svhProbe);
   const stackFrame = (lift = stackLift) => {
     const heroEl = $("[data-hero]"), ph = $("[data-phone]").offsetHeight, H = heroEl.offsetHeight, pt = ph / 852;
-    const scale = Math.min(0.95, (stackShare * H) / ((CONTENT_BOTTOM - CONTENT_TOP) * pt));
-    const contentTop = H - 16 - lift - (CONTENT_BOTTOM - CONTENT_TOP) * pt * scale;
+    const V = Math.min(H, svhProbe.offsetHeight);
+    const scale = Math.min(0.95, (stackShare * V) / ((CONTENT_BOTTOM - CONTENT_TOP) * pt));
+    const contentTop = V - 16 - lift - (CONTENT_BOTTOM - CONTENT_TOP) * pt * scale;
     return { scale, y: contentTop - CONTENT_TOP * pt * scale - (H / 2 - (ph * scale) / 2), textBottom: contentTop - 20 };
   };
   const bottomOf = (el, stop) => { let y = el.offsetHeight; for (let n = el; n && n !== stop; n = n.offsetParent) y += n.offsetTop; return y; };
@@ -560,19 +566,33 @@
   const settleY = (i) => (mobile() ? stackFrame(i < 0 ? stackLift : capLifts[i] ?? stackLift).y : 0);
 
 
+  // Phones get a shorter run: the same story in less thumb travel. The pull-back is short
+  // (1.2 of the timeline's units): the first flick of the wheel already sets the zoom going.
+  // Measured on the hero (svh/lvh), not innerHeight: the length stays put while a phone's
+  // toolbar shows and hides.
+  const run = () => hero.offsetHeight * (mobile() ? 6 : 7.85);
+  // Pinned by CSS, not by ScrollTrigger: the hero is sticky inside a runway as tall as itself
+  // plus the story. The browser keeps it in place on its own compositor, so it never lags a
+  // frame behind a phone's momentum scroll (a JS pin jitters there, above all as it lets go).
+  const runway = document.createElement("div");
+  runway.className = "hero-run";
+  hero.before(runway);
+  runway.append(hero);
+  const sizeRunway = () => { runway.style.height = `${hero.offsetHeight + run()}px`; };
+  sizeRunway();
+  ST.addEventListener("refreshInit", sizeRunway);
+
   const story = g.timeline({
     defaults: { ease: "power2.inOut" },
     scrollTrigger: {
-      trigger: hero,
+      trigger: runway,
       // The hero opens the page: the story starts at 0. Measured ("top top"), a refresh made deep
-      // in the pinned story (a resize) could read a negative start and shift every step.
+      // in the story (a resize) could read a negative start and shift every step.
       start: 0,
-      // Phones get a shorter run: the same story in less thumb travel. The pull-back is short
-      // (1.2 of the timeline's units): the first flick of the wheel already sets the zoom going.
-      end: () => "+=" + innerHeight * (mobile() ? 6 : 7.85),
-      pin: true,
-      scrub: 0.9,
-      anticipatePin: 1,
+      end: () => "+=" + run(),
+      // A finger drives the page directly (with its own momentum): a short catch-up keeps the
+      // story under the thumb instead of trailing behind it. The wheel keeps the longer glide.
+      scrub: coarse ? 0.3 : 0.9,
       invalidateOnRefresh: true,
       onRefreshInit: () => { m = null; },
       onRefresh: () => { measure(); layout(); },

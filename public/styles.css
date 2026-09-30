@@ -530,6 +530,8 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
 
 /* The screen is centred in the pinned viewport; the scene wrapper carries the zoom */
 .js-motion .stage { position: absolute; inset: 0; grid-column: auto; grid-row: auto; place-items: center; }
+/* The story's pin: the hero sticks to the top of its runway (sized in main.js) */
+.hero-run > .hero { position: sticky; top: 0; }
 .scene { transform-origin: 50% 50%; }
 
 /* ================= Store links ================= */
@@ -563,8 +565,14 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
     --top: calc(env(safe-area-inset-top) + 72px);
     grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; align-content: start; row-gap: 14px;
     padding: var(--top) var(--gutter) 0; text-align: center; justify-items: center;
-    height: 100svh; min-height: 0;
+    /* As tall as the screen with the toolbar folded away (lvh), so nothing is ever cut when it
+       folds; the screen and the texts sit in the part always visible (svh, see stackFrame() in
+       main.js). Both heights are fixed: the toolbar moving never changes the layout. */
+    --toolbar: calc(100lvh - 100svh);
+    height: 100lvh; min-height: 0;
   }
+  .js-motion .scrollcue-wrap { bottom: calc(max(32px, env(safe-area-inset-bottom)) + var(--toolbar)); }
+  .idle-hint { padding-bottom: var(--toolbar); }
   .js-motion .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
   .js-motion .hero__left, .js-motion .hero__right { grid-column: 1; }
   .hero__title { margin-inline: auto; font-size: clamp(2.25rem, 10.5vw, 3.5rem); max-width: 11em; }
