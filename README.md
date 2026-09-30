@@ -16,8 +16,10 @@ the `drafft` repository.
 
 ## Legal pages
 
-The legal notice, privacy policy and terms of use exist in the 7 languages: `/legal`, `/privacy` and
-`/terms` in English, `/<lang>/legal` and so on for the others (fr, es, de, it, pt, nl). Like the home
+The legal notice, privacy policy, terms of use and account deletion page exist in the 7 languages:
+`/legal`, `/privacy`, `/terms` and `/delete-account` in English, `/<lang>/legal` and so on for the others
+(fr, es, de, it, pt, nl). `/delete-account` is the page Google Play asks for (how to delete an account
+without the app, what's erased and what's kept): its URL goes in the Play Console's data deletion field. Like the home
 page, they follow the browser's language: a page opened in another language moves to its own version
 (English when none matches), so any of these URLs can be shared.
 

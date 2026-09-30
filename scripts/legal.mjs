@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Builds the legal pages (legal notice, privacy policy, terms of use) in the site's 7 languages.
+// Builds the legal pages (legal notice, privacy policy, terms of use, account deletion) in the site's 7
+// languages.
 //
 //   legal/pages/<lang>/<page>.html   the text of each page: an <h1>, then <h2 id="…"> sections
 //   legal/entity.json                who publishes drafft; {{key}} in a text becomes its value,
@@ -20,27 +21,27 @@ const check = process.argv.includes("--check");
 
 const SITE = "https://getdrafft.com";
 const CSS_VERSION = "1790760000";
-const PAGES = ["legal", "privacy", "terms"];
+const PAGES = ["legal", "privacy", "terms", "delete-account"];
 const LANGS = {
-  en: { name: "English", locale: "en-GB", legal: "Legal notice", privacy: "Privacy policy", terms: "Terms of use",
+  en: { name: "English", locale: "en-GB", legal: "Legal notice", privacy: "Privacy policy", terms: "Terms of use", "delete-account": "Delete your account",
     updated: "Updated on {date}", toc: "Contents", home: "drafft home", skip: "Skip to content",
     footer: "Dating for people who train.", legalNav: "Legal" },
-  fr: { name: "Français", locale: "fr-FR", legal: "Mentions légales", privacy: "Politique de confidentialité", terms: "Conditions d’utilisation",
+  fr: { name: "Français", locale: "fr-FR", legal: "Mentions légales", privacy: "Politique de confidentialité", terms: "Conditions d’utilisation", "delete-account": "Supprimer ton compte",
     updated: "Mis à jour le {date}", toc: "Sommaire", home: "Accueil drafft", skip: "Aller au contenu",
     footer: "Les rencontres pour les personnes qui s’entraînent.", legalNav: "Informations légales" },
-  es: { name: "Español", locale: "es-ES", legal: "Aviso legal", privacy: "Política de privacidad", terms: "Condiciones de uso",
+  es: { name: "Español", locale: "es-ES", legal: "Aviso legal", privacy: "Política de privacidad", terms: "Condiciones de uso", "delete-account": "Eliminar tu cuenta",
     updated: "Actualizado el {date}", toc: "Índice", home: "Inicio de drafft", skip: "Ir al contenido",
     footer: "Citas para quienes entrenan.", legalNav: "Información legal" },
-  de: { name: "Deutsch", locale: "de-DE", legal: "Impressum", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen",
+  de: { name: "Deutsch", locale: "de-DE", legal: "Impressum", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen", "delete-account": "Konto löschen",
     updated: "Aktualisiert am {date}", toc: "Inhalt", home: "drafft Startseite", skip: "Zum Inhalt",
     footer: "Dating für Menschen, die trainieren.", legalNav: "Rechtliches" },
-  it: { name: "Italiano", locale: "it-IT", legal: "Note legali", privacy: "Informativa sulla privacy", terms: "Termini di utilizzo",
+  it: { name: "Italiano", locale: "it-IT", legal: "Note legali", privacy: "Informativa sulla privacy", terms: "Termini di utilizzo", "delete-account": "Eliminare il tuo account",
     updated: "Aggiornato il {date}", toc: "Indice", home: "Home di drafft", skip: "Vai al contenuto",
     footer: "Incontri per chi si allena.", legalNav: "Note legali" },
-  pt: { name: "Português", locale: "pt-PT", legal: "Aviso legal", privacy: "Política de privacidade", terms: "Termos de utilização",
+  pt: { name: "Português", locale: "pt-PT", legal: "Aviso legal", privacy: "Política de privacidade", terms: "Termos de utilização", "delete-account": "Eliminar a tua conta",
     updated: "Atualizado a {date}", toc: "Índice", home: "Início do drafft", skip: "Ir para o conteúdo",
     footer: "Encontros para quem treina.", legalNav: "Informação legal" },
-  nl: { name: "Nederlands", locale: "nl-NL", legal: "Juridische informatie", privacy: "Privacybeleid", terms: "Gebruiksvoorwaarden",
+  nl: { name: "Nederlands", locale: "nl-NL", legal: "Juridische informatie", privacy: "Privacybeleid", terms: "Gebruiksvoorwaarden", "delete-account": "Je account verwijderen",
     updated: "Bijgewerkt op {date}", toc: "Inhoud", home: "drafft home", skip: "Naar de inhoud",
     footer: "Daten voor mensen die trainen.", legalNav: "Juridisch" },
 };
