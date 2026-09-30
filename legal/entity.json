@@ -1,6 +1,6 @@
 {
   "_about": "drafft's contact details, in one place: scripts/legal.mjs puts these values into every legal page, in all 7 languages. An empty value shows as a highlighted gap and fails `pnpm check`, so the pages can't ship incomplete. `updated` is the date the pages show (YYYY-MM-DD): change it whenever a text changes.",
-  "updated": "2026-09-29",
+  "updated": "2026-09-30",
   "email": "support@getdrafft.com",
   "privacyEmail": "support@getdrafft.com",
   "supabaseAddress": "65 Chulia Street #38-02/03, OCBC Centre, Singapore 049513"
