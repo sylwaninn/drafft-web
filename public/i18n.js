@@ -384,7 +384,7 @@
     { photo: "hiker", woman: false, name: "Noah", age: 30, area: "Paris 11e, 2 km", sports: ["hiking", "trail"] },
     { photo: "padel", woman: false, name: "Hugo", age: 32, area: "Paris 15e, 4 km", sports: ["padel", "running"] },
   ];
-  const ICON = { running: "sf-run", climbing: "sf-climb", strength: "sf-strength", hyrox: "sf-hyrox", hiking: "sf-hiking", cycling: "sf-cycling", yoga: "sf-yoga", trail: "sf-trail", tennis: "sf-tennis", padel: "sf-padel" };
+  const ICON = { running: "ic-steps-outline", climbing: "ic-carabiner", strength: "ic-dumbbell-large", hyrox: "ic-stopwatch", hiking: "ic-hiking", cycling: "ic-bicycling", yoga: "ic-meditation", trail: "ic-landscape-2-outline", tennis: "ic-tennis", padel: "ic-padel" };
   const shuffle = (a) => a.map((v) => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map((x) => x[1]);
   // Anyone can lead. The pile always shows three cards and a fourth waits to step in when the
   // top one goes. Like PackPhotos, it keeps to the lead's gender while the pool allows and only
