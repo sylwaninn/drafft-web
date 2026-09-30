@@ -726,6 +726,14 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
 /* The step arrows are for mouse and trackpad: touch screens scroll natively, and there the
    capsule would only sit on top of the content. */
 @media (pointer: coarse) { .stepper { display: none; } }
+/* Touch screens (iOS Safari above all): a backdrop-filter redrawn under a moving or scaling layer
+   flickers there. The app's screen scales through the whole story and the cue sits on the moving
+   photo, so their glass keeps its tint and rim without the live blur (over the screen's plain
+   background it looked the same anyway). */
+@media (pointer: coarse) {
+  .phone *, .scrollcue.lg, .lg-refract .scrollcue.lg { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .scrollcue.lg { --lg-tint: .22; }
+}
 /* On narrower desktop windows, the sections keep clear of the capsule (symmetric, so their
    content stays centred). */
 @media (hover: hover) and (pointer: fine) and (min-width: 900px) and (max-width: 1400px) {

@@ -84,11 +84,14 @@
     nav.classList.toggle("on-dark", dark);
     nav.classList.toggle("on-light", !dark);
   }
-  let toneQueued = false;
+  // At most one reading every 80 ms (18 hit tests each): every frame is too much for a phone
+  // while it scrolls, and the logo's colour can trail by a few frames unnoticed.
+  let toneQueued = false, toneAt = 0;
   const queueTone = () => {
     if (toneQueued) return;
     toneQueued = true;
-    requestAnimationFrame(() => { toneQueued = false; toneUnderLogo(); });
+    const wait = Math.max(0, toneAt + 80 - performance.now());
+    setTimeout(() => requestAnimationFrame(() => { toneQueued = false; toneAt = performance.now(); toneUnderLogo(); }), wait);
   };
   addEventListener("scroll", queueTone, { passive: true });
   addEventListener("resize", queueTone);
@@ -188,8 +191,11 @@
     stepper.style.bottom = `${free ?? usual}px`;
     stepper.classList.toggle("is-away", away || free === undefined);
   };
-  addEventListener("resize", placeStepper);
-  addEventListener("scroll", placeStepper, { passive: true });
+  // Touch screens never show the arrows (see the CSS): no need to place them on every scroll.
+  if (!matchMedia("(pointer: coarse)").matches) {
+    addEventListener("resize", placeStepper);
+    addEventListener("scroll", placeStepper, { passive: true });
+  }
 
   /* ================= Sentence starts never hang ================= */
 
