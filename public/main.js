@@ -462,13 +462,14 @@
       W: h.width, H: h.height,
       cx: c.left - h.left + c.width / 2, cy: c.top - h.top + c.height / 2,
       w: c.width, h: c.height,
+      PH: photo.offsetHeight,
       r: parseFloat(getComputedStyle(card).borderTopLeftRadius) || 20,
       // the action row (like, pass…): the photo keeps clear of it while it pulls back
       aTop: $(".acts").getBoundingClientRect().top - h.top,
       // what this geometry depends on: if any of it changes, measure again (see layout)
       key: `${hero.offsetHeight}|${phone.offsetHeight}|${hero.style.getPropertyValue("--text-gap")}`,
     };
-    m.S0 = Math.max(m.H / m.h, m.W / m.w) * 1.04;
+    m.S0 = Math.max(m.PH / m.h, m.W / m.w) * 1.04;
     scene.style.transformOrigin = `${c.left + c.width / 2 - s.left}px ${c.top + c.height / 2 - s.top}px`;
     scene.style.transform = prevScene;
     frameAll();
@@ -489,7 +490,7 @@
     // into the card's frame over the rest of it (smootherstep): late, long and without a jolt.
     // Start where the card's framing becomes smaller than the full-screen one, so the image only
     // ever shrinks (no swell before the pull-back).
-    const full0 = frameBox(photoImg, m.W, m.H, 0), card0 = frameBox(photoImg, m.w, m.h, 1);
+    const full0 = frameBox(photoImg, m.W, m.PH, 0), card0 = frameBox(photoImg, m.w, m.h, 1);
     const ratio = full0 && card0 ? full0.rw / card0.rw : 1;
     const t0 = Math.min(Math.max(1 - Math.log(Math.max(ratio, 1.0001)) / Math.log(m.S0), 0.25), 0.85);
     const u = Math.min(Math.max((t - t0) / (1 - t0), 0), 1);
@@ -498,34 +499,36 @@
     // The photo's bottom edge never comes within 16 px of the action buttons: they move with the
     // scene (scaled about the card's centre, then shifted), and the frame stops above them.
     const actsTop = m.cy + (m.aTop - m.cy) * s + dy;
-    const bw = lerp(m.W, cw, w), bh = Math.min(lerp(m.H, ch, w), actsTop - 16 - lerp(0, cy - ch / 2, w));
-    photo.style.left = `${lerp(0, cx - cw / 2, w)}px`;
-    photo.style.top = `${lerp(0, cy - ch / 2, w)}px`;
-    photo.style.width = `${bw}px`;
-    photo.style.height = `${bh}px`;
-    photo.style.borderRadius = `${m.r * s * w}px`;
+    const bx = lerp(0, cx - cw / 2, w), by = lerp(0, cy - ch / 2, w);
+    const bw = lerp(m.W, cw, w), bh = Math.min(lerp(m.PH, ch, w), actsTop - 16 - by);
+    // The frame is a clip on the full-hero layer and the image moves by transform only: nothing
+    // is laid out again while scrolling, so the pull-back stays on the GPU (smooth on phones).
+    photo.style.clipPath = `inset(${by}px ${m.W - bx - bw}px ${m.PH - by - bh}px ${bx}px round ${m.r * s * w}px)`;
     // A camera pull-back, not a re-crop: the image's rectangle on screen glides from its
     // full-screen framing to exactly where it sits inside the card (which itself moves with the
     // scene), while the frame above closes around it. Both are linear in w, so the image always
     // covers the frame, keeps its proportions and never jumps.
-    const full = frameBox(photoImg, m.W, m.H, 0), inCard = frameBox(photoImg, m.w, m.h, 1);
+    const full = frameBox(photoImg, m.W, m.PH, 0), inCard = frameBox(photoImg, m.w, m.h, 1);
     if (full && inCard) {
-      const bx = lerp(0, cx - cw / 2, w), by = lerp(0, cy - ch / 2, w);
       const ix = lerp(full.left, cx - cw / 2 + inCard.left * s, w);
       const iy = lerp(full.top, cy - ch / 2 + inCard.top * s, w);
-      const iw = lerp(full.rw, inCard.rw * s, w), ih = lerp(full.rh, inCard.rh * s, w);
-      const st2 = photoImg.style;
-      st2.position = "absolute"; st2.maxWidth = "none";
-      st2.left = `${ix - bx}px`; st2.top = `${iy - by}px`; st2.width = `${iw}px`; st2.height = `${ih}px`;
+      const iw = lerp(full.rw, inCard.rw * s, w);
+      const st2 = photoImg.style, size = `${full.rw}px`;
+      if (st2.width !== size) {
+        st2.position = "absolute"; st2.maxWidth = "none"; st2.left = "0px"; st2.top = "0px";
+        st2.width = size; st2.height = `${full.rh}px`; st2.transformOrigin = "0 0";
+      }
+      st2.transform = `translate3d(${ix}px, ${iy}px, 0) scale(${iw / full.rw})`;
     }
     // Once it lands, the card underneath (same image, same crop) takes over.
     photo.style.visibility = t >= 0.999 ? "hidden" : "visible";
     queueTone();
   };
 
-  // Load: the photo settles in (the scroll cue's entrance is CSS, so it never flashes).
+  // Load: the photo settles in (the scroll cue's entrance is CSS, so it never flashes). It runs on
+  // the frame layer, the image's own transform belongs to the pull-back (see layout).
   g.timeline({ defaults: { ease: "expo.out" } })
-    .fromTo(photoImg, { scale: 1.12, filter: "blur(18px)" }, { scale: 1, filter: "blur(0px)", duration: 2, clearProps: "scale,filter" }, 0);
+    .fromTo(photo, { scale: 1.12, filter: "blur(18px)" }, { scale: 1, filter: "blur(0px)", duration: 2, clearProps: "scale,filter" }, 0);
   root.classList.remove("is-booting");
 
   const caps = $$("[data-cap]");

@@ -507,9 +507,9 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
   left: 0; top: 0;
   width: 100%; height: 100%;
   overflow: hidden;
-  will-change: left, top, width, height;
+  will-change: clip-path;
 }
-.hero__photo img { position: absolute; max-width: none; transform-origin: 50% 50%; }
+.hero__photo img { position: absolute; max-width: none; transform-origin: 0 0; will-change: transform; }
 .scrollcue-wrap { display: none; }
 .js-motion .scrollcue-wrap {
   display: block;
