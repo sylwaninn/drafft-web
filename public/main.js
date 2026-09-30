@@ -309,7 +309,14 @@
   // With the scroll story running, fitting happens right after ScrollTrigger's refresh (see the
   // "refresh" listener by the story): only then does the pinned hero carry its new size, so the
   // texts are measured at the new size. Without it (static page), a plain debounced resize.
+  // On touch screens a height-only resize is the browser's toolbar showing or hiding while the
+  // page scrolls (iOS Safari): the layout never depends on it (100svh), so nothing is redone.
+  // Refreshing there would re-measure the pinned story mid-scroll and make the page jump.
+  const coarse = matchMedia("(pointer: coarse)").matches;
+  let lastW = innerWidth;
   addEventListener("resize", () => {
+    if (coarse && innerWidth === lastW) return;
+    lastW = innerWidth;
     clearTimeout(fitTimer);
     fitTimer = setTimeout(() => { if (window.ScrollTrigger && root.classList.contains("js-motion")) window.ScrollTrigger.refresh(); else fit(); }, 150);
   });
@@ -400,6 +407,8 @@
   /* ================= Smooth scroll ================= */
 
   g.registerPlugin(ST);
+  // Same rule inside ScrollTrigger: the toolbar's height changes never trigger a refresh.
+  ST.config({ ignoreMobileResize: true });
   g.ticker.add(queueTone);
   // A pile can be one card short (see i18n.js): its tweens then simply have nothing to move.
   g.config({ nullTargetWarn: false });
