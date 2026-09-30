@@ -92,15 +92,19 @@ function render(lang, page) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <script>
-    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    // A link can name the language (?lang=fr: the app does, so its pages follow the app's language);
+    // otherwise the browser's language picks the version, as on the home page (i18n.js). The query
+    // and the anchor come along.
     (() => {
       const langs = ${JSON.stringify(Object.keys(LANGS))};
-      let want = "en";
-      for (const tag of navigator.languages || [navigator.language || "en"]) {
+      const asked = new URLSearchParams(location.search).get("lang");
+      let want = langs.includes(asked) ? asked : null;
+      for (const tag of want ? [] : navigator.languages || [navigator.language || "en"]) {
         const code = String(tag).toLowerCase().split("-")[0];
         if (langs.includes(code)) { want = code; break; }
       }
-      if (want !== "${lang}") location.replace(\`\${want === "en" ? "" : \`/\${want}\`}/${page}\${location.hash}\`);
+      want = want || "en";
+      if (want !== "${lang}") location.replace(\`\${want === "en" ? "" : \`/\${want}\`}/${page}\${location.search}\${location.hash}\`);
     })();
   </script>
   <title>${pageTitle}</title>
@@ -148,6 +152,14 @@ ${foot}
 </body>
 </html>
 `;
+}
+
+// Anchors other code links to (the app opens /terms#community, the stores /terms#app-stores): every
+// language must keep them, or those links land at the top of the page.
+const ANCHORS = { terms: ["community", "app-stores", "report"], privacy: ["retention", "rights", "sensitive-data"] };
+for (const [page, ids] of Object.entries(ANCHORS)) for (const lang of Object.keys(LANGS)) {
+  const text = read(`legal/pages/${lang}/${page}.html`);
+  for (const id of ids) if (!text.includes(`id="${id}"`)) throw new Error(`legal: legal/pages/${lang}/${page}.html has no id="${id}"`);
 }
 
 const outputs = [];
