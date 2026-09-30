@@ -5,15 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <script>
-    // The browser's language picks the version, as on the home page (i18n.js); the anchor comes along.
+    // A link can name the language (?lang=fr: the app does, so its pages follow the app's language);
+    // otherwise the browser's language picks the version, as on the home page (i18n.js). The query
+    // and the anchor come along.
     (() => {
       const langs = ["en","fr","es","de","it","pt","nl"];
-      let want = "en";
-      for (const tag of navigator.languages || [navigator.language || "en"]) {
+      const asked = new URLSearchParams(location.search).get("lang");
+      let want = langs.includes(asked) ? asked : null;
+      for (const tag of want ? [] : navigator.languages || [navigator.language || "en"]) {
         const code = String(tag).toLowerCase().split("-")[0];
         if (langs.includes(code)) { want = code; break; }
       }
-      if (want !== "pt") location.replace(`${want === "en" ? "" : `/${want}`}/terms${location.hash}`);
+      want = want || "en";
+      if (want !== "pt") location.replace(`${want === "en" ? "" : `/${want}`}/terms${location.search}${location.hash}`);
     })();
   </script>
   <title>drafft: Termos de utilização</title>
@@ -130,7 +134,7 @@
 
     <h2 id="tempo">drafft tempo, boosts e super likes</h2>
     <h3>drafft tempo</h3>
-    <p>O drafft tempo é uma subscrição que acrescenta ao drafft: ver quem te deu like, likes ilimitados, voltar ao último perfil que passaste e um boost oferecido todas as semanas. Existe com a duração de 1 mês, 6 meses ou 12 meses. O preço, com impostos incluídos, e o que está incluído são mostrados na app antes da compra.</p>
+    <p>O drafft tempo é uma subscrição que acrescenta ao drafft: ver quem te deu like, likes ilimitados, anular o teu último swipe e um boost oferecido todas as semanas. Existe com a duração de 1 mês, 6 meses ou 12 meses. O preço, com impostos incluídos, e o que está incluído são mostrados na app antes da compra.</p>
     <ul>
       <li>O pagamento é feito pela loja de aplicações do teu telemóvel, na tua conta, quando confirmas a compra.</li>
       <li>A subscrição renova-se automaticamente pela mesma duração e ao mesmo preço, salvo se a cancelares pelo menos 24 horas antes do fim do período em curso.</li>
@@ -190,6 +194,7 @@
       <a href="/pt/legal">Aviso legal</a>
       <a href="/pt/privacy">Política de privacidade</a>
       <a href="/pt/terms" aria-current="page">Termos de utilização</a>
+      <a href="/pt/delete-account">Eliminar a tua conta</a>
     </nav>
     <p>© 2026 drafft</p>
   </div>
