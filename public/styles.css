@@ -155,6 +155,8 @@ input { caret-color: var(--accent); }
 
 /* ================= Hero + pinned story ================= */
 .hero {
+  /* The scroll cue's distance from the bottom (the idle hint sits above it) */
+  --cue-bottom: max(32px, env(safe-area-inset-bottom));
   position: relative;
   height: 100svh;
   min-height: 620px;
@@ -499,7 +501,8 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
 
 /* ================= Hero photo → the top card ================= */
 .hero__photo, .scrollcue { display: none; }
-@keyframes cue-in { from { opacity: 0; transform: translateY(18px); } }
+/* The cue arrives being stuck on: lifted a touch, then laid flat (main.js presses its fold down meanwhile) */
+@keyframes cue-in { from { opacity: 0; scale: 1.14; } 40% { opacity: 1; } }
 .js-motion .hero__photo {
   display: block;
   position: absolute;
@@ -516,17 +519,30 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
   position: absolute;
   z-index: 4;
   left: 0; right: 0;
-  bottom: max(32px, env(safe-area-inset-bottom));
+  bottom: var(--cue-bottom);
   width: 60px;
   margin: 0 auto;
 }
+/* The cue is a round sticker, the same design as the app's empty tabs: the sign filled in ink on a
+   white die-cut edge, its top-right corner never quite stuck. The fold (cut of the face, mirrored
+   back on the flap) is drawn by main.js, which also peels it now and then and toward the pointer.
+   Paper tones are the same in light and dark mode. */
 .js-motion .scrollcue {
-  display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; color: #fff;
-  animation: cue-in 1.2s var(--ease) .9s both;
+  position: relative; display: block; width: 60px; height: 60px;
+  filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / .22)) drop-shadow(0 6px 14px rgb(0 0 0 / .18));
+  animation: cue-in .55s var(--ease) .9s both;
 }
-.scrollcue .ic { width: 22px; height: 22px; stroke-width: 2.25; filter: drop-shadow(0 1px 2px rgb(0 0 0 / .25)); animation: cue 2.4s var(--ease) infinite; }
-@keyframes cue { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(4px); } }
-@media (prefers-reduced-motion: reduce) { .scrollcue .ic, .js-motion .scrollcue { animation: none; } }
+/* White edge, the ink disc inside it, the arrow in white */
+.scrollcue__face {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  border-radius: 50%; background: #fff; color: #fff;
+}
+.scrollcue__face::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: #111214; }
+/* The sticker's back: the same disc, mirrored over the face across the fold line */
+.scrollcue__flap { position: absolute; inset: 0; border-radius: 50%; background: #e2e4e7; transform-origin: 0 0; }
+.scrollcue .ic { position: relative; width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.75; stroke-linecap: round; stroke-linejoin: round; }
+.scrollcue:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 50%; }
+@media (prefers-reduced-motion: reduce) { .js-motion .scrollcue { animation: none; } }
 
 /* The screen is centred in the pinned viewport; the scene wrapper carries the zoom */
 .js-motion .stage { position: absolute; inset: 0; grid-column: auto; grid-row: auto; place-items: center; }
@@ -571,8 +587,7 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
     --toolbar: calc(100lvh - 100svh);
     height: 100lvh; min-height: 0;
   }
-  .js-motion .scrollcue-wrap { bottom: calc(max(32px, env(safe-area-inset-bottom)) + var(--toolbar)); }
-  .idle-hint { padding-bottom: var(--toolbar); }
+  .hero { --cue-bottom: calc(max(32px, env(safe-area-inset-bottom)) + var(--toolbar)); }
   .js-motion .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
   .js-motion .hero__left, .js-motion .hero__right { grid-column: 1; }
   .hero__title { margin-inline: auto; font-size: clamp(2.25rem, 10.5vw, 3.5rem); max-width: 11em; }
@@ -623,7 +638,7 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
 .stepper.is-pressed .stepper__blob { scale: .9 1.08; }
 @media (prefers-reduced-motion: reduce) { .stepper__btn, .stepper__blob { transition: none; } }
 
-/* ================= Liquid Glass (scroll cue, step arrows) =================
+/* ================= Liquid Glass (step arrows) =================
    Glass that refracts: backdrop blur + saturation, a lens that bends the backdrop at the rim
    (Chromium), a light rim that slowly travels round the edge, a specular bloom that follows
    the pointer, inner depth and a soft contact shadow. */
@@ -658,57 +673,61 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
   background: radial-gradient(60% 45% at var(--lx) var(--ly), rgb(255 255 255 / .4), rgb(255 255 255 / 0) 70%);
 }
 .lg:hover { --lg-tint: .22; }
-/* The cue sits on a photo that moves while the page loads: keep its glass on one stable layer,
-   no lens (recomputed every frame over a moving backdrop), a still rim, and never an opacity on
-   an ancestor (that cuts the backdrop and makes glass flicker). */
-.scrollcue.lg { position: relative; will-change: transform; transform: translateZ(0); }
-.lg-refract .scrollcue.lg { backdrop-filter: blur(10px) saturate(1.9) brightness(1.06); -webkit-backdrop-filter: blur(10px) saturate(1.9) brightness(1.06); }
-.scrollcue.lg::before { animation: none; --lg-a: 140deg; }
-.scrollcue.lg:hover { scale: 1.08; }
-.scrollcue.lg:active { scale: .9; }
 .stepper.lg { --lg-tint: .5; transition: --lx .35s var(--ease), --ly .35s var(--ease), opacity .4s var(--ease), translate .5s var(--ease), bottom .35s var(--ease), background-color .3s; }
 .stepper.lg:hover { --lg-tint: .58; }
 @keyframes lg-rim { to { --lg-a: 360deg; } }
 @media (prefers-reduced-motion: reduce) { .lg::before { animation: none; } .lg { transition: none; } }
 
-/* ================= Idle hint (10 s without scrolling on the hero) ================= */
+/* ================= Idle hint (10 s without scrolling on the hero) =================
+   One line just above the scroll cue, never a veil over the page. Only the words sit on a blur:
+   stacked blurs, each a smaller ellipse (radial masks), so it is strongest under the words and
+   fades out on every side with no edge. On arrival the blurs grow one after the other. Its ink
+   follows the photo behind it (--hint-ink, set in main.js from the pixels under the words), over
+   a faint veil of the opposite tone (--hint-veil) so it reads on any photo.
+   No opacity, filter or mask on an ancestor of the blur: any of them cuts the backdrop. Nothing
+   in it takes a touch. */
 .idle-hint {
-  position: absolute; z-index: 5; inset: 0; display: grid; place-items: center;
-  background: rgb(14 15 12 / .22);
-  backdrop-filter: blur(18px) saturate(1.15); -webkit-backdrop-filter: blur(18px) saturate(1.15);
-  opacity: 0; transition: opacity .7s var(--ease);
+  --hint-ink: #fff; --hint-veil: rgb(14 15 12 / .32);
+  position: absolute; z-index: 4; left: 0; right: 0; bottom: calc(var(--cue-bottom) + 60px + 10px);
+  display: flex; justify-content: center; pointer-events: none;
 }
 .idle-hint[hidden] { display: none; }
-.idle-hint.is-on { opacity: 1; }
-/* No container: the words and the glyph sit straight on the blurred veil */
 .idle-hint__go {
-  display: grid; justify-items: center; gap: 16px; padding: 12px 20px; border: 0; background: none; cursor: pointer;
-  color: #fff; font: 700 clamp(1.125rem, 1.6vw, 1.375rem)/1.25 var(--text); letter-spacing: -0.015em; text-align: center;
-  text-shadow: 0 1px 12px rgb(0 0 0 / .25);
-  translate: 0 16px; filter: blur(6px); opacity: 0;
-  transition: translate .9s var(--ease), filter .7s var(--ease), opacity .7s var(--ease);
+  position: relative; margin: 0 var(--gutter); padding: 14px 30px;
+  color: var(--hint-ink); font: 650 clamp(1rem, 1.3vw, 1.125rem)/1.25 var(--text); letter-spacing: -0.01em; text-align: center;
+  transition: color .5s var(--ease);
 }
-.idle-hint.is-on .idle-hint__go { translate: 0 0; filter: blur(0); opacity: 1; }
-.idle-hint__go:focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 16px; }
-.idle-hint__mouse, .idle-hint__swipe { width: 30px; height: 45px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; filter: drop-shadow(0 1px 8px rgb(0 0 0 / .25)); }
-.idle-hint__wheel { fill: #fff; stroke: none; animation: wheel 1.6s var(--ease) infinite; }
+/* The words above the blur, explicitly: the blur is layer 0, the line layer 1 */
+.idle-hint__line { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.idle-hint__line > svg, .idle-hint__text { opacity: 0; translate: 0 6px; transition: opacity .7s var(--ease) .25s, translate .9s var(--ease) .25s; }
+.idle-hint.is-on .idle-hint__line > svg, .idle-hint.is-on .idle-hint__text { opacity: 1; translate: 0 0; }
+.idle-hint__text { text-shadow: 0 0 14px var(--hint-veil); }
+.idle-hint__blur { position: absolute; z-index: 0; inset: -10px -28px; pointer-events: none; }
+.idle-hint__blur i { position: absolute; inset: 0; }
+.idle-hint__blur i:not(:last-child) { backdrop-filter: blur(0); -webkit-backdrop-filter: blur(0); transition: backdrop-filter .9s var(--ease), -webkit-backdrop-filter .9s var(--ease); }
+.idle-hint__blur i:nth-child(1) { -webkit-mask: radial-gradient(closest-side, #000 55%, transparent); mask: radial-gradient(closest-side, #000 55%, transparent); }
+.idle-hint__blur i:nth-child(2) { -webkit-mask: radial-gradient(closest-side, #000 40%, transparent 88%); mask: radial-gradient(closest-side, #000 40%, transparent 88%); transition-delay: .12s; }
+.idle-hint__blur i:nth-child(3) { -webkit-mask: radial-gradient(closest-side, #000 25%, transparent 76%); mask: radial-gradient(closest-side, #000 25%, transparent 76%); transition-delay: .24s; }
+.idle-hint__blur i:nth-child(4) { -webkit-mask: radial-gradient(closest-side, #000 10%, transparent 64%); mask: radial-gradient(closest-side, #000 10%, transparent 64%); transition-delay: .36s; }
+.idle-hint.is-on .idle-hint__blur i:nth-child(1) { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+.idle-hint.is-on .idle-hint__blur i:nth-child(2) { backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+.idle-hint.is-on .idle-hint__blur i:nth-child(3) { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.idle-hint.is-on .idle-hint__blur i:nth-child(4) { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.idle-hint__blur i:last-child { background: radial-gradient(closest-side, var(--hint-veil), transparent); opacity: 0; transition: opacity .9s var(--ease) .2s; }
+.idle-hint.is-on .idle-hint__blur i:last-child { opacity: 1; }
+.idle-hint__mouse, .idle-hint__swipe { flex: none; width: 16px; height: 24px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+.idle-hint__wheel { fill: currentColor; stroke: none; animation: wheel 1.6s var(--ease) infinite; }
 @keyframes wheel { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(6px); } }
 .idle-hint__swipe { display: none; }
-.idle-hint__dot { fill: #fff; stroke: none; animation: swipe 1.6s var(--ease) infinite; }
+.idle-hint__dot { fill: currentColor; stroke: none; animation: swipe 1.6s var(--ease) infinite; }
 @keyframes swipe { 0%, 100% { transform: translateY(0); } 55% { transform: translateY(-20px); } }
 @media (pointer: coarse) {
   .idle-hint__mouse { display: none; }
   .idle-hint__swipe { display: block; }
-  .idle-hint__chev { rotate: 180deg; }
 }
-.idle-hint__chev { display: grid; justify-items: center; margin-top: -2px; }
-.idle-hint__chev svg { width: 18px; height: 10px; margin-top: -3px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; overflow: visible; animation: chev 1.8s ease-in-out infinite; opacity: .2; }
-.idle-hint__chev svg:nth-child(2) { animation-delay: .18s; }
-.idle-hint__chev svg:nth-child(3) { animation-delay: .36s; }
-@keyframes chev { 0%, 100% { opacity: .2; } 40% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) {
-  .idle-hint, .idle-hint__go { transition: opacity .2s; }
-  .idle-hint__wheel, .idle-hint__dot, .idle-hint__chev svg { animation: none; opacity: 1; }
+  .idle-hint__line > svg, .idle-hint__text, .idle-hint__blur i { transition-duration: .2s; transition-delay: 0s; translate: none; }
+  .idle-hint__wheel, .idle-hint__dot { animation: none; }
 }
 
 /* Step arrows stay away from the full-screen opening */
@@ -727,12 +746,10 @@ html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
    capsule would only sit on top of the content. */
 @media (pointer: coarse) { .stepper { display: none; } }
 /* Touch screens (iOS Safari above all): a backdrop-filter redrawn under a moving or scaling layer
-   flickers there. The app's screen scales through the whole story and the cue sits on the moving
-   photo, so their glass keeps its tint and rim without the live blur (over the screen's plain
-   background it looked the same anyway). */
+   flickers there. The app's screen scales through the whole story, so its glass keeps its tint
+   and rim without the live blur (over the screen's plain background it looked the same anyway). */
 @media (pointer: coarse) {
-  .phone *, .scrollcue.lg, .lg-refract .scrollcue.lg { backdrop-filter: none; -webkit-backdrop-filter: none; }
-  .scrollcue.lg { --lg-tint: .22; }
+  .phone * { backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 /* On narrower desktop windows, the sections keep clear of the capsule (symmetric, so their
    content stays centred). */
