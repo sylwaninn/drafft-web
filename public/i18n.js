@@ -374,6 +374,9 @@
     tennis: { w: 7008, h: 4672, widths: [640, 1080, 1600, 2400, 3200], box: [45, 27, 86, 100] },
     hiker: { w: 6000, h: 4000, widths: [640, 1080, 1600, 2400, 3200], box: [30, 38, 62, 100] },
     padel: { w: 3936, h: 2624, widths: [640, 1080, 1600, 2400, 3200], box: [30, 30, 62, 98] },
+    cyclist: { w: 3829, h: 2411, widths: [640, 1080, 1600, 2400, 3200], box: [28, 19, 65, 100] },
+    mountaineer: { w: 6000, h: 4000, widths: [640, 1080, 1600, 2400, 3200], box: [20, 25, 95, 100] },
+    skier: { w: 5655, h: 3770, widths: [640, 1080, 1600, 2400, 3200], box: [20, 10, 80, 100] },
   };
 
   const PEOPLE = [
@@ -383,6 +386,9 @@
     { photo: "tennis", woman: true, name: "Chloé", age: 26, area: "Paris 16e, 3 km", sports: ["tennis", "running"] },
     { photo: "hiker", woman: false, name: "Noah", age: 30, area: "Paris 11e, 2 km", sports: ["hiking", "trail"] },
     { photo: "padel", woman: false, name: "Hugo", age: 32, area: "Paris 15e, 4 km", sports: ["padel", "running"] },
+    { photo: "cyclist", woman: false, name: "Léo", age: 29, area: "Paris 10e, 3 km", sports: ["cycling", "running"] },
+    { photo: "mountaineer", woman: false, name: "Rayan", age: 28, area: "Paris 19e, 4 km", sports: ["hiking", "trail"] },
+    { photo: "skier", woman: true, name: "Léa", age: 29, area: "Paris 9e, 2 km", sports: ["hiking", "yoga"] },
   ];
   const ICON = { running: "ic-steps-outline", climbing: "ic-carabiner", strength: "ic-dumbbell-large", hyrox: "ic-stopwatch", hiking: "ic-hiking", cycling: "ic-bicycling", yoga: "ic-meditation", trail: "ic-landscape-2-outline", tennis: "ic-tennis", padel: "ic-padel" };
   const shuffle = (a) => a.map((v) => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map((x) => x[1]);
