@@ -14,6 +14,23 @@ pnpm wording  # the copy against WORDING.md's forbidden wording (CI runs it too)
 All page copy (`public/i18n.js`, 7 languages) follows [WORDING.md](WORDING.md), a synced copy of the one in
 the `drafft` repository.
 
+## Sport photos
+
+The sports marquee photos `public/img/sport_*.webp` added in 2026-10 come from Wikimedia Commons, all
+CC0 (no attribution required). The run club, tennis, hiking, strength, swimming, football, padel, volleyball, skateboarding, dance, rugby, boxing and martial arts photos are Unsplash images (Unsplash licence, free to use) picked by the team. Cropped to 4:5, 640×800, WebP quality 70 (12 to 112 KB each). Source files:
+
+- `sport_surfing.webp`: File:Trickster surfer (Unsplash).jpg
+- `sport_kitesurf.webp`: File:Kitesurfing in Sweden.jpg
+- `sport_basketball.webp`: File:Freestanding basketball net (Unsplash).jpg
+- `sport_rowing.webp`: File:Fluidesign Quad Rowing Team At Dawn.jpg
+- `sport_kayak.webp`: File:Kayak Rotankid.jpg
+- `sport_pilates.webp`: File:Pilates Wunda Chair.jpg
+- `sport_badminton.webp`: File:Badminton-1428046.jpg
+- `sport_sailing.webp`: File:Sailboat in front of Campbell Point and the Angel Island Ferry Landing, Angel Island, 2011.jpg
+- `sport_pickleball.webp`: File:Harry B. Anderson Tennis Center - Pickleball Courts 1-3.jpg
+- `sport_skiing.webp`: File:Skier on a slope (Unsplash).jpg
+- `sport_golf.webp`: File:Golf swing sunset.jpg
+
 ## Legal pages
 
 The legal notice, privacy policy, terms of use and account deletion page exist in the 7 languages:
