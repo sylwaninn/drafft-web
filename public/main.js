@@ -753,7 +753,7 @@
     .to("[data-sayhi]", { scale: 1, duration: 0.2 }, 7.85)
     .to(caps[1], capOut, 7.9)
 
-    // 5. Straight to the plan: the chat, then the propose sheet over it.
+    // 5. Straight to the proposal: the chat, then the propose sheet over it.
     .to("[data-matchview]", { autoAlpha: 0, duration: 0.35, ease: "power1.out" }, 8)
     .set("[data-discover]", { autoAlpha: 0 }, 8.1)
     .to("[data-sheet]", { autoAlpha: 1, y: 0, duration: 0.7, ease: "expo.out" }, 8.35)
@@ -814,7 +814,7 @@
 
   let fillTrigger = null; // set by the manifesto below
 
-  // Each step is a moment of the story (headline, like, match, plan, confirmed), then each
+  // Each step is a moment of the story (headline, like, match, proposal, confirmed), then each
   // section below. A press scrolls there smoothly, so the scroll animation plays on the way.
   const STORY_STEPS = [0, 3.1, 4.8, 6.8, 10, 11.9];
   const stepTargets = () => {
