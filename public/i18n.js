@@ -273,7 +273,7 @@
       legalNotice: "Impressum", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen" },
     it: { m1: "Quindi «fan del giorno delle salite». Che coraggio.", m2: "Provato e approvato. Il canale ha delle salite, no?", m3: "È il posto più piatto di Parigi.", m4: "Però mi piace la sicurezza.", m5: "Allora risolviamola sul campo.",
       legalNotice: "Note legali", privacy: "Informativa sulla privacy", terms: "Termini di utilizzo" },
-    pt: { m1: "Então, «fã do dia das subidas». Que ousadia.", m2: "Testado e aprovado. O canal tem subidas, certo?", m3: "É o sítio mais plano de Paris.", m4: "Mas gosto da confiança.", m5: "Então resolvemos isso no terreno.",
+    pt: { m1: "Então, «fã do dia das subidas». Que ousadia.", m2: "Testado e aprovado. O canal tem subidas, certo?", m3: "É o sítio com menos subidas de Paris.", m4: "Mas gosto da confiança.", m5: "Então resolvemos isso no terreno.",
       legalNotice: "Aviso legal", privacy: "Política de privacidade", terms: "Termos de utilização" },
     nl: { m1: "Dus ‘fan van heuveldag’. Gedurfd.", m2: "Getest en bewezen. Het kanaal heeft toch heuvels?", m3: "Het is de vlakste plek van Parijs.", m4: "Maar ik hou van het zelfvertrouwen.", m5: "Dan beslechten we het op de weg.",
       legalNotice: "Juridische informatie", privacy: "Privacybeleid", terms: "Gebruiksvoorwaarden" },
