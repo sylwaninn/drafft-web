@@ -182,26 +182,22 @@
   addEventListener("scroll", () => { if (scrollY > 4) hideHint(); }, { passive: true });
   // A message, not a control: it takes no touch, and the page never scrolls by itself.
 
-  /* ================= Scroll cue: a round sticker, its corner never quite stuck ================= */
-  // The app's EmptyStateSticker geometry: the corner folds back along the line halfway between the
-  // box's top-right corner and where the corner lands (paper folding). The face is cut along that
-  // line; beyond it the sticker shows its back, mirrored over the face. Now and then the corner
-  // peels up a little and settles back; under the pointer it leans toward it.
-  {
-    const cueEl = $(".scrollcue");
-    const face = $(".scrollcue__face", cueEl), flap = $(".scrollcue__flap", cueEl);
-    const S = 60, R = 30;
-    // How far the disc sits from the box's corner, along the diagonal: where a fold catches paper.
-    const REACH = R * Math.SQRT2 - R;
+  /* ================= Peeling stickers: the scroll cue, and the sports that have a lifting corner ================= */
+  // The app's EmptyStateSticker geometry: the top-right corner folds back along the line halfway
+  // between the box's corner and where the corner lands (paper folding). The face is cut along that
+  // line; beyond it the sticker shows its back, mirrored over the face (the flap: the same rounded
+  // shape, in paper grey). Under the pointer, the corner lifts and leans toward it. Springs, no
+  // overshoot. r is the corner radius; rest, hover and lean are in px (depth of the fold at rest and
+  // under the pointer, how far the corner follows the pointer); arrive is the depth it starts from.
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const peelSticker = (el, face, flap, { r, rest, hover, lean, arrive = rest }) => {
+    // How far the shape sits from the box's corner, along the diagonal: where a fold catches paper.
+    const REACH = r * Math.SQRT2 - r;
     const IN = [-Math.SQRT1_2, Math.SQRT1_2];
-    const REST = 6, REMIND = 11, HOVER = 9, MAX_LEAN = 9;
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Springs (no overshoot): depth of the fold, and the corner's lean toward the pointer.
-    // It arrives half peeled (in step with the CSS cue-in) and is pressed down onto the photo.
-    const ARRIVE = 26;
-    const st = { d: still ? REST : ARRIVE, dv: 0, dt: REST, x: 0, y: 0, xv: 0, yv: 0, xt: 0, yt: 0, k: 40 };
+    const st = { d: still ? rest : arrive, dv: 0, dt: rest, x: 0, y: 0, xv: 0, yv: 0, xt: 0, yt: 0, k: 40 };
+    const width = () => el.offsetWidth || 2 * r;
     const halfPlane = (mx, my, nx, ny) => {
-      const F = 400, p = (s, t) => `${(mx - ny * s + nx * t).toFixed(2)}px ${(my + nx * s + ny * t).toFixed(2)}px`;
+      const F = 1000, p = (s, t) => `${(mx - ny * s + nx * t).toFixed(2)}px ${(my + nx * s + ny * t).toFixed(2)}px`;
       return `polygon(${p(-F, 0)}, ${p(F, 0)}, ${p(F, F)}, ${p(-F, F)})`;
     };
     const draw = () => {
@@ -211,7 +207,7 @@
       const along = vx * IN[0] + vy * IN[1], least = 2 * (REACH + 2);
       if (along < least) { vx += IN[0] * (least - along); vy += IN[1] * (least - along); }
       const len = Math.hypot(vx, vy), nx = vx / len, ny = vy / len;
-      const mx = S + vx / 2, my = vy / 2, o = 2 * (mx * nx + my * ny);
+      const mx = width() + vx / 2, my = vy / 2, o = 2 * (mx * nx + my * ny);
       face.style.clipPath = halfPlane(mx, my, nx, ny);
       flap.style.clipPath = halfPlane(mx, my, -nx, -ny);
       flap.style.transform = `matrix(${1 - 2 * nx * nx}, ${-2 * nx * ny}, ${-2 * nx * ny}, ${1 - 2 * ny * ny}, ${o * nx}, ${o * ny})`;
@@ -229,32 +225,38 @@
       if (!moving) last = 0;
     };
     const go = () => { if (!raf) raf = requestAnimationFrame(step); };
+    const sticker = { st, go, hovering: false };
     draw();
-    if (!still) setTimeout(() => { st.k = 70; go(); }, 950);
-
-    let hovering = false;
-    cueEl.addEventListener("pointermove", (e) => {
+    el.addEventListener("pointermove", (e) => {
       if (e.pointerType !== "mouse") return;
-      hovering = true;
-      const r = cueEl.getBoundingClientRect();
+      sticker.hovering = true;
+      const b = el.getBoundingClientRect(), w = width();
       // Where the corner lands at hover depth, then a lean toward the pointer, rubber-banded.
-      const l = 2 * (REACH + HOVER), qx = S + IN[0] * l, qy = IN[1] * l;
-      const dx = (e.clientX - r.left) * (S / r.width) - qx, dy = (e.clientY - r.top) * (S / r.height) - qy;
-      const dist = Math.hypot(dx, dy), k = dist ? MAX_LEAN / (dist + MAX_LEAN) : 0;
-      Object.assign(st, { dt: HOVER, xt: dx * k, yt: dy * k, k: 120 });
+      const l = 2 * (REACH + hover), qx = w + IN[0] * l, qy = IN[1] * l;
+      const dx = (e.clientX - b.left) * (w / b.width) - qx, dy = (e.clientY - b.top) * (w / b.width) - qy;
+      const dist = Math.hypot(dx, dy), k = dist ? lean / (dist + lean) : 0;
+      Object.assign(st, { dt: hover, xt: dx * k, yt: dy * k, k: 120 });
       go();
     });
-    cueEl.addEventListener("pointerleave", () => {
-      hovering = false;
-      Object.assign(st, { dt: REST, xt: 0, yt: 0, k: 60 });
+    el.addEventListener("pointerleave", () => {
+      sticker.hovering = false;
+      Object.assign(st, { dt: rest, xt: 0, yt: 0, k: 60 });
       go();
     });
-    // The reminder: a slow lift of the corner, held a moment, laid back down.
+    return sticker;
+  };
+
+  // The scroll cue: a round sticker. It arrives half peeled (in step with the CSS cue-in) and is
+  // pressed down onto the photo; now and then the corner lifts a little, a slow reminder.
+  {
+    const cueEl = $(".scrollcue");
+    const cue = peelSticker(cueEl, $(".scrollcue__face", cueEl), $(".scrollcue__flap", cueEl), { r: 30, rest: 6, hover: 9, lean: 9, arrive: 26 });
+    if (!still) setTimeout(() => { cue.st.k = 70; cue.go(); }, 950);
     if (!still) {
       setInterval(() => {
-        if (hovering || document.hidden || scrollY > innerHeight) return;
-        Object.assign(st, { dt: REMIND, k: 18 }); go();
-        setTimeout(() => { if (!hovering) { Object.assign(st, { dt: REST, k: 22 }); go(); } }, 1100);
+        if (cue.hovering || document.hidden || scrollY > innerHeight) return;
+        Object.assign(cue.st, { dt: 11, k: 18 }); cue.go();
+        setTimeout(() => { if (!cue.hovering) { Object.assign(cue.st, { dt: 6, k: 22 }); cue.go(); } }, 1100);
       }, 7000);
     }
   }
@@ -891,8 +893,16 @@
   const marquee = $("[data-marquee]");
   if (marquee) {
     const track = $(".marquee__track", marquee);
-    track.append(...$$("li", track).map((li) => li.cloneNode(true)));
-    g.to(track, { xPercent: -50, duration: 48, ease: "none", repeat: -1 });
+    const cards = $$("li", track);
+    track.append(...cards.map((li) => li.cloneNode(true)));
+    // Cards with a lifting corner: the same sticker as the scroll cue, its flap added here
+    $$('li[data-stk="peel"]', track).forEach((li) => {
+      const flap = document.createElement("i");
+      flap.className = "stk__flap";
+      li.append(flap);
+      peelSticker(li, $(".stk", li), flap, { r: 24, rest: 8, hover: 22, lean: 20 });
+    });
+    g.to(track, { xPercent: -50, duration: cards.length * 4.8, ease: "none", repeat: -1 }); // 4.8 s a card: the same pace whatever the count
   }
 
   addEventListener("load", () => ST.refresh());

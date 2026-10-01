@@ -446,12 +446,38 @@ input { caret-color: var(--accent); }
 .sports__title { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -0.035em; }
 .marquee { margin-top: clamp(40px, 5vw, 64px); }
 .marquee__track { display: flex; gap: 14px; width: max-content; }
-.marquee li { position: relative; flex: none; width: clamp(200px, 22vw, 320px); aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--r); background: var(--night); }
+/* Each sport is a paper sticker, like the scroll cue: a white die-cut edge and a soft shadow, laid
+   flat (no animation) except as noted. The shadow is on the li, the cut-out shape (clip, mask) on
+   .stk inside it, so the shadow follows the shape. main.js clones the list for the loop. Paper is white in light and dark mode. */
+.marquee__track { padding-block: 14px; }
+.marquee li {
+  position: relative; flex: none; width: clamp(200px, 22vw, 320px); aspect-ratio: 4 / 5;
+  filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / .22)) drop-shadow(0 6px 12px rgb(0 0 0 / .18));
+}
+.stk { position: absolute; inset: 0; overflow: hidden; border: 6px solid #fff; border-radius: var(--r); background: var(--night); }
+/* A few are slightly crooked (data-stk on the li: tilt-N, peel, wear-a/b) */
+.marquee li[data-stk="tilt-1"] { rotate: -1.6deg; }
+.marquee li[data-stk="tilt-2"] { rotate: 1.3deg; }
+.marquee li[data-stk="tilt-3"] { rotate: -1deg; }
+/* A few have the top-right corner lifting: data-stk="peel", drawn by peelSticker() in main.js, the same
+   sticker as the scroll cue (the face cut along the fold, the flap its mirrored back, in paper grey) */
+.stk__flap { position: absolute; inset: 0; z-index: 2; border-radius: var(--r); background: #e2e4e7; transform-origin: 0 0; pointer-events: none; }
+/* A few have their edge slightly worn in places, as if someone had tried to peel them off: tiny bites out of the paper */
+.marquee li[data-stk="wear-a"] .stk {
+  --bites: radial-gradient(circle 4px at 31% 0, transparent 97%, #000), radial-gradient(circle 2.5px at 34% 0, transparent 97%, #000), radial-gradient(circle 3.5px at 0 62%, transparent 97%, #000), radial-gradient(circle 4px at 78% 100%, transparent 97%, #000), radial-gradient(circle 2px at 81% 100%, transparent 97%, #000), radial-gradient(circle 3px at 100% 41%, transparent 97%, #000);
+}
+.marquee li[data-stk="wear-b"] .stk {
+  --bites: radial-gradient(circle 3px at 12% 0, transparent 97%, #000), radial-gradient(circle 4.5px at 64% 0, transparent 97%, #000), radial-gradient(circle 2.5px at 67% 0, transparent 97%, #000), radial-gradient(circle 3px at 100% 70%, transparent 97%, #000), radial-gradient(circle 4px at 45% 100%, transparent 97%, #000), radial-gradient(circle 2px at 0 25%, transparent 97%, #000);
+}
+.marquee li[data-stk^="wear"] .stk {
+  -webkit-mask-image: var(--bites); mask-image: var(--bites);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
 .marquee img { width: 100%; height: 100%; object-fit: cover; }
-.marquee li::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(to top, rgb(14 15 12 / .72), rgb(14 15 12 / 0)); }
-.marquee span { position: absolute; z-index: 1; left: 20px; bottom: 16px; color: #fff; font-family: var(--display); font-weight: 900; font-size: clamp(1.375rem, 2vw, 1.875rem); letter-spacing: -0.02em; }
+.stk::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(to top, rgb(14 15 12 / .72), rgb(14 15 12 / 0)); }
+.marquee span { position: absolute; z-index: 1; left: 14px; bottom: 10px; color: #fff; font-family: var(--display); font-weight: 900; font-size: clamp(1.375rem, 2vw, 1.875rem); letter-spacing: -0.02em; }
 html:not(.js-motion) .marquee { overflow-x: auto; scrollbar-width: none; }
-html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
+html:not(.js-motion) .marquee__track { padding-inline: var(--gutter); }
 
 /* ================= tempo ================= */
 .tempo { padding: 0 clamp(8px, 1.5vw, 20px); }
