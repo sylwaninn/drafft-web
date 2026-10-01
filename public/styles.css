@@ -499,6 +499,7 @@ html:not(.js-motion) .marquee__track { padding-inline: var(--gutter); }
 
 /* ================= Join ================= */
 .join { max-width: 1000px; margin: 0 auto; padding: clamp(120px, 16vw, 220px) var(--gutter) clamp(80px, 10vw, 140px); text-align: center; }
+.join__kicker { margin-bottom: 20px; font-size: clamp(1.0625rem, 1.4vw, 1.25rem); color: var(--body); }
 .join__title { font-size: clamp(3.25rem, 9vw, 8rem); letter-spacing: -0.045em; line-height: .88; }
 .join__lead { margin-top: 24px; font-size: clamp(1.0625rem, 1.4vw, 1.25rem); color: var(--body); }
 
