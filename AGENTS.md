@@ -1,28 +1,27 @@
 # Instructions for AI agents
 
 drafft marketing site (getdrafft.com): static HTML, CSS and JS in `public/`, served by a Cloudflare
-Worker (see [README.md](README.md)). The app is the `drafft` repository, the backend `drafft-backend`.
+Worker (see [README.md](README.md)). The apps are `drafft-ios` and `drafft-android`, the backend
+`drafft-backend`.
 
 ## User-facing text: WORDING.md first (priority rule)
 
-Before writing or changing any text people see (page copy in `public/i18n.js` and
-`public/index.html`, all 7 languages, the in-phone mockup profiles and chats, meta tags, store
-badges, social copy), read and apply [WORDING.md](WORDING.md), then run its review checklist
-(section 10). The `wording` skill (`.agents/skills/wording/`) walks through it. Never write "plan" in
-any sense or language, and never present a match as turning into something. WORDING.md here is a
-synced copy: edit it in the `drafft` repository only, then run `drafft/scripts/sync-wording.sh`.
+Before writing or changing any text people see (page copy in `public/i18n.js` and `public/index.html`,
+all 7 languages, the in-phone mockup profiles and chats, meta tags, store badges, social copy), read and
+apply [WORDING.md](WORDING.md), then run its review checklist (section 10). The `wording` skill
+(workspace `.claude/skills/wording/`) walks through it. Never write "plan" in any sense or language, and
+never present a match as turning into something. `../drafft-ios/WORDING.md` is the source: this copy is
+synced by the workspace's `scripts/sync-docs.sh`, never edited here.
 
-## Rules for every agent
+## Workspace rules
 
-Read these before committing or opening a pull request. They live in `.agents/` so any agent can use
-them; Claude Code loads them through `CLAUDE.md`.
-
-- Commits and branches: [.agents/rules/commits.md](.agents/rules/commits.md)
-- GitHub (pull requests, comments): [.agents/rules/github.md](.agents/rules/github.md)
-- Skills: `.agents/skills/` (`create-pr`, `technical-writer`, `wording`)
-- Git hooks that enforce them for everyone, agents and humans (`.agents/git-hooks/`): `commit-msg`
-  (format, one line, no Co-Authored-By) and `pre-push` (no push to `main`). Enable once per clone:
-  `git config core.hooksPath .agents/git-hooks`
+This repository lives in the drafft workspace (the parent folder, see `../AGENTS.md`), which holds what
+every repository shares: commit and GitHub rules (`../.claude/rules/`), the `create-pr` and `wording`
+skills (`../.claude/skills/`), and the Claude Code settings and git guard (`../.claude/`). Start agents
+there. In short: work on a branch, one-line commits `type(scope): description` without any
+Co-Authored-By, a pull request into `main`, verify first. The git hooks in `.agents/git-hooks/`
+enforce it for agents and humans (`git config core.hooksPath .agents/git-hooks`, set by the
+workspace's `scripts/bootstrap.sh`).
 
 `main` deploys to production on every push: work on a branch, open a pull request. "Verify" in these
 rules (`pnpm verify`) means, in this repository:
