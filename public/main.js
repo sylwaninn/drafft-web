@@ -264,10 +264,8 @@
   // The step arrows keep away from the opening; they show once the photo has landed.
   const stepper = $("[data-stepper]");
   let stepperFrom = () => innerHeight * 0.5;
-  // It also never runs over the footer: it stops 16 px above the footer's divider.
-  const footRule = $(".foot__row");
-  // And it never hides a word or a button: it tries its usual place (above the footer's divider),
-  // then lower, down into the footer, and if every spot covers something it steps aside.
+  // It never rises with the footer: it stays at the bottom of the screen.
+  // And it never hides a word or a button: if its place covers something it steps aside.
   const OBSTACLES = ".hero__title, .hero__note, .hero .store, .cap h2, .cap p, .acts, .composer, .psheet__foot, .statement__text, .sports__title, .tempo__lockup, .tempo__lead, .perk h3, .perk p, .join__title, .join__lead, .store, .foot__row p, .foot__links a";
   const shown = (el) => { for (let n = el; n && n !== document.body; n = n.parentElement) { const s = getComputedStyle(n); if (+s.opacity < 0.05 || s.visibility === "hidden" || s.display === "none") return false; } return true; };
   // Text is tested line by line (a paragraph's box is wider than its words).
@@ -280,10 +278,8 @@
   const covers = (bottom) => {
     const w = stepper.offsetWidth, h = stepper.offsetHeight, right = innerWidth - parseFloat(getComputedStyle(stepper).right);
     const box = { left: right - w - 8, right: right + 8, top: innerHeight - bottom - h - 8, bottom: innerHeight - bottom + 8 };
-    // The sport names never stop sliding by: the arrows keep off the whole row they run along,
-    // not the spot where a name happens to be, or they would hop and blink as the names pass.
-    const name = $(".marquee span");
-    if (name) { const b = name.getBoundingClientRect(); if (b.bottom > box.top && b.top < box.bottom) return true; }
+    // The sport names are not obstacles: they slide by all the time, so the arrows would hop and blink.
+    // They pass under the glass, which blurs and veils them, and the arrows stay.
     return $$(OBSTACLES).some((el) => {
       const b = el.getBoundingClientRect();
       if (b.bottom < box.top || b.top > box.bottom || b.right < box.left || b.left > box.right || !shown(el)) return false;
@@ -292,14 +288,8 @@
   };
   const placeStepper = () => {
     const away = !(scrollY >= stepperFrom());
-    const rule = footRule.getBoundingClientRect().top;
-    const usual = Math.max(20, innerHeight - rule + 16);
-    const spots = [usual];
-    for (let b = usual - 24; b > 20; b -= 24) spots.push(b);
-    if (usual > 20) spots.push(20);
-    const free = away ? usual : spots.find((b) => !covers(b));
-    stepper.style.bottom = `${free ?? usual}px`;
-    stepper.classList.toggle("is-away", away || free === undefined);
+    const free = away || !covers(20);
+    stepper.classList.toggle("is-away", away || !free);
   };
   // Touch screens never show the arrows (see the CSS): no need to place them on every scroll.
   if (!matchMedia("(pointer: coarse)").matches) {
