@@ -281,19 +281,23 @@
 
     <!-- On load, only this: the top profile's photo, full bleed. Scrolling reveals it's the top card on the phone. -->
     <div class="hero__photo" data-photo><img data-person-img data-framed alt="" fetchpriority="high"></div>
-    <!-- After 10 s without scrolling: a blurred veil and a glass card that says how to go on -->
-    <div class="idle-hint" data-idle-hint hidden>
-      <button type="button" class="idle-hint__go" data-idle-go>
+    <!-- After 10 s without scrolling: one line above the scroll cue, a blur under the words only; its colour follows the photo -->
+    <div class="idle-hint" data-idle-hint hidden aria-live="polite">
+      <p class="idle-hint__go">
+        <span class="idle-hint__blur" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="idle-hint__line">
         <!-- A mouse you can't mistake for a zero: body, the split between the buttons, a wheel that never disappears -->
         <svg class="idle-hint__mouse" viewBox="0 0 32 48" aria-hidden="true"><rect x="2" y="2" width="28" height="44" rx="14"/><path d="M16 2v12"/><rect class="idle-hint__wheel" x="13" y="9" width="6" height="11" rx="3"/></svg>
         <svg class="idle-hint__swipe" viewBox="0 0 32 48" aria-hidden="true"><rect x="9" y="4" width="14" height="40" rx="7"/><circle class="idle-hint__dot" cx="16" cy="36" r="4"/></svg>
         <span class="idle-hint__text" data-i18n="hintScroll" data-hint-text>Scroll to continue</span>
-        <span class="idle-hint__chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
-      </button>
+        </span>
+      </p>
     </div>
     <div class="scrollcue-wrap" data-scrollcue>
-      <a class="scrollcue lg" href="#story" aria-label="Scroll to see the app" data-i18n-aria="scrollAria">
-        <svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+      <!-- A paper sticker, like the app's empty tabs: its top-right corner never quite stuck, peeling up now and then -->
+      <a class="scrollcue" href="#story" aria-label="Scroll to see the app" data-i18n-aria="scrollAria">
+        <span class="scrollcue__face"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+        <span class="scrollcue__flap" aria-hidden="true"></span>
       </a>
     </div>
   </section>

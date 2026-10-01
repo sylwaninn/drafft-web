@@ -134,22 +134,130 @@
     clearTimeout(hintTimer);
     if (hint.hidden) return;
     hint.classList.remove("is-on");
-    setTimeout(() => { hint.hidden = true; }, 700);
+    setTimeout(() => { hint.hidden = true; }, 1300);
+  };
+  // The words take their colour from the photo right behind them: the average of those pixels,
+  // white on a dark or saturated patch, else a deep shade of the patch's own hue.
+  const hintInk = () => {
+    const img = $("[data-photo] img"), words = $(".idle-hint__go", hint);
+    if (!img || !img.complete || !img.naturalWidth) return;
+    const r = img.getBoundingClientRect(), w = words.getBoundingClientRect();
+    const k = img.naturalWidth / r.width, kh = img.naturalHeight / r.height;
+    const sx = Math.max(0, (w.left - r.left) * k), sy = Math.max(0, (w.top - 12 - r.top) * kh);
+    const sw = Math.min(img.naturalWidth - sx, (w.width) * k), sh = Math.min(img.naturalHeight - sy, (w.height + 24) * kh);
+    if (sw <= 0 || sh <= 0) return;
+    try {
+      const c = document.createElement("canvas"); c.width = c.height = 12;
+      const ctx = c.getContext("2d", { willReadFrequently: true });
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, 12, 12);
+      const d = ctx.getImageData(0, 0, 12, 12).data;
+      let R = 0, G = 0, B = 0;
+      for (let i = 0; i < d.length; i += 4) { R += d[i]; G += d[i + 1]; B += d[i + 2]; }
+      const n = d.length / 4; R /= n * 255; G /= n * 255; B /= n * 255;
+      const lin = (v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+      const L = 0.2126 * lin(R) + 0.7152 * lin(G) + 0.0722 * lin(B);
+      const max = Math.max(R, G, B), min = Math.min(R, G, B);
+      let h = 0;
+      if (max !== min) {
+        const dd = max - min;
+        h = max === R ? ((G - B) / dd) % 6 : max === G ? (B - R) / dd + 2 : (R - G) / dd + 4;
+        h = (h * 60 + 360) % 360;
+      }
+      const sat = max === min ? 0 : (max - min) / (1 - Math.abs(max + min - 1));
+      // Contrast against white beats contrast against black below about L 0.18.
+      const light = L >= 0.18;
+      hint.style.setProperty("--hint-ink", light ? `hsl(${h.toFixed(0)} ${Math.min(60, sat * 100).toFixed(0)}% 13%)` : "#fff");
+      hint.style.setProperty("--hint-veil", light ? "rgb(255 255 255 / .5)" : "rgb(14 15 12 / .32)");
+    } catch { /* an unreadable image: keep white */ }
   };
   const showHint = () => {
     if (hintDone || scrollY > 4) return;
     hint.hidden = false;
+    hintInk();
     requestAnimationFrame(() => requestAnimationFrame(() => hint.classList.add("is-on")));
   };
+  addEventListener("resize", () => { if (!hint.hidden) hintInk(); }, { passive: true });
   hintTimer = setTimeout(showHint, 10000);
   ["wheel", "touchmove", "keydown"].forEach((ev) => addEventListener(ev, hideHint, { passive: true, once: true }));
   addEventListener("scroll", () => { if (scrollY > 4) hideHint(); }, { passive: true });
-  // Pressing the card starts the scroll for you.
-  $("[data-idle-go]").addEventListener("click", () => {
-    hideHint();
-    const to = innerHeight * 0.9;
-    if (window.__lenis) window.__lenis.scrollTo(to, { duration: 1.6 }); else scrollTo({ top: to, behavior: "smooth" });
-  });
+  // A message, not a control: it takes no touch, and the page never scrolls by itself.
+
+  /* ================= Scroll cue: a round sticker, its corner never quite stuck ================= */
+  // The app's EmptyStateSticker geometry: the corner folds back along the line halfway between the
+  // box's top-right corner and where the corner lands (paper folding). The face is cut along that
+  // line; beyond it the sticker shows its back, mirrored over the face. Now and then the corner
+  // peels up a little and settles back; under the pointer it leans toward it.
+  {
+    const cueEl = $(".scrollcue");
+    const face = $(".scrollcue__face", cueEl), flap = $(".scrollcue__flap", cueEl);
+    const S = 60, R = 30;
+    // How far the disc sits from the box's corner, along the diagonal: where a fold catches paper.
+    const REACH = R * Math.SQRT2 - R;
+    const IN = [-Math.SQRT1_2, Math.SQRT1_2];
+    const REST = 6, REMIND = 11, HOVER = 9, MAX_LEAN = 9;
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Springs (no overshoot): depth of the fold, and the corner's lean toward the pointer.
+    // It arrives half peeled (in step with the CSS cue-in) and is pressed down onto the photo.
+    const ARRIVE = 26;
+    const st = { d: still ? REST : ARRIVE, dv: 0, dt: REST, x: 0, y: 0, xv: 0, yv: 0, xt: 0, yt: 0, k: 40 };
+    const halfPlane = (mx, my, nx, ny) => {
+      const F = 400, p = (s, t) => `${(mx - ny * s + nx * t).toFixed(2)}px ${(my + nx * s + ny * t).toFixed(2)}px`;
+      return `polygon(${p(-F, 0)}, ${p(F, 0)}, ${p(F, F)}, ${p(-F, F)})`;
+    };
+    const draw = () => {
+      const len0 = 2 * (REACH + st.d);
+      let vx = IN[0] * len0 + st.x, vy = IN[1] * len0 + st.y;
+      // Pushed back toward its corner, it stays a little loose.
+      const along = vx * IN[0] + vy * IN[1], least = 2 * (REACH + 2);
+      if (along < least) { vx += IN[0] * (least - along); vy += IN[1] * (least - along); }
+      const len = Math.hypot(vx, vy), nx = vx / len, ny = vy / len;
+      const mx = S + vx / 2, my = vy / 2, o = 2 * (mx * nx + my * ny);
+      face.style.clipPath = halfPlane(mx, my, nx, ny);
+      flap.style.clipPath = halfPlane(mx, my, -nx, -ny);
+      flap.style.transform = `matrix(${1 - 2 * nx * nx}, ${-2 * nx * ny}, ${-2 * nx * ny}, ${1 - 2 * ny * ny}, ${o * nx}, ${o * ny})`;
+    };
+    let raf = 0, last = 0;
+    const step = (t) => {
+      const dt = Math.min((t - (last || t)) / 1000, 1 / 30); last = t;
+      const c = 2 * Math.sqrt(st.k);
+      st.dv += (st.k * (st.dt - st.d) - c * st.dv) * dt; st.d += st.dv * dt;
+      st.xv += (st.k * (st.xt - st.x) - c * st.xv) * dt; st.x += st.xv * dt;
+      st.yv += (st.k * (st.yt - st.y) - c * st.yv) * dt; st.y += st.yv * dt;
+      draw();
+      const moving = Math.abs(st.dt - st.d) + Math.abs(st.xt - st.x) + Math.abs(st.yt - st.y) + Math.abs(st.dv) + Math.abs(st.xv) + Math.abs(st.yv) > 0.01;
+      raf = moving ? requestAnimationFrame(step) : 0;
+      if (!moving) last = 0;
+    };
+    const go = () => { if (!raf) raf = requestAnimationFrame(step); };
+    draw();
+    if (!still) setTimeout(() => { st.k = 70; go(); }, 950);
+
+    let hovering = false;
+    cueEl.addEventListener("pointermove", (e) => {
+      if (e.pointerType !== "mouse") return;
+      hovering = true;
+      const r = cueEl.getBoundingClientRect();
+      // Where the corner lands at hover depth, then a lean toward the pointer, rubber-banded.
+      const l = 2 * (REACH + HOVER), qx = S + IN[0] * l, qy = IN[1] * l;
+      const dx = (e.clientX - r.left) * (S / r.width) - qx, dy = (e.clientY - r.top) * (S / r.height) - qy;
+      const dist = Math.hypot(dx, dy), k = dist ? MAX_LEAN / (dist + MAX_LEAN) : 0;
+      Object.assign(st, { dt: HOVER, xt: dx * k, yt: dy * k, k: 120 });
+      go();
+    });
+    cueEl.addEventListener("pointerleave", () => {
+      hovering = false;
+      Object.assign(st, { dt: REST, xt: 0, yt: 0, k: 60 });
+      go();
+    });
+    // The reminder: a slow lift of the corner, held a moment, laid back down.
+    if (!still) {
+      setInterval(() => {
+        if (hovering || document.hidden || scrollY > innerHeight) return;
+        Object.assign(st, { dt: REMIND, k: 18 }); go();
+        setTimeout(() => { if (!hovering) { Object.assign(st, { dt: REST, k: 22 }); go(); } }, 1100);
+      }, 7000);
+    }
+  }
 
   // The step arrows keep away from the opening; they show once the photo has landed.
   const stepper = $("[data-stepper]");
