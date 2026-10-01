@@ -52,8 +52,11 @@ with `?lang=<code>`: the app does, so its pages open in the app's language, not 
 
 ## Deploying
 
-Every push to `main` deploys to production (`.github/workflows/ci.yml`), then smoke-tests the site.
-Work on a branch and open a pull request: the PR runs the same checks without deploying.
+Work on a branch and open a pull request into `staging` (the default branch): pull requests and pushes to
+`staging` run the checks without deploying. To ship, Actions > release > Run workflow
+(`.github/workflows/release.yml`): it fast-forwards `main` to `staging`, tags the next `vX.Y.Z`, publishes a
+GitHub release, then `ci.yml` deploys that tag to production and smoke-tests the site. To roll back,
+Actions > ci > Run workflow on an older tag.
 
 The repository needs:
 
