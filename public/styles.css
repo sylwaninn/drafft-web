@@ -58,6 +58,7 @@
   --tone-2: #9FE870;
   --tone-3: #B5ADFE;
   --block-edge: transparent;
+  --card-scrim: linear-gradient(to bottom, rgb(42 45 49 / .72) 0%, rgb(42 45 49 / 0) 30%, rgb(42 45 49 / 0) 62%, rgb(42 45 49 / .85) 100%);
 
   --r-sm: 12px;
   --r: 24px;
@@ -243,7 +244,9 @@ input { caret-color: var(--accent); }
 .card--d3 { transform: translateY(28em) scale(.86); opacity: 0; }
 .veil { position: absolute; inset: 0; border-radius: inherit; background: var(--page); opacity: var(--o); }
 .card--top { box-shadow: 0 12em 32em -6em rgb(0 0 0 / .22); }
-.card__scrim { position: absolute; inset: 0; background: linear-gradient(to bottom, rgb(42 45 49 / .72) 0%, rgb(42 45 49 / 0) 30%, rgb(42 45 49 / 0) 62%, rgb(42 45 49 / .85) 100%); }
+.card__scrim { position: absolute; inset: 0; background: var(--card-scrim); }
+/* The same vignette on the opening photo, grown in as the photo closes onto the card (main.js sizes it to the photo's frame), so the card has nothing new to show when it takes over */
+.hero__scrim { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; background: var(--card-scrim); opacity: 0; pointer-events: none; }
 .card__top { position: absolute; inset: 0 0 auto; display: flex; align-items: flex-start; gap: 12em; padding: 12em 12em 0 24em; color: #fff; }
 .card__identity { flex: 1; min-width: 0; padding-top: 8em; }
 .card__id { font-family: var(--display); line-height: 1; letter-spacing: -0.01em; white-space: nowrap; }
@@ -446,12 +449,27 @@ input { caret-color: var(--accent); }
 .sports__title { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -0.035em; }
 .marquee { margin-top: clamp(40px, 5vw, 64px); }
 .marquee__track { display: flex; gap: 14px; width: max-content; }
-.marquee li { position: relative; flex: none; width: clamp(200px, 22vw, 320px); aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--r); background: var(--night); }
+/* Each sport is a paper sticker, like the scroll cue: a white die-cut edge and a soft shadow, laid
+   flat (no animation) except as noted. The shadow is on the li, the cut-out shape (clip, mask) on
+   .stk inside it, so the shadow follows the shape. main.js clones the list for the loop. Paper is white in light and dark mode. */
+.marquee__track { padding-block: 14px; }
+.marquee li {
+  position: relative; flex: none; width: clamp(200px, 22vw, 320px); aspect-ratio: 4 / 5;
+  filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / .22)) drop-shadow(0 6px 12px rgb(0 0 0 / .18));
+}
+.stk { position: absolute; inset: 0; overflow: hidden; border: 6px solid #fff; border-radius: var(--r); background: var(--night); }
+/* A few are slightly crooked (data-stk on the li: tilt-N, peel) */
+.marquee li[data-stk="tilt-1"] { rotate: -1.6deg; }
+.marquee li[data-stk="tilt-2"] { rotate: 1.3deg; }
+.marquee li[data-stk="tilt-3"] { rotate: -1deg; }
+/* A few have the top-right corner lifting: data-stk="peel", drawn by peelSticker() in main.js, the same
+   sticker as the scroll cue (the face cut along the fold, the flap its mirrored back, in paper grey) */
+.stk__flap { position: absolute; inset: 0; z-index: 2; border-radius: var(--r); background: #e2e4e7; transform-origin: 0 0; pointer-events: none; }
 .marquee img { width: 100%; height: 100%; object-fit: cover; }
-.marquee li::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(to top, rgb(14 15 12 / .72), rgb(14 15 12 / 0)); }
-.marquee span { position: absolute; z-index: 1; left: 20px; bottom: 16px; color: #fff; font-family: var(--display); font-weight: 900; font-size: clamp(1.375rem, 2vw, 1.875rem); letter-spacing: -0.02em; }
+.stk::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(to top, rgb(14 15 12 / .72), rgb(14 15 12 / 0)); }
+.marquee span { position: absolute; z-index: 1; left: 14px; bottom: 10px; color: #fff; font-family: var(--display); font-weight: 900; font-size: clamp(1.375rem, 2vw, 1.875rem); letter-spacing: -0.02em; }
 html:not(.js-motion) .marquee { overflow-x: auto; scrollbar-width: none; }
-html:not(.js-motion) .marquee__track { padding: 0 var(--gutter); }
+html:not(.js-motion) .marquee__track { padding-inline: var(--gutter); }
 
 /* ================= tempo ================= */
 .tempo { padding: 0 clamp(8px, 1.5vw, 20px); }

@@ -173,6 +173,7 @@ repository's copy of this file: keep the format.
 \bplan(s|ned|ning|ner|ners)?\b | "plan" is banned (5.1)
 \bplanifi\w* | "plan" is banned (5.1)
 \bplane(ar|ado|ada|amos)\b | "plan" is banned (5.1)
+\bplanos?\b | "plan" is banned (5.1)
 \b(ge)?plan(t|en|nen|nt|de)\b | "plan" is banned (5.1)
 \bgepland\b | "plan" is banned (5.1)
 \bpianific\w* | "plan" is banned (5.1)
@@ -376,3 +377,6 @@ Run on every text before you validate it.
   « ce qui t'a donné envie », « faire craquer », "win me over", DE "rumkriegen". The like comment
   field becomes "Add a note" / « Ajoute un petit mot »; the prompt "The way to win me over" reads
   "To convince me, propose" / « Pour me convaincre, propose-moi ».
+- 2026-10-01: "plan" stays banned with no exception, subscriptions included: also out of the
+  catalog's English keys (the lint checks keys) and of "plano" in ES/PT, even as "flat" or
+  "segundo plano" (background).
