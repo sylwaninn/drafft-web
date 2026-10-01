@@ -882,6 +882,15 @@
     }).scrollTrigger;
   }
 
+  // The sticker next to the manifesto drops in once, when it comes into view.
+  const statementSticker = $(".statement__sticker");
+  if (statementSticker) {
+    g.from(statementSticker, {
+      y: 70, rotation: 8, autoAlpha: 0, duration: 1.1, ease: "expo.out",
+      scrollTrigger: { trigger: statementSticker, start: "top 90%", once: true },
+    });
+  }
+
   /* ================= Sports marquee: a steady loop ================= */
 
   const marquee = $("[data-marquee]");
