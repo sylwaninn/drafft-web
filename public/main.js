@@ -808,17 +808,18 @@
 
   /* ================= Step arrows ================= */
 
-  let fillTrigger = null; // set by the manifesto below
-
   // Each step is a moment of the story (headline, like, match, proposal, confirmed), then each
   // section below. A press scrolls there smoothly, so the scroll animation plays on the way.
   const STORY_STEPS = [0, 3.1, 4.8, 6.8, 10, 11.9];
   const stepTargets = () => {
     const st = story.scrollTrigger, span = st.end - st.start, total = story.duration();
     const inStory = STORY_STEPS.map((t) => st.start + (t / total) * span);
-    // The manifesto's step is where its words have all inked in, not where it starts.
+    // The manifesto's step centres its text and sticker in the viewport; its words have all inked in by then.
     const sections = [
-      fillTrigger ? fillTrigger.end + 2 : $(".statement").getBoundingClientRect().top + scrollY - 40,
+      (() => {
+        const r = $(".statement__row").getBoundingClientRect();
+        return Math.max(0, r.top + r.height / 2 + scrollY - innerHeight / 2);
+      })(),
       // Other sections: their content (first to last child) centred in the viewport.
       ...$$(".sports, .tempo, .join").map((el) => {
         const kids = [...el.children].filter((k) => k.offsetHeight);
@@ -876,10 +877,20 @@
   const fill = $("[data-fill]");
   if (fill) {
     const words = splitFill(fill);
-    fillTrigger = g.to(words, {
+    g.to(words, {
       opacity: 1, stagger: 0.1, ease: "none",
-      scrollTrigger: { trigger: fill, start: "top 85%", end: "center center", scrub: 0.6 },
-    }).scrollTrigger;
+      // From the text reaching 62% of the screen to the text and sticker sitting centred.
+      scrollTrigger: { trigger: fill, start: "top 62%", endTrigger: ".statement__row", end: "center center", scrub: 0.6 },
+    });
+  }
+
+  // The sticker next to the manifesto drops in once, when it comes into view.
+  const statementSticker = $(".statement__sticker");
+  if (statementSticker) {
+    g.from(statementSticker, {
+      y: 70, rotation: 8, autoAlpha: 0, duration: 1.1, ease: "expo.out",
+      scrollTrigger: { trigger: statementSticker, start: "top 90%", once: true },
+    });
   }
 
   /* ================= Sports marquee: a steady loop ================= */
