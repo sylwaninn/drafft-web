@@ -433,7 +433,8 @@ input { caret-color: var(--accent); }
 [data-send-done] { opacity: 0; }
 
 /* ================= Statement ================= */
-.statement { max-width: 1100px; margin: 0 auto; padding: clamp(120px, 18vw, 240px) var(--gutter); }
+/* Tall on purpose: the text sits in the middle of a full screen and a half, clear of its neighbours */
+.statement { max-width: 1100px; margin: 0 auto; min-height: max(130svh, 720px); display: grid; align-content: center; padding: clamp(96px, 12vw, 160px) var(--gutter); }
 .statement__text {
   font-family: var(--display);
   font-weight: 900;

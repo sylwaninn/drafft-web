@@ -878,7 +878,7 @@
     const words = splitFill(fill);
     fillTrigger = g.to(words, {
       opacity: 1, stagger: 0.1, ease: "none",
-      scrollTrigger: { trigger: fill, start: "top 85%", end: "center center", scrub: 0.6 },
+      scrollTrigger: { trigger: fill, start: "top 62%", end: "bottom 40%", scrub: 0.6 },
     }).scrollTrigger;
   }
 
