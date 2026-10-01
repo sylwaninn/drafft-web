@@ -557,6 +557,7 @@
   const phone = $("[data-phone]");
   const photo = $("[data-photo]");
   const photoImg = $("img", photo);
+  const photoScrim = $("[data-photo-scrim]", photo);
   const cue = $("[data-scrollcue]");
   // Fade the glass button itself, never its wrapper: an ancestor's opacity cuts the backdrop blur.
   const cueBtn = $(".scrollcue", cue);
@@ -626,6 +627,9 @@
     // The frame is a clip on the full-hero layer and the image moves by transform only: nothing
     // is laid out again while scrolling, so the pull-back stays on the GPU (smooth on phones).
     photo.style.clipPath = `inset(${by}px ${m.W - bx - bw}px ${m.PH - by - bh}px ${bx}px round ${m.r * s * w}px)`;
+    // The card's vignette grows in with the frame, following it, so it never appears all at once at the handover.
+    photoScrim.style.transform = `translate(${bx}px, ${by}px) scale(${bw / m.W}, ${bh / m.PH})`;
+    photoScrim.style.opacity = w;
     // A camera pull-back, not a re-crop: the image's rectangle on screen glides from its
     // full-screen framing to exactly where it sits inside the card (which itself moves with the
     // scene), while the frame above closes around it. Both are linear in w, so the image always
