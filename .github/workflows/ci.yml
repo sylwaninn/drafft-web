@@ -1,17 +1,26 @@
-# drafft-web CI: every change is checked; main ships to production (getdrafft.com).
+# drafft-web CI: every change is checked; a release tag ships to production (getdrafft.com).
 #
-#   pull request   → PR title, bundle (wrangler dry run, wording check), security (dependencies, secrets, workflows)
-#   push to main   → the same checks, then deploy the drafft-web Worker and smoke-test getdrafft.com
+#   pull request into staging → PR title, bundle (wrangler dry run, wording check), security
+#                               (dependencies, secrets, workflows)
+#   push to staging           → the same checks (no staging site: getdrafft.com is the only one)
+#   v* tag                    → the same checks, then deploy the drafft-web Worker and smoke-test
+#                               getdrafft.com. release.yml starts it on the tag it creates; Run workflow
+#                               on an older tag rolls back to it.
 #
+# Flow: feature branch → pull request into staging → release.yml (staging → main, tag, deploy).
+
 # Wrangler needs the secret CLOUDFLARE_API_TOKEN and the variable CLOUDFLARE_ACCOUNT_ID.
 # Third-party actions are pinned to a commit; Dependabot bumps them.
 name: ci
 
 on:
   pull_request:
-    branches: [main]
+    branches: [staging]
   push:
-    branches: [main]
+    branches: [staging]
+  # Production: run on a v* tag. release.yml does it for the tag it creates; by hand, on an older tag, it
+  # rolls back. Not on tag pushes: a tag-triggered run counts as a release, where shared caches are unsafe.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -89,7 +98,7 @@ jobs:
 
   deploy-production:
     name: deploy production
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: [bundle, security]
     runs-on: ubuntu-latest
     timeout-minutes: 10
