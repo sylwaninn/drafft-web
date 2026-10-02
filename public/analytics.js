@@ -68,6 +68,10 @@
       before_send: (event) => {
         if (!event) return null;
         const properties = event.properties || {};
+        // Same property as the apps' (`app_environment`): one filter keeps production only. This code only
+        // runs on getdrafft.com, so every event it sends is production.
+        properties.app_environment = "production";
+        event.properties = properties;
         if (properties.$current_url) properties.$current_url = clean(properties.$current_url);
         if (properties.$referrer && properties.$referrer !== "$direct") properties.$referrer = referrer(properties.$referrer);
         return event;

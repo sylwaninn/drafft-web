@@ -15,7 +15,7 @@ no heatmap, no error tracking.
 |---|---|
 | Cookies, localStorage | None (`cookieless_mode: "always"`, `persistence: "memory"`) |
 | Visitor | PostHog counts visitors with a hash of the IP address and the browser, salted every day and never stored: nobody is followed from one day to the next. No person profile, no identify |
-| Sent | The page (path, and `utm_*` campaign parameters only: any other query string and the fragment are removed), the referring site (domain and path, no query), browser, device, language, screen size (no country: see below) |
+| Sent | `app_environment: production` (the apps' property, so one filter works everywhere), the page (path, and `utm_*` campaign parameters only: any other query string and the fragment are removed), the referring site (domain and path, no query), browser, device, language, screen size (no country: see below) |
 | Not sent | Anything typed (the site has no form), the IP address (not kept: project setting below), clicks |
 | Destination | `https://getdrafft.com/ingest/*`, relayed by the Worker to PostHog's EU cloud (`eu.i.posthog.com`, Germany). The browser contacts no other site |
 | Off when | there is no project key; the browser sends Do Not Track or Global Privacy Control; the host isn't `getdrafft.com` (`wrangler dev`, previews); the browser is a crawler (posthog-js drops bots) |
