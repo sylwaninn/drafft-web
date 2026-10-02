@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/sticker.png" alt="drafft-web" width="140">
+</p>
+
 # drafft-web
 
 The drafft marketing site, getdrafft.com: static HTML, CSS and JS in `public/`, served by a Cloudflare
