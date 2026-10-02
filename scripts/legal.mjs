@@ -10,7 +10,7 @@
 // wordmark, date, contents, and the footer links in its language. Like the home page, a page follows the
 // browser's language: opened in another one, it moves to its own version (English when none matches).
 //
-//   node scripts/legal.mjs           write public/**/{legal,privacy,terms}.html
+//   node scripts/legal.mjs           write public/**/{legal,privacy,terms,delete-account}.html
 //   node scripts/legal.mjs --check   fail if those files are stale or a value in entity.json is empty
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname } from "node:path";
