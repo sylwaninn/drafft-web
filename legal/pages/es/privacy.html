@@ -26,7 +26,7 @@
 <h3>Lo que se recoge cuando usas drafft</h3>
 <ul>
   <li><strong>Zona aproximada:</strong> con tu permiso, la aplicación lee tu ubicación con precisión reducida y, en tu teléfono, la redondea a una cuadrícula de 1 km aproximadamente antes de enviarla. Tu ubicación exacta nunca sale de tu teléfono. Para encontrar el nombre de tu ciudad, esta zona redondeada puede enviarse al servicio de mapas del sistema de tu teléfono.</li>
-  <li><strong>Dispositivo y conexión:</strong> modelo, versiones del sistema y de la aplicación, idioma, zona horaria, identificador de instalación, número de aperturas y fechas de la primera y la última apertura, dirección IP y país deducido de la dirección IP, un token de integridad del dispositivo proporcionado por el sistema del teléfono y un token de notificaciones. La zona horaria sirve también para enviarte los recordatorios de sesión a la hora correcta.</li>
+  <li><strong>Dispositivo y conexión:</strong> modelo, versiones del sistema y de la aplicación, idioma, zona horaria, identificador de instalación, número de aperturas y fechas de la primera y la última apertura, dirección IP y país deducido de la dirección IP, un token de integridad del dispositivo proporcionado por el sistema del teléfono (Apple DeviceCheck en iPhone, Google Play Integrity en Android) y un token de notificaciones. La zona horaria sirve también para enviarte los recordatorios de sesión a la hora correcta.</li>
   <li><strong>Actividad:</strong> fecha de tu última actividad, compras y créditos (boosts, super likes, drafft tempo). Nunca recibimos tus datos bancarios: los pagos pasan por la tienda de aplicaciones de tu teléfono.</li>
   <li><strong>Diagnóstico:</strong> si la aplicación falla o da un error, se envía un informe técnico (dispositivo, versiones, cómo se produjo el error, identificador de cuenta seudónimo) para que podamos corregirlo. No contiene ni tus mensajes ni tus fotos.</li>
   <li><strong>Estadísticas de uso, solo si lo aceptas:</strong> las pantallas que abres y las acciones que haces en la aplicación (por ejemplo, abrir un perfil o proponer una sesión), vinculadas a un identificador seudónimo. Sin el contenido de tus mensajes, sin tus fotos y sin grabación de tu pantalla.</li>
@@ -62,7 +62,7 @@
 <ul>
   <li><strong>Perfiles que se muestran en Descubrir:</strong> solo aparecen los perfiles activos en los últimos 30 días, con al menos una foto aprobada, que encajan con tus filtros (distancia, edad, deportes) y cuyos géneros buscados coinciden en los dos sentidos. Primero aparecen las personas que te han enviado un super like, después los perfiles con boost cerca de ti y después los demás, ordenados según la distancia, la actividad reciente, los deportes en común y si una persona ya te ha dado like. Esta clasificación no produce ningún efecto jurídico y no te priva de ningún servicio.</li>
   <li><strong>Revisión de fotos:</strong> cada foto del perfil se analiza automáticamente para detectar desnudos, violencia u otros contenidos prohibidos. Puede rechazarse automáticamente; los casos dudosos quedan a la espera de que los revise una persona. Si crees que un rechazo es un error, puedes pedir una segunda revisión: la hace una persona. Las fotos y los vídeos enviados en una conversación se analizan después de enviarse; un contenido dudoso se comunica al equipo de moderación, sin ninguna decisión automática. Los mensajes de voz y la intro de voz no se analizan.</li>
-  <li><strong>Vuelta de cuentas expulsadas:</strong> unas huellas cifradas del correo electrónico, del número de teléfono y de los identificadores de acceso, y un marcador de integridad del dispositivo, permiten detectar una cuenta expulsada que vuelve. Una identidad expulsada no puede crear una cuenta nueva. Una coincidencia puede dejar automáticamente la cuenta pendiente, mientras se hace una revisión o un selfie de verificación. Una expulsión siempre la decide una persona.</li>
+  <li><strong>Vuelta de cuentas expulsadas:</strong> unas huellas cifradas del correo electrónico, del número de teléfono y de los identificadores de acceso, y un marcador de integridad del dispositivo, permiten detectar una cuenta expulsada que vuelve. Este marcador es un indicador que guarda Apple (DeviceCheck) o Google (Play Integrity, Device recall) para tu teléfono, no para tu cuenta. Solo indica que una cuenta fue cerrada o dejada pendiente en este teléfono, y sobrevive a la reinstalación de la aplicación. Se retira en cuanto la expulsión o la revisión pendiente llega a su fin. Una identidad expulsada no puede crear una cuenta nueva. Una coincidencia puede dejar automáticamente la cuenta pendiente, mientras se hace una revisión o un selfie de verificación. Una expulsión siempre la decide una persona.</li>
   <li><strong>Número de teléfono:</strong> comprobamos el tipo de número; los números que no son móviles se rechazan.</li>
 </ul>
 
@@ -88,7 +88,7 @@
     <tr><td>RevenueCat</td><td>Seguimiento de suscripciones y compras</td><td>Estados Unidos</td></tr>
     <tr><td>Sentry (Functional Software, Inc.)</td><td>Informes de fallos y errores</td><td>Alemania (UE)</td></tr>
     <tr><td>PostHog</td><td>Estadísticas de uso de la aplicación, solo con tu consentimiento; estadísticas de visitas del sitio web, sin cookies</td><td>Alemania (UE)</td></tr>
-    <tr><td>Apple o Google, según tu teléfono</td><td>Pagos a través de su tienda de aplicaciones, notificaciones push, verificación de la integridad del dispositivo, nombre de tu ciudad a partir de tu zona redondeada</td><td>Estados Unidos</td></tr>
+    <tr><td>Apple o Google, según tu teléfono</td><td>Pagos a través de su tienda de aplicaciones, notificaciones push, verificación de la integridad del dispositivo (Apple DeviceCheck, Google Play Integrity), nombre de tu ciudad a partir de tu zona redondeada</td><td>Estados Unidos</td></tr>
   </tbody>
 </table>
 </div>
@@ -106,6 +106,7 @@
     <tr><td>Fotos de perfil añadidas pero no guardadas</td><td>Se borran cuando sales sin guardar, 7 días como máximo.</td></tr>
     <tr><td>Copias de seguridad</td><td>Hasta 30 días; después se borran.</td></tr>
     <tr><td>Direcciones IP</td><td>180 días desde tu última conexión desde esa dirección.</td></tr>
+    <tr><td>Marcador de integridad del dispositivo (guardado por Apple o Google)</td><td>Se retira cuando la expulsión o la revisión pendiente llega a su fin. Se mantiene tras eliminar la cuenta. Google también lo borra 3 años después de su último uso.</td></tr>
     <tr><td>Información del dispositivo</td><td>1 año desde su último uso.</td></tr>
     <tr><td>Historial de SMS enviados (número, dirección IP)</td><td>30 días.</td></tr>
     <tr><td>Colas técnicas de envío (notificaciones, correos electrónicos)</td><td>30 días como máximo. Una solicitud de borrado que falla sigue en cola hasta que se completa.</td></tr>

@@ -98,7 +98,7 @@
     <h3>O que é recolhido quando usas o drafft</h3>
     <ul>
       <li><strong>Zona aproximada:</strong> com a tua autorização, a app lê a tua localização com precisão reduzida e arredonda-a no teu telemóvel para uma grelha de cerca de 1 km antes de a enviar. A tua localização exata nunca sai do teu telemóvel. Para encontrar o nome da tua cidade, esta zona arredondada pode ser enviada ao serviço de mapas do sistema do teu telemóvel.</li>
-      <li><strong>Dispositivo e ligação:</strong> modelo, versões do sistema e da app, idioma, fuso horário, identificador de instalação, número de aberturas da app e datas da primeira e da última abertura, endereço IP e país deduzido do endereço IP, um token de integridade do dispositivo fornecido pelo sistema do telemóvel e um token de notificação. O fuso horário serve também para te enviarmos os lembretes de sessão à hora certa.</li>
+      <li><strong>Dispositivo e ligação:</strong> modelo, versões do sistema e da app, idioma, fuso horário, identificador de instalação, número de aberturas da app e datas da primeira e da última abertura, endereço IP e país deduzido do endereço IP, um token de integridade do dispositivo fornecido pelo sistema do telemóvel (Apple DeviceCheck no iPhone, Google Play Integrity no Android) e um token de notificação. O fuso horário serve também para te enviarmos os lembretes de sessão à hora certa.</li>
       <li><strong>Atividade:</strong> data da tua última atividade, compras e créditos (boosts, super likes, drafft tempo). Nunca recebemos os teus dados bancários: os pagamentos passam pela loja de aplicações do teu telemóvel.</li>
       <li><strong>Diagnóstico:</strong> se a app falhar ou encontrar um erro, é enviado um relatório técnico (dispositivo, versões, desenrolar do erro, identificador de conta pseudónimo) para o podermos corrigir. Não contém as tuas mensagens nem as tuas fotos.</li>
       <li><strong>Estatísticas de utilização, só se aceitares:</strong> os ecrãs que abres e as ações que fazes na app (por exemplo, abrir um perfil ou propor uma sessão), associados a um identificador pseudónimo. Sem o conteúdo das tuas mensagens, sem as tuas fotos e sem gravação do teu ecrã.</li>
@@ -134,7 +134,7 @@
     <ul>
       <li><strong>Perfis mostrados em Descobrir:</strong> só aparecem os perfis ativos nos últimos 30 dias, com pelo menos uma foto aprovada, que correspondem aos teus filtros (distância, idade, desportos) e cujos géneros procurados correspondem nos dois sentidos. Aparecem primeiro as pessoas que te enviaram um super like, depois os perfis com boost perto de ti e depois os restantes, ordenados segundo a distância, a atividade recente, os desportos em comum e o facto de uma pessoa já te ter dado like. Esta ordenação não produz nenhum efeito jurídico e não te priva de nenhum serviço.</li>
       <li><strong>Verificação de fotos:</strong> cada foto de perfil é analisada automaticamente para detetar nudez, violência ou outros conteúdos proibidos. Pode ser recusada automaticamente; os casos duvidosos aguardam a análise de uma pessoa. Se achares que uma recusa é um erro, podes pedir uma segunda análise: é feita por uma pessoa. As fotos e os vídeos enviados numa conversa são analisados depois do envio; um conteúdo duvidoso é assinalado à moderação, sem decisão automática. As mensagens de voz e a intro de voz não são analisadas.</li>
-      <li><strong>Regresso de contas banidas:</strong> códigos cifrados gerados a partir do e-mail, do número de telefone e dos identificadores de acesso, e um marcador de integridade do dispositivo, permitem detetar uma conta banida que regressa. Uma identidade banida não pode criar uma nova conta. Uma correspondência pode pôr automaticamente a conta em espera, durante uma análise ou uma selfie de verificação. Um banimento é sempre decidido por uma pessoa.</li>
+      <li><strong>Regresso de contas banidas:</strong> códigos cifrados gerados a partir do e-mail, do número de telefone e dos identificadores de acesso, e um marcador de integridade do dispositivo, permitem detetar uma conta banida que regressa. Este marcador é um indicador que a Apple (DeviceCheck) ou a Google (Play Integrity, Device recall) guarda para o teu telemóvel, e não para a tua conta. Indica apenas que uma conta foi fechada ou posta em espera neste telemóvel, e sobrevive à reinstalação da app. É removido assim que o ban ou a espera terminam. Uma identidade banida não pode criar uma nova conta. Uma correspondência pode pôr automaticamente a conta em espera, durante uma análise ou uma selfie de verificação. Um banimento é sempre decidido por uma pessoa.</li>
       <li><strong>Número de telefone:</strong> verificamos o tipo de número; os números que não são de telemóvel são recusados.</li>
     </ul>
 
@@ -160,7 +160,7 @@
         <tr><td>RevenueCat</td><td>Acompanhamento das subscrições e compras</td><td>Estados Unidos</td></tr>
         <tr><td>Sentry (Functional Software, Inc.)</td><td>Relatórios de falhas e erros</td><td>Alemanha (UE)</td></tr>
         <tr><td>PostHog</td><td>Estatísticas de utilização da app, só com o teu acordo; estatísticas de visitas do site, sem cookies</td><td>Alemanha (UE)</td></tr>
-        <tr><td>Apple ou Google, consoante o teu telemóvel</td><td>Pagamentos através da respetiva loja de aplicações, notificações push, verificação da integridade do dispositivo, nome da tua cidade a partir da tua zona arredondada</td><td>Estados Unidos</td></tr>
+        <tr><td>Apple ou Google, consoante o teu telemóvel</td><td>Pagamentos através da respetiva loja de aplicações, notificações push, verificação da integridade do dispositivo (Apple DeviceCheck, Google Play Integrity), nome da tua cidade a partir da tua zona arredondada</td><td>Estados Unidos</td></tr>
       </tbody>
     </table>
     </div>
@@ -178,6 +178,7 @@
         <tr><td>Fotos de perfil adicionadas mas não guardadas</td><td>Apagadas quando sais sem guardar, 7 dias no máximo.</td></tr>
         <tr><td>Cópias de segurança</td><td>Até 30 dias, depois são apagadas.</td></tr>
         <tr><td>Endereços IP</td><td>180 dias após a tua última ligação a partir desse endereço.</td></tr>
+        <tr><td>Marcador de integridade do dispositivo (guardado pela Apple ou pela Google)</td><td>Removido assim que o ban ou a espera terminam. Mantém-se depois de a conta ser eliminada. A Google também o apaga 3 anos após a última utilização.</td></tr>
         <tr><td>Informações sobre o dispositivo</td><td>1 ano após a sua última utilização.</td></tr>
         <tr><td>Histórico dos SMS enviados (número, endereço IP)</td><td>30 dias.</td></tr>
         <tr><td>Filas de envio técnicas (notificações, e-mails)</td><td>30 dias no máximo. Um pedido de eliminação que falha fica na fila até ser concluído.</td></tr>

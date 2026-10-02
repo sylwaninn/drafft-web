@@ -98,7 +98,7 @@
     <h3>Quello che viene raccolto quando usi drafft</h3>
     <ul>
       <li><strong>Zona approssimativa:</strong> con il tuo consenso, l’app legge la tua posizione con precisione ridotta e, prima di inviarla, la arrotonda sul tuo telefono a una griglia di circa 1 km. La tua posizione esatta non lascia mai il tuo telefono. Per trovare il nome della tua città, questa zona arrotondata può essere inviata al servizio di mappe del sistema del tuo telefono.</li>
-      <li><strong>Dispositivo e connessione:</strong> modello, versioni del sistema e dell’app, lingua, fuso orario, identificativo di installazione, numero di aperture e date della prima e dell’ultima apertura, indirizzo IP e paese dedotto dall’indirizzo IP, un token di integrità del dispositivo fornito dal sistema del telefono e un token per le notifiche. Il fuso orario serve anche a inviarti i promemoria delle sessioni all’ora giusta.</li>
+      <li><strong>Dispositivo e connessione:</strong> modello, versioni del sistema e dell’app, lingua, fuso orario, identificativo di installazione, numero di aperture e date della prima e dell’ultima apertura, indirizzo IP e paese dedotto dall’indirizzo IP, un token di integrità del dispositivo fornito dal sistema del telefono (Apple DeviceCheck su iPhone, Google Play Integrity su Android) e un token per le notifiche. Il fuso orario serve anche a inviarti i promemoria delle sessioni all’ora giusta.</li>
       <li><strong>Attività:</strong> data della tua ultima attività, acquisti e crediti (boost, super like, drafft tempo). Non riceviamo mai i tuoi dati bancari: i pagamenti passano dallo store di app del tuo telefono.</li>
       <li><strong>Diagnostica:</strong> in caso di arresto anomalo o di errore, viene inviato un rapporto tecnico (dispositivo, versioni, svolgimento dell’errore, identificativo pseudonimo dell’account) per permetterci di correggerlo. Non contiene né i tuoi messaggi né le tue foto.</li>
       <li><strong>Statistiche di utilizzo, solo se accetti:</strong> le schermate che apri e le azioni che compi nell’app (per esempio aprire un profilo o proporre una sessione), collegate a un identificativo pseudonimo. Senza il contenuto dei tuoi messaggi, le tue foto né registrazioni del tuo schermo.</li>
@@ -134,7 +134,7 @@
     <ul>
       <li><strong>Profili proposti in Scopri:</strong> compaiono solo i profili attivi negli ultimi 30 giorni, con almeno una foto approvata, che corrispondono ai tuoi filtri (distanza, età, sport) e i cui generi cercati corrispondono in entrambi i sensi. Vengono prima le persone che ti hanno mandato un super like, poi i profili con un boost attivo vicino a te, poi gli altri, ordinati in base alla distanza, all’attività recente, agli sport in comune e al fatto che una persona ti abbia già messo like. Questo ordinamento non produce alcun effetto giuridico e non ti esclude da alcun servizio.</li>
       <li><strong>Verifica delle foto:</strong> ogni foto del profilo viene analizzata automaticamente per rilevare nudità, violenza o altri contenuti vietati. Può essere rifiutata automaticamente; i casi dubbi attendono l’esame di una persona. Se pensi che un rifiuto sia un errore, puoi chiedere un secondo esame: lo fa una persona. Le foto e i video inviati in una conversazione vengono analizzati dopo l’invio; un contenuto dubbio viene segnalato alla moderazione, senza alcuna decisione automatica. I messaggi vocali e l’intro vocale non vengono analizzati.</li>
-      <li><strong>Ritorno di account bannati:</strong> impronte cifrate dell’e-mail, del numero di telefono e degli identificativi di accesso, e un marcatore di integrità del dispositivo, permettono di individuare un account bannato che ritorna. Un’identità bannata non può creare un nuovo account. Una corrispondenza può mettere automaticamente l’account in attesa, il tempo di un esame o di un selfie di verifica. Un ban viene sempre deciso da una persona.</li>
+      <li><strong>Ritorno di account bannati:</strong> impronte cifrate dell’e-mail, del numero di telefono e degli identificativi di accesso, e un marcatore di integrità del dispositivo, permettono di individuare un account bannato che ritorna. Questo marcatore è un indicatore che Apple (DeviceCheck) o Google (Play Integrity, Device recall) conserva per il tuo telefono, non per il tuo account. Indica solo che su questo telefono un account è stato chiuso o messo in attesa, e resiste alla reinstallazione dell’app. Viene rimosso non appena il ban o l’attesa finiscono. Un’identità bannata non può creare un nuovo account. Una corrispondenza può mettere automaticamente l’account in attesa, il tempo di un esame o di un selfie di verifica. Un ban viene sempre deciso da una persona.</li>
       <li><strong>Numero di telefono:</strong> verifichiamo il tipo di numero; i numeri che non sono di cellulare vengono rifiutati.</li>
     </ul>
 
@@ -160,7 +160,7 @@
         <tr><td>RevenueCat</td><td>Gestione di abbonamenti e acquisti</td><td>Stati Uniti</td></tr>
         <tr><td>Sentry (Functional Software, Inc.)</td><td>Rapporti su arresti anomali ed errori</td><td>Germania (UE)</td></tr>
         <tr><td>PostHog</td><td>Statistiche di utilizzo dell’app, solo con il tuo consenso; statistiche delle visite del sito, senza cookie</td><td>Germania (UE)</td></tr>
-        <tr><td>Apple o Google, a seconda del tuo telefono</td><td>Pagamenti tramite il loro store di app, notifiche push, verifica dell’integrità del dispositivo, nome della tua città a partire dalla tua zona arrotondata</td><td>Stati Uniti</td></tr>
+        <tr><td>Apple o Google, a seconda del tuo telefono</td><td>Pagamenti tramite il loro store di app, notifiche push, verifica dell’integrità del dispositivo (Apple DeviceCheck, Google Play Integrity), nome della tua città a partire dalla tua zona arrotondata</td><td>Stati Uniti</td></tr>
       </tbody>
     </table>
     </div>
@@ -178,6 +178,7 @@
         <tr><td>Foto del profilo aggiunte ma non salvate</td><td>Cancellate quando esci senza salvare, al massimo dopo 7 giorni.</td></tr>
         <tr><td>Backup</td><td>Fino a 30 giorni, poi cancellati.</td></tr>
         <tr><td>Indirizzi IP</td><td>180 giorni dopo il tuo ultimo accesso da quell’indirizzo.</td></tr>
+        <tr><td>Marcatore di integrità del dispositivo (conservato da Apple o Google)</td><td>Rimosso non appena il ban o l’attesa finiscono. Resta dopo l’eliminazione dell’account. Google lo cancella inoltre 3 anni dopo l’ultimo utilizzo.</td></tr>
         <tr><td>Informazioni sul dispositivo</td><td>1 anno dopo il suo ultimo utilizzo.</td></tr>
         <tr><td>Registro degli SMS inviati (numero, indirizzo IP)</td><td>30 giorni.</td></tr>
         <tr><td>Code di invio tecniche (notifiche, e-mail)</td><td>Al massimo 30 giorni. Una richiesta di cancellazione non riuscita resta in coda finché non va a buon fine.</td></tr>

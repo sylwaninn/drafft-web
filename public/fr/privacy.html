@@ -98,7 +98,7 @@
     <h3>Ce qui est collecté quand tu utilises drafft</h3>
     <ul>
       <li><strong>Zone approximative :</strong> avec ton accord, l’application lit ta position en précision réduite et l’arrondit sur ton téléphone à une grille d’environ 1 km avant de l’envoyer. Ta position exacte ne quitte jamais ton téléphone. Pour trouver le nom de ta ville, cette zone arrondie peut être envoyée au service de cartographie du système de ton téléphone.</li>
-      <li><strong>Appareil et connexion :</strong> modèle, versions du système et de l’application, langue, fuseau horaire, identifiant d’installation, nombre d’ouvertures et dates de première et dernière ouverture, adresse IP et pays déduit de l’adresse IP, un jeton d’intégrité de l’appareil fourni par le système du téléphone et un jeton de notification. Le fuseau horaire sert aussi à t’envoyer les rappels de séance à la bonne heure.</li>
+      <li><strong>Appareil et connexion :</strong> modèle, versions du système et de l’application, langue, fuseau horaire, identifiant d’installation, nombre d’ouvertures et dates de première et dernière ouverture, adresse IP et pays déduit de l’adresse IP, un jeton d’intégrité de l’appareil fourni par le système du téléphone (Apple DeviceCheck sur iPhone, Google Play Integrity sur Android) et un jeton de notification. Le fuseau horaire sert aussi à t’envoyer les rappels de séance à la bonne heure.</li>
       <li><strong>Activité :</strong> date de ta dernière activité, achats et crédits (boosts, super likes, drafft tempo). On ne reçoit jamais tes coordonnées bancaires : les paiements passent par la boutique d’applications de ton téléphone.</li>
       <li><strong>Diagnostics :</strong> en cas de plantage ou d’erreur, un rapport technique (appareil, versions, déroulé de l’erreur, identifiant de compte pseudonyme) est envoyé pour qu’on puisse la corriger. Il ne contient ni tes messages ni tes photos.</li>
       <li><strong>Statistiques d’usage, seulement si tu l’acceptes :</strong> les écrans que tu ouvres et les actions que tu fais dans l’application (par exemple ouvrir un profil ou proposer une séance), rattachés à un identifiant pseudonyme. Sans le contenu de tes messages, tes photos ni enregistrement de ton écran.</li>
@@ -134,7 +134,7 @@
     <ul>
       <li><strong>Profils proposés dans Découvrir :</strong> seuls apparaissent les profils actifs ces 30 derniers jours, avec au moins une photo validée, qui correspondent à tes filtres (distance, âge, sports) et dont les genres recherchés correspondent dans les deux sens. Viennent d’abord les personnes qui t’ont envoyé un super like, puis les profils boostés près de toi, puis les autres, classés selon la distance, l’activité récente, les sports en commun et le fait qu’une personne t’a déjà liké. Ce classement ne produit aucun effet juridique et ne te prive d’aucun service.</li>
       <li><strong>Vérification des photos :</strong> chaque photo de profil est analysée automatiquement pour détecter la nudité, la violence ou d’autres contenus interdits. Elle peut être refusée automatiquement ; les cas douteux attendent l’examen d’une personne. Si tu penses qu’un refus est une erreur, tu peux demander un second examen : une personne le fait. Les photos et vidéos envoyées en conversation sont analysées après leur envoi ; un contenu douteux est signalé à la modération, sans décision automatique. Les messages vocaux et l’intro vocale ne sont pas analysés.</li>
-      <li><strong>Retour de comptes bannis :</strong> des empreintes chiffrées de l’e-mail, du numéro de téléphone et des identifiants de connexion, et un marqueur d’intégrité de l’appareil, permettent de repérer un compte banni qui revient. Une identité bannie ne peut pas créer de nouveau compte. Une correspondance peut mettre automatiquement le compte en attente, le temps d’un examen ou d’un selfie de vérification. Un bannissement est toujours décidé par une personne.</li>
+      <li><strong>Retour de comptes bannis :</strong> des empreintes chiffrées de l’e-mail, du numéro de téléphone et des identifiants de connexion, et un marqueur d’intégrité de l’appareil, permettent de repérer un compte banni qui revient. Ce marqueur est un indicateur que garde Apple (DeviceCheck) ou Google (Play Integrity, Device recall) pour ton téléphone, pas pour ton compte. Il indique seulement qu’un compte a été fermé ou mis en attente sur ce téléphone, et il survit à la réinstallation de l’application. Il est retiré dès que le bannissement ou la mise en attente prend fin. Une identité bannie ne peut pas créer de nouveau compte. Une correspondance peut mettre automatiquement le compte en attente, le temps d’un examen ou d’un selfie de vérification. Un bannissement est toujours décidé par une personne.</li>
       <li><strong>Numéro de téléphone :</strong> on vérifie le type de numéro ; les numéros qui ne sont pas des numéros mobiles sont refusés.</li>
     </ul>
 
@@ -160,7 +160,7 @@
         <tr><td>RevenueCat</td><td>Suivi des abonnements et achats</td><td>États-Unis</td></tr>
         <tr><td>Sentry (Functional Software, Inc.)</td><td>Rapports de plantage et d’erreur</td><td>Allemagne (UE)</td></tr>
         <tr><td>PostHog</td><td>Statistiques d’usage de l’application, seulement avec ton accord ; statistiques de visites du site, sans cookie</td><td>Allemagne (UE)</td></tr>
-        <tr><td>Apple ou Google, selon ton téléphone</td><td>Paiements via leur boutique d’applications, notifications push, vérification de l’intégrité de l’appareil, nom de ta ville à partir de ta zone arrondie</td><td>États-Unis</td></tr>
+        <tr><td>Apple ou Google, selon ton téléphone</td><td>Paiements via leur boutique d’applications, notifications push, vérification de l’intégrité de l’appareil (Apple DeviceCheck, Google Play Integrity), nom de ta ville à partir de ta zone arrondie</td><td>États-Unis</td></tr>
       </tbody>
     </table>
     </div>
@@ -178,6 +178,7 @@
         <tr><td>Photos de profil ajoutées mais pas enregistrées</td><td>Effacées quand tu quittes sans enregistrer, 7 jours au plus.</td></tr>
         <tr><td>Sauvegardes</td><td>Jusqu’à 30 jours, puis effacées.</td></tr>
         <tr><td>Adresses IP</td><td>180 jours après ta dernière connexion depuis cette adresse.</td></tr>
+        <tr><td>Marqueur d’intégrité de l’appareil (conservé par Apple ou Google)</td><td>Retiré dès que le bannissement ou la mise en attente prend fin. Il reste après la suppression du compte. Google l’efface aussi 3 ans après sa dernière utilisation.</td></tr>
         <tr><td>Informations sur l’appareil</td><td>1 an après sa dernière utilisation.</td></tr>
         <tr><td>Historique des SMS envoyés (numéro, adresse IP)</td><td>30 jours.</td></tr>
         <tr><td>Files d’envoi techniques (notifications, e-mails)</td><td>30 jours au plus. Une demande d’effacement qui échoue reste en file jusqu’à ce qu’elle aboutisse.</td></tr>
