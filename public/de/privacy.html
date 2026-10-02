@@ -98,7 +98,7 @@
     <h3>Was bei der Nutzung von drafft erhoben wird</h3>
     <ul>
       <li><strong>Ungefährer Standortbereich:</strong> Mit deiner Zustimmung liest die App deinen Standort mit reduzierter Genauigkeit und rundet ihn auf deinem Handy auf ein Raster von etwa 1 km, bevor sie ihn sendet. Dein genauer Standort verlässt nie dein Handy. Um den Namen deiner Stadt zu ermitteln, kann dieser gerundete Bereich an den Kartendienst des Systems deines Handys gesendet werden.</li>
-      <li><strong>Gerät und Verbindung:</strong> Modell, System- und App-Version, Sprache, Zeitzone, Installationskennung, Anzahl der App-Starts und Zeitpunkt des ersten und letzten Starts, IP-Adresse und das daraus abgeleitete Land, ein vom System des Handys bereitgestelltes Token zur Geräteintegrität und ein Benachrichtigungs-Token. Die Zeitzone dient außerdem dazu, dir Erinnerungen an Sessions zur richtigen Uhrzeit zu senden.</li>
+      <li><strong>Gerät und Verbindung:</strong> Modell, System- und App-Version, Sprache, Zeitzone, Installationskennung, Anzahl der App-Starts und Zeitpunkt des ersten und letzten Starts, IP-Adresse und das daraus abgeleitete Land, ein vom System des Handys bereitgestelltes Token zur Geräteintegrität (Apple DeviceCheck auf dem iPhone, Google Play Integrity auf Android) und ein Benachrichtigungs-Token. Die Zeitzone dient außerdem dazu, dir Erinnerungen an Sessions zur richtigen Uhrzeit zu senden.</li>
       <li><strong>Aktivität:</strong> Zeitpunkt deiner letzten Aktivität, Käufe und Guthaben (Boosts, Super Likes, drafft tempo). Deine Bankdaten erhalten wir nie: Zahlungen laufen über den App-Store deines Handys.</li>
       <li><strong>Diagnosedaten:</strong> Wenn die App abstürzt oder ein Fehler auftritt, wird ein technischer Bericht (Gerät, Versionen, Ablauf des Fehlers, pseudonyme Kontokennung) gesendet, damit wir den Fehler beheben können. Er enthält weder deine Nachrichten noch deine Fotos.</li>
       <li><strong>Nutzungsstatistiken, nur wenn du zustimmst:</strong> die Bildschirme, die du öffnest, und die Aktionen, die du in der App ausführst (zum Beispiel ein Profil öffnen oder eine Session vorschlagen), verknüpft mit einer pseudonymen Kennung. Ohne den Inhalt deiner Nachrichten, ohne deine Fotos und ohne Aufzeichnung deines Bildschirms.</li>
@@ -134,7 +134,7 @@
     <ul>
       <li><strong>Vorgeschlagene Profile in Entdecken:</strong> Angezeigt werden nur Profile, die in den letzten 30 Tagen aktiv waren, mindestens ein freigegebenes Foto haben und zu deinen Filtern passen (Entfernung, Alter, Sportarten), und nur, wenn die gesuchten Geschlechter in beide Richtungen zusammenpassen. Zuerst kommen Personen, die dir ein Super Like geschickt haben, dann geboostete Profile in deiner Nähe, dann alle anderen, sortiert nach Entfernung, letzter Aktivität, gemeinsamen Sportarten und danach, ob dich jemand schon gelikt hat. Diese Reihenfolge hat keine rechtliche Wirkung und schließt dich von keinem Dienst aus.</li>
       <li><strong>Prüfung von Fotos:</strong> Jedes Profilfoto wird automatisch auf Nacktheit, Gewalt oder andere verbotene Inhalte geprüft. Es kann automatisch abgelehnt werden; unklare Fälle warten auf die Prüfung durch einen Menschen. Wenn du meinst, dass eine Ablehnung ein Fehler ist, kannst du eine zweite Prüfung verlangen: Ein Mensch übernimmt sie. Im Chat gesendete Fotos und Videos werden nach dem Senden geprüft; ein unklarer Inhalt wird der Moderation gemeldet, ohne automatische Entscheidung. Sprachnachrichten und das Sprach-Intro werden nicht geprüft.</li>
-      <li><strong>Rückkehr gesperrter Konten:</strong> Verschlüsselte Fingerabdrücke von E-Mail, Telefonnummer und Anmeldekennungen sowie ein Merkmal zur Geräteintegrität helfen, ein gesperrtes Konto zu erkennen, das zurückkommt. Mit einer gesperrten Identität lässt sich kein neues Konto erstellen. Ein Treffer kann das Konto automatisch in Wartestellung versetzen, bis eine Prüfung oder ein Verifizierungs-Selfie erfolgt ist. Über eine Sperre entscheidet immer ein Mensch.</li>
+      <li><strong>Rückkehr gesperrter Konten:</strong> Verschlüsselte Fingerabdrücke von E-Mail, Telefonnummer und Anmeldekennungen sowie ein Merkmal zur Geräteintegrität helfen, ein gesperrtes Konto zu erkennen, das zurückkommt. Dieses Merkmal ist ein Kennzeichen, das Apple (DeviceCheck) oder Google (Play Integrity, Device recall) für dein Handy speichert, nicht für dein Konto. Es besagt nur, dass auf diesem Handy ein Konto gesperrt oder in Wartestellung versetzt wurde, und bleibt nach einer Neuinstallation der App erhalten. Es wird entfernt, sobald die Sperre oder die Wartestellung endet. Mit einer gesperrten Identität lässt sich kein neues Konto erstellen. Ein Treffer kann das Konto automatisch in Wartestellung versetzen, bis eine Prüfung oder ein Verifizierungs-Selfie erfolgt ist. Über eine Sperre entscheidet immer ein Mensch.</li>
       <li><strong>Telefonnummer:</strong> Wir prüfen die Art der Nummer; Nummern, die keine Mobilnummern sind, werden abgelehnt.</li>
     </ul>
 
@@ -160,7 +160,7 @@
         <tr><td>RevenueCat</td><td>Nachverfolgung von Abos und Käufen</td><td>USA</td></tr>
         <tr><td>Sentry (Functional Software, Inc.)</td><td>Absturz- und Fehlerberichte</td><td>Deutschland (EU)</td></tr>
         <tr><td>PostHog</td><td>Nutzungsstatistiken der App, nur mit deiner Zustimmung; Besuchsstatistiken der Website, ohne Cookies</td><td>Deutschland (EU)</td></tr>
-        <tr><td>Apple oder Google, je nach Handy</td><td>Zahlungen über ihren App-Store, Push-Benachrichtigungen, Prüfung der Geräteintegrität, Name deiner Stadt anhand deines gerundeten Bereichs</td><td>USA</td></tr>
+        <tr><td>Apple oder Google, je nach Handy</td><td>Zahlungen über ihren App-Store, Push-Benachrichtigungen, Prüfung der Geräteintegrität (Apple DeviceCheck, Google Play Integrity), Name deiner Stadt anhand deines gerundeten Bereichs</td><td>USA</td></tr>
       </tbody>
     </table>
     </div>
@@ -178,6 +178,7 @@
         <tr><td>Hinzugefügte, aber nicht gespeicherte Profilfotos</td><td>Gelöscht, wenn du ohne Speichern verlässt, spätestens nach 7 Tagen.</td></tr>
         <tr><td>Backups</td><td>Bis zu 30 Tage, danach gelöscht.</td></tr>
         <tr><td>IP-Adressen</td><td>180 Tage nach deiner letzten Anmeldung von dieser Adresse.</td></tr>
+        <tr><td>Merkmal zur Geräteintegrität (von Apple oder Google gespeichert)</td><td>Wird entfernt, sobald die Sperre oder die Wartestellung endet. Es bleibt nach dem Löschen des Kontos bestehen. Google löscht es außerdem 3 Jahre nach der letzten Nutzung.</td></tr>
         <tr><td>Geräteinformationen</td><td>1 Jahr nach der letzten Nutzung des Geräts.</td></tr>
         <tr><td>Verlauf der gesendeten SMS (Nummer, IP-Adresse)</td><td>30 Tage.</td></tr>
         <tr><td>Technische Versandwarteschlangen (Benachrichtigungen, E-Mails)</td><td>Höchstens 30 Tage. Ein fehlgeschlagener Löschauftrag bleibt in der Warteschlange, bis er ausgeführt ist.</td></tr>

@@ -26,7 +26,7 @@
 <h3>What’s collected when you use drafft</h3>
 <ul>
   <li><strong>Approximate area:</strong> with your permission, the app reads your location at reduced accuracy and rounds it on your phone to a grid of about 1 km before sending it. Your exact location never leaves your phone. To find the name of your city, this rounded area may be sent to your phone system’s maps service.</li>
-  <li><strong>Device and connection:</strong> model, system and app versions, language, time zone, install identifier, how many times you opened the app and when first and last, IP address and the country it indicates, a device integrity token provided by the phone’s system and a notification token. The time zone is also used to send session reminders at the right time.</li>
+  <li><strong>Device and connection:</strong> model, system and app versions, language, time zone, install identifier, how many times you opened the app and when first and last, IP address and the country it indicates, a device integrity token provided by the phone’s system (Apple DeviceCheck on iPhone, Google Play Integrity on Android) and a notification token. The time zone is also used to send session reminders at the right time.</li>
   <li><strong>Activity:</strong> when you were last active, purchases and credits (boosts, super likes, drafft tempo). We never receive your card details: payments go through your phone’s app store.</li>
   <li><strong>Diagnostics:</strong> if the app crashes or hits an error, a technical report (device, versions, how the error happened, a pseudonymous account identifier) is sent so we can fix it. It contains neither your messages nor your photos.</li>
   <li><strong>Usage statistics, only if you agree:</strong> the screens you open and the actions you take in the app (for example opening a profile or proposing a session), linked to a pseudonymous identifier. No message content, no photos and no screen recording.</li>
@@ -62,7 +62,7 @@
 <ul>
   <li><strong>Profiles shown in Discover:</strong> only profiles active in the last 30 days, with at least one approved photo, that match your filters (distance, age, sports) and whose preferred genders match both ways appear. People who sent you a super like come first, then boosted profiles near you, then everyone else, ranked by distance, recent activity, shared sports and whether someone has already liked you. This ranking has no legal effect and doesn’t deny you any service.</li>
   <li><strong>Photo checks:</strong> every profile photo is analysed automatically to detect nudity, violence or other prohibited content. It can be rejected automatically; unclear cases wait for a person to review them. If you think a rejection is a mistake, you can ask for a second look: a person does it. Photos and videos sent in a chat are analysed after they’re sent; anything unclear is flagged to moderation, with no automatic decision. Voice messages and the voice intro aren’t analysed.</li>
-  <li><strong>Banned accounts coming back:</strong> encrypted fingerprints of the email, phone number and login identifiers, and a device integrity marker, help spot a banned account that returns. A banned identity can’t create a new account. A match can automatically put the account on hold while it’s reviewed or a verification selfie is checked. A ban is always decided by a person.</li>
+  <li><strong>Banned accounts coming back:</strong> encrypted fingerprints of the email, phone number and login identifiers, and a device integrity marker, help spot a banned account that returns. The marker is a flag that Apple (DeviceCheck) or Google (Play Integrity, Device recall) keeps for your phone, not for your account. It only says that an account was closed or put on hold on this phone, and it survives reinstalling the app. It is removed when the ban or hold ends. A banned identity can’t create a new account. A match can automatically put the account on hold while it’s reviewed or a verification selfie is checked. A ban is always decided by a person.</li>
   <li><strong>Phone number:</strong> we check the type of number; numbers that aren’t mobile numbers are refused.</li>
 </ul>
 
@@ -88,7 +88,7 @@
     <tr><td>RevenueCat</td><td>Tracking subscriptions and purchases</td><td>United States</td></tr>
     <tr><td>Sentry (Functional Software, Inc.)</td><td>Crash and error reports</td><td>Germany (EU)</td></tr>
     <tr><td>PostHog</td><td>Usage statistics of the app, only with your consent; visit statistics of the website, without cookies</td><td>Germany (EU)</td></tr>
-    <tr><td>Apple or Google, depending on your phone</td><td>Payments through their app store, push notifications, device integrity checks, the name of your city from your rounded area</td><td>United States</td></tr>
+    <tr><td>Apple or Google, depending on your phone</td><td>Payments through their app store, push notifications, device integrity checks (Apple DeviceCheck, Google Play Integrity), the name of your city from your rounded area</td><td>United States</td></tr>
   </tbody>
 </table>
 </div>
@@ -106,6 +106,7 @@
     <tr><td>Profile photos added but not saved</td><td>Erased when you leave without saving, 7 days at most.</td></tr>
     <tr><td>Backups</td><td>Up to 30 days, then erased.</td></tr>
     <tr><td>IP addresses</td><td>180 days after you last connected from that address.</td></tr>
+    <tr><td>Device integrity marker (kept by Apple or Google)</td><td>Removed when the ban or hold ends. It stays after the account is deleted. Google also erases it 3 years after it was last used.</td></tr>
     <tr><td>Device information</td><td>1 year after it was last used.</td></tr>
     <tr><td>Log of texts sent (number, IP address)</td><td>30 days.</td></tr>
     <tr><td>Technical sending queues (notifications, emails)</td><td>30 days at most. An erasure request that fails stays queued until it goes through.</td></tr>
