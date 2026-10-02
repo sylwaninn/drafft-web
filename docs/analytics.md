@@ -15,7 +15,7 @@ no heatmap, no error tracking.
 |---|---|
 | Cookies, localStorage | None (`cookieless_mode: "always"`, `persistence: "memory"`) |
 | Visitor | PostHog counts visitors with a hash of the IP address and the browser, salted every day and never stored: nobody is followed from one day to the next. No person profile, no identify |
-| Sent | The page (path, and `utm_*` campaign parameters only: any other query string and the fragment are removed), the referring site (domain and path, no query), browser, device, language, screen size, country |
+| Sent | The page (path, and `utm_*` campaign parameters only: any other query string and the fragment are removed), the referring site (domain and path, no query), browser, device, language, screen size (no country: see below) |
 | Not sent | Anything typed (the site has no form), the IP address (not kept: project setting below), clicks |
 | Destination | `https://getdrafft.com/ingest/*`, relayed by the Worker to PostHog's EU cloud (`eu.i.posthog.com`, Germany). The browser contacts no other site |
 | Off when | there is no project key; the browser sends Do Not Track or Global Privacy Control; the host isn't `getdrafft.com` (`wrangler dev`, previews); the browser is a crawler (posthog-js drops bots) |
@@ -44,8 +44,10 @@ The CSP (`public/_headers`) needs no change: the script and the library are `'se
    Project settings (they apply to the apps too, which is fine):
    - Web analytics > **Cookieless server hash mode: on** (without it, cookieless events are dropped);
    - Project > **Discard client IP data: on** (the policy says the IP address isn't kept);
-   - Data retention: events 13 months at most (the policy says so); GeoIP enrichment kept (country only
-     is shown).
+   - Data retention: events 13 months at most (the policy says so).
+   - Cookieless mode hashes the IP address into the visitor id and strips it before any enrichment, so
+     web events carry no country or city (GeoIP and bot detection don't run on them). The policy doesn't
+     claim a country. "Discard client IP data" still matters for the apps' events.
 2. The project token (`phc_...`, public) is already in `PROJECT_KEY` of `public/analytics.js`. To change
    it: bump the `?v=` (`public/index.html`, `ANALYTICS_VERSION` in `scripts/legal.mjs`, then
    `pnpm legal`) and open a pull request. Merging deploys it.
