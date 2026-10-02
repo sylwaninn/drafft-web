@@ -1,0 +1,10 @@
+# Secret scanning (CI). Only public keys live in this repository: they're allowed by value, nothing else.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "PostHog project key of the website's audience measurement (public: it only lets a page send events)"
+regexTarget = "match"
+regexes = [
+    '''phc_[A-Za-z0-9]+''',
+]

@@ -27,9 +27,31 @@ workspace's `scripts/bootstrap.sh`).
 rules (`pnpm verify`) means, in this repository:
 
 ```sh
-pnpm check && pnpm wording
+pnpm check && pnpm wording && pnpm test
 ```
 
 `pnpm wording` (`scripts/ci/wording.mjs`) fails on any wording WORDING.md forbids (its
 `wording-forbidden` block) in `public/i18n.js` and `public/index.html`; CI runs it on every pull
 request.
+
+## Audience measurement (PostHog Web analytics)
+
+[docs/analytics.md](docs/analytics.md): `public/analytics.js` counts page views with PostHog (EU cloud),
+without a cookie or any storage, through the Worker's `/ingest` relay (`worker/index.js`), so the CSP
+stays `'self'` and the page contacts no other site. The privacy policy says so (`legal/pages/*/privacy.html`):
+change what is measured, and its text changes with it, in all 7 languages. The project key is public
+and goes in `analytics.js`; empty, nothing is sent. Bump the `?v=` of `analytics.js` (`index.html`,
+`ANALYTICS_VERSION` in `scripts/legal.mjs`) when it changes.
+
+**Every change to the site finishes with an audience measurement pass** (the pull request's "Notes" says
+what was done, or "Measurement: none, because ..."):
+
+1. A new page gets `analytics.js` (the legal pages through `scripts/legal.mjs`, the home page by hand) so
+   its views are counted; nothing else to add.
+2. A new thing to measure (a click on a store badge, a form) is a new event, and it changes the legal
+   basis: first the privacy policy (7 languages) and the decision on consent, then the event, with
+   `app_environment` (set for you in `before_send`) and a code-only property set.
+3. Stay cookieless and first party: no cookie, no storage, no request to another site, no replay,
+   autocapture or flag. The relay's allow list (`worker/index.js`) and its tests change with it.
+4. PostHog is the apps' project too: filter `$host = getdrafft.com` for the site and
+   `app_environment = production` everywhere; the project's test-account filter already does the latter.
