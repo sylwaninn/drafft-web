@@ -21,6 +21,7 @@ const check = process.argv.includes("--check");
 
 const SITE = "https://getdrafft.com";
 const CSS_VERSION = "1790760000";
+const ANALYTICS_VERSION = "1790900000";
 const PAGES = ["legal", "privacy", "terms", "delete-account"];
 const LANGS = {
   en: { name: "English", locale: "en-GB", legal: "Legal notice", privacy: "Privacy policy", terms: "Terms of use", "delete-account": "Delete your account",
@@ -119,6 +120,7 @@ ${alternates}
   <link rel="apple-touch-icon" sizes="180x180" href="/icon.png?v=graphite">
   <link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/legal.css?v=${CSS_VERSION}">
+  <script src="/analytics.js?v=${ANALYTICS_VERSION}" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">${L.skip}</a>

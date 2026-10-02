@@ -9,10 +9,16 @@ pnpm dev      # http://localhost:8787, with the production headers (public/_head
 pnpm legal    # rebuild the legal pages from legal/
 pnpm check    # legal pages up to date and complete, then bundle without deploying
 pnpm wording  # the copy against WORDING.md's forbidden wording (CI runs it too)
+pnpm test     # the PostHog relay of the Worker (worker/index.test.mjs)
 ```
 
 All page copy (`public/i18n.js`, 7 languages) follows [WORDING.md](WORDING.md), a synced copy of the one in
 the `drafft` repository.
+
+## Audience measurement
+
+Page views are counted with PostHog, cookieless and through the Worker (`/ingest`): see
+[docs/analytics.md](docs/analytics.md), including how to switch it on (it sends nothing without a project key).
 
 ## Sport photos
 

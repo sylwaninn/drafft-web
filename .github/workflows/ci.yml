@@ -59,6 +59,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - name: Test the analytics relay
+        run: pnpm test
       - name: Check wording (WORDING.md forbidden list)
         run: pnpm wording
 
