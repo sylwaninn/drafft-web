@@ -528,7 +528,7 @@ html:not(.js-motion) .marquee__track { padding-inline: var(--gutter); }
 .foot__links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--accent); }
 
 /* ================= Header wordmark ================= */
-/* The word alone, no trail; not a link. It takes the tone of whatever passes under it
+/* The word alone; not a link. It takes the tone of whatever passes under it
    (see toneUnderLogo in main.js). */
 .brand { position: relative; display: inline-grid; font-family: var(--display); font-weight: 900; font-size: 1.625rem; letter-spacing: -0.02em; line-height: 1; color: var(--ink); transition: color .4s; }
 .brand { margin: 0; pointer-events: none; user-select: none; -webkit-user-select: none; }
