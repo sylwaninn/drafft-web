@@ -9,19 +9,97 @@ Worker (see [README.md](README.md)). The apps are `drafft-ios` and `drafft-andro
 Before writing or changing any text people see (page copy in `public/i18n.js` and `public/index.html`,
 all 7 languages, the in-phone mockup profiles and chats, meta tags, store badges, social copy), read and
 apply [WORDING.md](WORDING.md), then run its review checklist (section 10). The `wording` skill
-(workspace `.claude/skills/wording/`) walks through it. Never write "plan" in any sense or language, and
-never present a match as turning into something. `../drafft-ios/WORDING.md` is the source: this copy is
-synced by the workspace's `scripts/sync-docs.sh`, never edited here.
+(`.claude/skills/wording/`) walks through it. Never write "plan" in any sense or language, and
+never present a match as turning into something. This file is shared with drafft-ios (the
+reference), drafft-android and drafft-backend: see "Shared docs" before changing it.
 
-## Workspace rules
+## Working with the user
 
-This repository lives in the drafft workspace (the parent folder, see `../AGENTS.md`), which holds what
-every repository shares: commit and GitHub rules (`../.claude/rules/`), the `create-pr` and `wording`
-skills (`../.claude/skills/`), and the Claude Code settings and git guard (`../.claude/`). Start agents
-there. In short: work on a branch, one-line commits `type(scope): description` without any
-Co-Authored-By, a pull request into `main`, verify first. The git hooks in `.agents/git-hooks/`
-enforce it for agents and humans (`git config core.hooksPath .agents/git-hooks`, set by the
-workspace's `scripts/bootstrap.sh`).
+- **Rules live in this repository, never in an agent's memory.** A rule the user gives (design, copy,
+  product, way of working) goes into the document it belongs to, in the same change: PRODUCT.md, this file, or WORDING.md (in drafft-ios, its source). Never save it to Claude Code's auto
+  memory: a cloud session, another machine or another agent would never see it.
+- **Industry-grade solutions.** Every fix or feature takes the robust, secure, scalable solution the
+  industry already uses (proven libraries and patterns: idempotency keys, retries with backoff,
+  dead-letter queues and redrive, circuit breakers, stale-while-revalidate), never a quick patch.
+  Challenge it before presenting it: name the pattern, its failure modes and how they are covered.
+- **Design calls are yours.** On design and build tasks, decide the structure, the call to action and the
+  wording (within WORDING.md) and say what you chose in the summary, instead of a round of questions.
+  Lean modern: rich motion and micro-interactions.
+- **Never check screens yourself**: no screenshots, no visual review by a subagent.
+  Start the local server and give the address, then hand over.
+  The user checks the result themselves.
+- **Reviews run in depth, never trimmed.** A review (`/pr-review-toolkit:review-pr`, a pull request
+  audit) uses every applicable specialist agent on each pull request (code-reviewer,
+  silent-failure-hunter, pr-test-analyzer, comment-analyzer, type-design-analyzer, then code-simplifier).
+  Batch by repository if needed; never drop an aspect to save agents.
+- **Don't wait for CI or deploys.** Start the run, look at its status once if useful, report and move on.
+  Never block on `gh run watch`.
+
+## Repository rules
+
+Everything an agent needs is in this repository: this file, the docs it links, and `.claude/` (settings,
+git guard, skills). Claude Code loads the same files on this machine and on the web.
+
+### Branches and commits
+
+- Never commit on `main`. Branch from a fresh `origin/main` (`git fetch origin` first), named
+  `feat/`, `fix/`, `chore/`, `docs/` or `hotfix/` + a short kebab-case name.
+- Commit messages: `type(scope): description`, one line, no body, no trailers. Types: feat, fix, docs,
+  style, refactor, test, chore. Scope (required): `web` (`ci`, `deps`). The description is lowercase,
+  imperative, starts with a verb and has no final period. Example: `chore(web): bump wrangler`.
+- Commits are authored by the user only: never a `Co-Authored-By` or any AI attribution line
+  (`.claude/settings.json` turns Claude Code's off; the `commit-msg` hook and CI refuse them).
+- One logical change per commit; every commit passes verify. Never `--no-verify`.
+- Enforcement: the git hooks in `.agents/git-hooks/` (`git config core.hooksPath .agents/git-hooks`,
+  which `.claude/settings.json` runs at the start of every session) and, for Claude Code,
+  `.claude/hooks/guard-git.py` (commits and pushes to `main`, deleting them, `--no-verify`). If a hook
+  refuses, change the approach; never work around it.
+
+### Pull requests and releases
+
+- Open them with the `create-pr` skill (`.claude/skills/create-pr/`), into `main`. Title in
+  conventional commit format, English, 70 characters at most (it becomes the squash commit and feeds
+  the release version: `type!:` major, any `feat` minor, else patch). Every section of the body filled,
+  no AI attribution. Squash-merge.
+- Never merge a pull request whose checks are red or still running, never with admin rights.
+- There is no `staging` and no release workflow: pull requests go straight into `main`, and every merge deploys getdrafft.com (`ci.yml`).
+- Agents never start a release or a deploy unless the user asks for it in the current request, and
+  never tag by hand.
+
+### Secrets
+
+Never open, print, copy, search or summarize `.env*` files (`.env.example` is safe), `.dev.vars`
+(`.dev.vars.example` is safe), keys, `google-services.json` or anything in `~/Secrets/`, by any means.
+Run the CLI that consumes them without showing them, and only when the user asks: it writes to a remote
+project. Never write, regenerate or overwrite a user's `.env.local`. `.claude/settings.json` denies the
+reads.
+
+### Environments
+
+Apps an agent installs or launches always target the local Supabase. Never build, install, deploy or run
+mutations against staging or production unless the user asks for that environment in the current
+request. Compile-only checks are the exception.
+
+### Work that spans repositories
+
+A product feature usually runs backend, then iOS, then Android (then the website for legal or marketing
+copy): one session and one pull request per repository, backend first since the apps call its RPCs and
+functions. iOS is the reference; Android ports it with the same names, behaviour and strings. The first
+pull request states the contract (RPCs, payloads, event names) and the next ones link it. Another
+repository is read on GitHub (`gh repo clone sylwaninn/<repo>` into a temporary folder), never edited
+from here, except the shared docs below when the user agrees.
+
+### Shared docs
+
+`WORDING.md` (in drafft-ios, drafft-android, drafft-backend and drafft-web) and `DESIGN.md` (in drafft-ios
+and drafft-android) are one document kept identical in each repository; drafft-ios holds the reference.
+**After changing either one here, ask the user whether the change goes to the other repositories' copies.**
+If yes, make the identical change in each, one pull request per repository (`gh repo clone
+sylwaninn/<repo>` into a temporary folder, a branch from its base, the `create-pr` skill), and link the
+pull requests to each other. Locally, drafft-ios's `scripts/sync-shared.sh` writes the copies from
+drafft-ios, and `--check` lists those that differ.
+
+### This repository
 
 `main` deploys to production on every push: work on a branch, open a pull request. "Verify" in these
 rules (`pnpm verify`) means, in this repository:
