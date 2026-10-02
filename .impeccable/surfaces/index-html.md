@@ -6,7 +6,7 @@ related_targets: []
 ---
 
 Scope: drafft marketing landing (index.html). Mode: Persuade.
-Audience: active urban singles 25–40 who train 2–5×/week. Job: believe a match can become a real session within days; action: join the waitlist (app not released). No invented metrics, users, press or prices.
+Audience: see PRODUCT.md. Job: believe a match can become a real session within days; action: join the waitlist (app not released). No invented metrics, users, press or prices.
 
 ## Direction contract
 THESIS: The page owns the moment after "It's a match": the hero plays a match turning into a dated session. Refuses the category default of photo grids, swipe mockups and testimonial walls.
