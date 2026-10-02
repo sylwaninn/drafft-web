@@ -42,9 +42,12 @@ The CSP (`public/_headers`) needs no change: the script and the library are `'se
 1. PostHog (EU cloud): the website shares the drafft project with the iPhone and Android apps (production
    and staging); web events are the ones with `$host = getdrafft.com`, the apps' carry `app_environment`.
    Project settings (they apply to the apps too, which is fine):
-   - Web analytics > **Cookieless server hash mode: on** (without it, cookieless events are dropped);
-   - Project > **Discard client IP data: on** (the policy says the IP address isn't kept);
-   - Data retention: events 13 months at most (the policy says so).
+   - Web analytics > **Cookieless tracking: on** (done; without it, cookieless events are dropped);
+   - Project > **Discard client IP data: on** (done; the policy says the IP address isn't kept);
+   - Data retention is not a setting: PostHog Cloud keeps events 1 year on the free plan and 7 years on
+     a paid plan, and can't shorten it. The policy says 13 months at most, which the free plan meets.
+     Before moving to a paid plan, change the policy (retention table, in 7 languages) or delete the
+     older data, otherwise it stops being true.
    - Cookieless mode hashes the IP address into the visitor id and strips it before any enrichment, so
      web events carry no country or city (GeoIP and bot detection don't run on them). The policy doesn't
      claim a country. "Discard client IP data" still matters for the apps' events.
