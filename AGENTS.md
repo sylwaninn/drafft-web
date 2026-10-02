@@ -78,9 +78,9 @@ reads.
 
 ### Environments
 
-Apps an agent installs or launches always target the local Supabase. Never build, install, deploy or run
-mutations against staging or production unless the user asks for that environment in the current
-request. Compile-only checks are the exception.
+The site is static: it has no backend, no Supabase and no staging, see "Pull requests and releases".
+`pnpm dev` is a plain local preview. Never deploy unless the user asks for it in the current request.
+Compile-only checks are the exception.
 
 ### Work that spans repositories
 
