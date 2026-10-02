@@ -39,20 +39,22 @@ The CSP (`public/_headers`) needs no change: the script and the library are `'se
 
 ## Switching it on
 
-1. PostHog (EU cloud): create a project for the website (one project per environment, never the apps'
-   one). Settings:
+1. PostHog (EU cloud): the website shares the drafft project with the iPhone and Android apps (production
+   and staging); web events are the ones with `$host = getdrafft.com`, the apps' carry `app_environment`.
+   Project settings (they apply to the apps too, which is fine):
    - Web analytics > **Cookieless server hash mode: on** (without it, cookieless events are dropped);
    - Project > **Discard client IP data: on** (the policy says the IP address isn't kept);
    - Data retention: events 13 months at most (the policy says so); GeoIP enrichment kept (country only
      is shown).
-2. Put the project API key (`phc_...`, public) in `PROJECT_KEY` of `public/analytics.js`, bump the `?v=`
-   (`public/index.html`, `ANALYTICS_VERSION` in `scripts/legal.mjs`, then `pnpm legal`), open a pull
-   request. Merging deploys it.
+2. The project token (`phc_...`, public) is already in `PROJECT_KEY` of `public/analytics.js`. To change
+   it: bump the `?v=` (`public/index.html`, `ANALYTICS_VERSION` in `scripts/legal.mjs`, then
+   `pnpm legal`) and open a pull request. Merging deploys it.
 3. Web analytics in PostHog shows visits once the first page view arrives. Check one visit from a real
    browser with Do Not Track off, and that the browser's network tab shows `/ingest/e/` and no request
    to another host.
 
-Without a key nothing is sent: the deploy is safe before step 1.
+With an empty key nothing is sent. Until step 1's settings are on, the policy isn't accurate: set them
+before merging.
 
 ## The vendored library
 

@@ -11,11 +11,11 @@
 // - Off when there is no project key, when the browser says Do Not Track or Global Privacy Control, and
 //   anywhere but getdrafft.com (wrangler dev, previews).
 //
-// The project key is public (it only lets a page send events). Set it once PostHog's web project exists:
-// docs/analytics.md. PostHog project settings it relies on: Web analytics > "Cookieless server hash
+// The project key is public (it only lets a page send events). It is the drafft project's, shared with
+// the apps: docs/analytics.md. PostHog project settings it relies on: Web analytics > "Cookieless server hash
 // mode" on, and "Discard client IP data" on.
 (() => {
-  const PROJECT_KEY = "";
+  const PROJECT_KEY = "phc_v7XkEKcLMvYaaNMfNANZBEidQwYKe4MjzugMQHyxur7W";
   const HOST = "getdrafft.com";
 
   const quiet = navigator.doNotTrack === "1" || navigator.globalPrivacyControl === true;

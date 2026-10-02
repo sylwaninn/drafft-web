@@ -21,7 +21,7 @@ const check = process.argv.includes("--check");
 
 const SITE = "https://getdrafft.com";
 const CSS_VERSION = "1790760000";
-const ANALYTICS_VERSION = "1790900000";
+const ANALYTICS_VERSION = "1790910000";
 const PAGES = ["legal", "privacy", "terms", "delete-account"];
 const LANGS = {
   en: { name: "English", locale: "en-GB", legal: "Legal notice", privacy: "Privacy policy", terms: "Terms of use", "delete-account": "Delete your account",
