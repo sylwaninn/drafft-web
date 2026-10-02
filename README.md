@@ -13,21 +13,22 @@ The home page, the legal pages the apps open, and the account deletion page, in 
 ![Languages](https://img.shields.io/badge/languages-7-2EA44F)
 ![License](https://img.shields.io/badge/license-proprietary-lightgrey)
 
-[How it works](#how-it-works) · [Getting started](#getting-started) · [Deploy](#deploy) · [Docs](#documentation)
+[How it works](#how-it-works) | [Getting started](#getting-started) | [Deploy](#deploy) | [Docs](#documentation)
 
 </div>
 
 ## How it works
 
 Static HTML, CSS and JS in `public/`, with no framework and no build step, served by one Cloudflare Worker with
-static assets. The Worker runs first on every request (`run_worker_first`), so nothing skips its rules.
+static assets. The Worker runs first on every request (`run_worker_first`), so nothing skips its rules. Under
+`/ingest/`, a path outside the allow list gets a 404 and a method other than POST a 405.
 
 ```mermaid
 flowchart LR
   Browser["Browser"] --> Worker["Worker<br/>worker/index.js"]
   Worker -- "host www.getdrafft.com" --> Redirect["301 to getdrafft.com<br/>same path and query"]
-  Worker -- "POST /ingest/…" --> PostHog["PostHog EU<br/>eu.i.posthog.com"]
-  Worker -- "any other request" --> Assets["Static assets<br/>public/"]
+  Worker -- "POST /ingest/…<br/>allow list only" --> PostHog["PostHog EU<br/>eu.i.posthog.com"]
+  Worker -- "any other path" --> Assets["Static assets<br/>public/"]
 ```
 
 ### Requests
@@ -36,31 +37,33 @@ flowchart LR
 |---|---|
 | Domains | `getdrafft.com` and `www.getdrafft.com` only; no `workers.dev` or preview URLs |
 | Redirect | a `www.` host gets a 301 to the apex; `http` to `https` is the zone's Always Use HTTPS |
-| Assets | `public/`, with the headers of `public/_headers`: CSP `default-src 'self'`, `frame-ancestors 'none'`, HSTS, `nosniff`, no camera, microphone or location |
-| Caching | `/fonts/`, `/vendor/` and `/img/` for a week; `main.js`, `i18n.js`, `styles.css` and `analytics.js` are cache-busted with `?v=` |
+| Assets | `public/`, with the headers of `public/_headers`: a same-origin CSP (inline scripts allowed, for the legal pages' language redirect), no framing, HSTS, `nosniff`, no camera, microphone or location |
+| Caching | `/fonts/`, `/vendor/` and `/img/` for a week; scripts and stylesheets are cache-busted with `?v=` (see [Getting started](#getting-started)) |
 
 ### Languages
 
 - **Home page:** one HTML file, translated in the browser by `public/i18n.js` (7 languages). It takes the first
   browser language it knows, else English, then fills every `data-i18n` text, the title and the meta tags.
-- **Legal pages:** English at `/<page>`, the others at `/<lang>/<page>`. A small script on each page picks
-  `?lang=<code>` first (the apps pass it, so a page opens in the app's language), else the browser's language,
-  and moves to that version. Each page lists its 7 alternates (`hreflang`).
+- **Legal pages:** `?lang=<code>` first (the apps pass it), else the browser's language, then English; each page
+  moves to its own version ([docs/legal.md](docs/legal.md#languages)).
 
 ### Legal pages
 
-`scripts/legal.mjs` builds them from `legal/`: 4 pages (`legal`, `privacy`, `terms`, `delete-account`) in
-7 languages, 28 files written to `public/`. Contact details come from `legal/entity.json` (`{{key}}`, `{{@key}}`
-for a link). The build fails on a missing section anchor or an empty value, and `--check` fails while a
-generated page is stale. Details: [docs/legal.md](docs/legal.md).
+`scripts/legal.mjs` builds them from `legal/`: 4 pages (`legal`, `privacy`, `terms`, `delete-account`) in every
+language, written to `public/`, English at `/<page>` and the others at `/<lang>/<page>`. Contact details come
+from `legal/entity.json` (`{{key}}`, `{{@key}}` for a link). `pnpm legal` fails on an unknown `{{key}}`, a page
+without `<h1>` or a missing required anchor, and writes an empty value as a visible gap; `pnpm check` also
+fails on a stale page or an empty value. Details: [docs/legal.md](docs/legal.md).
 
 ### Page views
 
 `public/analytics.js` loads PostHog once the page is loaded and the browser idle, and counts page views and
 time on page only: no cookie, no storage, no autocapture, no replay. It sends nothing with Do Not Track or
 Global Privacy Control on, or on another host than `getdrafft.com`. Events go to `/ingest` on the same domain;
-the Worker relays three PostHog paths only, POST only, 256 KiB at most, with four headers (`content-type`,
-`content-encoding`, `user-agent`, `accept-language`). Details: [docs/analytics.md](docs/analytics.md).
+the Worker relays three PostHog paths only, POST only, 256 KiB at most, with four request headers
+(`content-type`, `content-encoding`, `user-agent`, `accept-language`) plus the visitor's IP in
+`x-forwarded-for`, which PostHog's cookieless hash needs and doesn't store. Details:
+[docs/analytics.md](docs/analytics.md).
 
 ### Layout
 
@@ -86,19 +89,21 @@ pnpm dev       # http://localhost:8787, with the production headers
 | `pnpm wording` | the copy against WORDING.md's forbidden wording |
 | `pnpm test` | the Worker: redirect, relay allow list, POST only, size limit |
 
-Bump `?v=` in `index.html` when `main.js`, `i18n.js` or `styles.css` change.
+When a script or stylesheet changes, bump its `?v=` in `index.html` (`main.js`, `i18n.js`, `styles.css`,
+`analytics.js`), and `CSS_VERSION` or `ANALYTICS_VERSION` in `scripts/legal.mjs` for the legal pages.
 
 ## Deploy
 
 There is no staging: pull requests go into `main`.
 
-| When | CI (`.github/workflows/ci.yml`) |
+| When | CI |
 |---|---|
-| Pull request | title format; `pnpm check`, `pnpm test`, `pnpm wording`; `pnpm audit`, gitleaks, actionlint, zizmor, shellcheck |
-| Push to `main` | the same checks, then `wrangler deploy` to production and a smoke test: `/` answers 200 with its CSP, and `www` and `http` land on `https://getdrafft.com/` |
+| Pull request | `ci.yml`: title format; `pnpm check`, `pnpm test`, `pnpm wording`; `pnpm audit`, gitleaks, actionlint, zizmor, shellcheck. `pr.yml`: base branch, description, commit authors, no AI attribution, unsigned commits (a warning) |
+| Push to `main` | `ci.yml`: the same checks, then `wrangler deploy` to production and a smoke test: `/` answers 200 with its CSP, and `www` and `http` land on `https://getdrafft.com/` |
 
 The repository needs the variable `CLOUDFLARE_ACCOUNT_ID` and the secret `CLOUDFLARE_API_TOKEN` (template "Edit
-Cloudflare Workers", this account and the `getdrafft.com` zone).
+Cloudflare Workers", this account and the `getdrafft.com` zone; the custom domains need Workers Routes and DNS on
+the zone).
 
 ## Documentation
 
