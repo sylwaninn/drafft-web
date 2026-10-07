@@ -266,7 +266,7 @@
   let stepperFrom = () => innerHeight * 0.5;
   // It never rises with the footer: it stays at the bottom of the screen.
   // And it never hides a word or a button: if its place covers something it steps aside.
-  const OBSTACLES = ".hero__title, .hero__note, .hero .store, .cap h2, .cap p, .acts, .composer, .psheet__foot, .statement__text, .sports__title, .tempo__lockup, .tempo__lead, .perk h3, .perk p, .join__title, .join__lead, .store, .foot__row p, .foot__links a";
+  const OBSTACLES = ".hero__title, .hero__note, .cap h2, .cap p, .acts, .composer, .psheet__foot, .statement__text, .sports__title, .tempo__lockup, .tempo__lead, .perk h3, .perk p, .join__title, .join__lead, .store, .foot__row p, .foot__links a";
   const shown = (el) => { for (let n = el; n && n !== document.body; n = n.parentElement) { const s = getComputedStyle(n); if (+s.opacity < 0.05 || s.visibility === "hidden" || s.display === "none") return false; } return true; };
   // Text is tested line by line (a paragraph's box is wider than its words).
   const boxesOf = (el) => {
