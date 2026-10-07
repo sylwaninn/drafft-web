@@ -608,6 +608,30 @@ html:not(.js-motion) .marquee__track { padding-inline: var(--gutter); }
 .store__text { display: grid; font-weight: 700; font-size: 1.0625rem; line-height: 1.1; letter-spacing: -0.01em; white-space: nowrap; }
 .store__text small { font-size: .6875rem; font-weight: 500; letter-spacing: 0; opacity: .75; }
 
+/* Not launched yet: the badges are greyed out and inert (no href, no pointer), with the reason
+   in a line above them. */
+.stores__soon {
+  flex: 1 0 100%;
+  margin-bottom: 6px;
+  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.stores[data-center] .stores__soon { text-align: center; }
+.stores[data-soon] .store {
+  background: var(--hairline);
+  color: var(--mute);
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .stores__soon { animation: soon-in .9s var(--ease) .15s both; }
+  @keyframes soon-in { from { opacity: 0; translate: 0 .35em; } }
+}
+
 /* ---- Phones and portrait tablets: everything stacked, nothing dropped. The texts take the top
    (their real height, whatever the language); the app's screen is scaled in JS to fill exactly
    what is left below them (see settle() in main.js). ---- */
@@ -627,7 +651,7 @@ html:not(.js-motion) .marquee__track { padding-inline: var(--gutter); }
   .js-motion .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
   .js-motion .hero__left, .js-motion .hero__right { grid-column: 1; }
   .hero__title { margin-inline: auto; font-size: clamp(2.25rem, 10.5vw, 3.5rem); max-width: 11em; }
-  .hero__left .stores { justify-content: center; margin-top: 18px; gap: 8px; }
+  .stores__soon { font-size: 1.125rem; }
   .hero__right { display: block; justify-self: center; max-width: 24em; padding-top: 0; margin-top: 10px; text-align: center; }
   .hero__note { font-size: .9375rem; }
   .stage { grid-column: 1; grid-row: auto; }
@@ -808,7 +832,6 @@ html:not(.js-motion) .marquee__track { padding-inline: var(--gutter); }
 /* Very short phones (iPhone SE and the like): tighter spacing above the screen, same content */
 @media (max-width: 860px) and (orientation: portrait) and (max-height: 760px) {
   .hero { --top: calc(env(safe-area-inset-top) + 58px); row-gap: 8px; }
-  .hero__left .stores { margin-top: 10px; }
   .store { min-height: 40px; padding: 4px 12px 4px 10px; }
   .store__logo { width: 18px; height: 18px; }
   .store__text { font-size: .875rem; }
